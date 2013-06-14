@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///Users/epait/Desktop/powering2013/progressBar.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Progress Bar Test</title>
+<link href="file:///Users/epait/Desktop/powering2013/js/video-js/video-js.css" rel="stylesheet">
+<script src="./Progress Bar Test_files/jquery.min.js"></script>
+<script src="./Progress Bar Test_files/jquery-ui.min.js"></script>
+<script src="./Progress Bar Test_files/video.js"></script>
+<script>
+  videojs.options.flash.swf = "./js/video-js/video-js.swf"
+</script>
+</head>
+
+<body style="">
+
+
+<div class="videoWrapper">
+	<video id="mainTrack" class="video-js vjs-default-skin" preload="auto" width="960" height="720">
+		<source src="./vid/Emmy_Cut_v2.mp4" type="video/mp4">
+		<source src="./vid/Emmy_Cut_v2.webm" type="video/webm">
+		<source src="./vid/Emmy_Cut_v2.ogv" type="video/ogg">
+	</video>
+</div>
+
+
+<div class="videoControls">
+	<div id="progressBar" class="ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="37"><div class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 37%;"></div></div>
+</div>
+
+
+<div class="overlayWrapper">
+	<div id="playToggle"></div>
+</div>
+
+
+<script src="./Progress Bar Test_files/progressBar.js"></script>
+<!-- End Scripts	 -->
+
+
+
+</body></html>
