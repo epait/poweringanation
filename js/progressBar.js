@@ -1,7 +1,3 @@
-// Universal Variables
-var myPlayer = videojs("mainTrack");
-
-
 function hideMenu () {
 		var timer;
 		var down = true;
@@ -25,29 +21,31 @@ hideMenu();
 
 
 var progressBarWidth = function() { return $('#progressBar').width() - 195; }
-var timeAsPercent = function(time) { return time/ myPlayer.duration(); }
+var timeAsPercent = function(time) { return time/ pop.duration(); }
 var timePosition = function(time) { return timeAsPercent(time)*progressBarWidth() + 45; }
-var progressPosition = function() { return timePosition(myPlayer.currentTime()); }
-var secondsPerPixel = function() { return myPlayer.duration()/progressBarWidth(); }
-var timeToPausePoint = function (pauseTime) { return pauseTime - myPlayer.currentTime(); }
+var progressPosition = function() { return timePosition(pop.currentTime()); }
+var secondsPerPixel = function() { return pop.duration()/progressBarWidth(); }
+var timeToPausePoint = function (pauseTime) { return pauseTime - pop.currentTime(); }
 var pausePointVisible = function(d) { return timeToPausePoint(d.start) < 10*secondsPerPixel() ? 1 : 0; }
 var pageWrapperOffset = function() {return $('#pageWrapper').offset(); }
-var eventTime = function (position) {return (position/progressBarWidth())*myPlayer.duration(); }
+var eventTime = function (position) {return (position/progressBarWidth())*pop.duration(); }
 var progressCirclePosition = function (id) {return d3.select(id).attr('cx') - 45; }
 
 $('#progressClickOverlay').click(function(e) {
 	var clickLocation = e.pageX - (pageWrapperOffset().left + 45);
-	myPlayer.currentTime(eventTime(clickLocation));
+	pop.currentTime(eventTime(clickLocation));
 });
 
 
 var drag = d3.behavior.drag()
         .on("drag", function() {
+        	pop.pause();
         	myPlayer.pause();
             d3.select(this).attr("cx", d3.event.x);
         })
         .on("dragend", function() {
-        	myPlayer.currentTime(eventTime(progressCirclePosition('#drag')));
+        	pop.currentTime(eventTime(progressCirclePosition('#drag')));
+        	pop.play();
         	myPlayer.play();
         });
 
@@ -62,16 +60,22 @@ var progressFunc = function () {
 		d3.select('#drag').transition().ease('linear').duration(250).attr('cx',progressPosition());
 		pauseDiamonds.attr('transform', diamondTransform);
 		pauseDiamonds.select('rect').transition().duration(1000).style('opacity', pausePointVisible);
-		pauseDiamonds.on('click',function(d){myPlayer.currentTime(d.start);});
+		pauseDiamonds.on('click',function(d){pop.currentTime(d.start);});
+		var now = pop.currentTime();
+		var end = pop.duration();
+		if (now>=end) {
+			pop.pause();
+			myPlayer.pause();
+		}
 }
 
 
 
 
 
-myPlayer.ready(function() {
+videoAct1.ready(function() {
 	d3.select('#drag').call(drag);
-	myPlayer.on("timeupdate", progressFunc);
+	pop.on("timeupdate", progressFunc);
 });
 
 

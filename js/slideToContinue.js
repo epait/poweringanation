@@ -1,5 +1,4 @@
 $(function() {
-	var myPlayer = videojs("mainTrack");
 	$("#dragButton").draggable({
 		axis: 'x',
 		drag: function(event, ui) {
@@ -9,7 +8,7 @@ $(function() {
 			if (ui.position.left > dragButtonStart()+365) {
 				$('#dragButton').hide();
 				$('#dragPath').hide();
-				myPlayer.play();
+				pop.play();
 				$('#resumeVideo').attr('transform',dragButtonPositioning);
   				$('#dragArrow').attr('transform',dragButtonPositioning);
   				$('#dragClick').attr('transform',dragButtonPositioning);

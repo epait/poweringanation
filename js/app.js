@@ -1,12 +1,3 @@
-// Universal Variables
-var myPlayer = videojs("mainTrack");
-var windowHeight = $(window).height();
-var windowWidth = $(window).width();
-var windowAspectRatio = parseFloat(windowWidth/windowHeight).toFixed(2);
-var widthAspectRatio = 1.77;
-var heightAspectRatio = 0.5625;
-
-
 // Global Functions
 var fullscreenOn = function() {
   var wrapperWidth = $('.pageWrapper').width();
@@ -96,31 +87,31 @@ var resizePageElements = function() {
 
 
 // Preload Video
-$('.pageWrapper').hide();
-myPlayer.volume(0);
-var bufferFunc = function () {
-  var bufferLimit = 30;
-  var bufferTime = myPlayer.buffered().end(0);
-  var bufferPercent = parseFloat((bufferTime/bufferLimit)*100).toFixed(0);
-  console.log('Current Time: ' + myPlayer.currentTime());
-  console.log('Buffered Until: ' + bufferTime);
-  $('#preloadScreen').text('The video is ' + bufferPercent + '% buffered.');
-  if (bufferTime >= bufferLimit) {
-    myPlayer.currentTime(0);
-    myPlayer.volume(1);
-    $('#preloadScreen').hide();
-    $('.pageWrapper').fadeIn(500);
-    myPlayer.off('progress');
-    myPlayer.play();
-  }
-  else if (bufferTime < 1) {
-    myPlayer.play();
-  }
-  else {
-    myPlayer.pause();
-  }
-}
-myPlayer.on('progress',bufferFunc);
+// $('.pageWrapper').hide();
+// myPlayer.volume(0);
+// var bufferFunc = function () {
+//   var bufferLimit = 30;
+//   var bufferTime = myPlayer.buffered().end(0);
+//   var bufferPercent = parseFloat((bufferTime/bufferLimit)*100).toFixed(0);
+//   console.log('Current Time: ' + myPlayer.currentTime());
+//   console.log('Buffered Until: ' + bufferTime);
+//   $('#preloadScreen').text('The video is ' + bufferPercent + '% buffered.');
+//   if (bufferTime >= bufferLimit) {
+//     myPlayer.currentTime(0);
+//     myPlayer.volume(1);
+//     $('#preloadScreen').hide();
+//     $('.pageWrapper').fadeIn(500);
+//     myPlayer.off('progress');
+//     myPlayer.play();
+//   }
+//   else if (bufferTime < 1) {
+//     myPlayer.play();
+//   }
+//   else {
+//     myPlayer.pause();
+//   }
+// }
+// myPlayer.on('progress',bufferFunc);
 
 
 // Size Page Wrapper On Load
@@ -188,19 +179,6 @@ function cancelFullscreen(id) {
 }
 
 
-// Toggle Audio Mute
-$('#soundOn').click(function() {
-  myPlayer.volume(0);
-  $(this).hide();
-  $('#soundOff').show();
-})
-$('#soundOff').click(function() {
-  myPlayer.volume(1);
-  $(this).hide();
-  $('#soundOn').show();
-})
-
-
 // Hide Video Loops
 $('#videoLoop1').hide();
 $('#videoLoop2').hide();
@@ -229,20 +207,4 @@ $('#dragClick').hover(
       $('#dragArrow').hide();  
     }
   );
-
-
-// Play/Pause wrapper
-$('#playToggle').click(function() {
-	var isPaused = myPlayer.paused();
-	var isPlaying = !myPlayer.paused();
-	if (isPaused) {
-		myPlayer.play();
-    console.log('Play!');
-	}
-	else {
-		myPlayer.pause();
-    console.log('Pause!');
-	}
-});
-
 
