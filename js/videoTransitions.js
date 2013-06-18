@@ -23,23 +23,14 @@ function Player(sequence) {
 			var curVid = that.vidAt(index);
 			curVid.hide();
 			curVid.volume(0);
-
+			var nextVid = that.vidAt(index+1);
 			$('#'+sequence[index].transitionLoop).fadeIn(1000);
-
-
-
-
-
-
-
-			// var nextVid = that.vidAt(index+1);
-			// if (nextVid) {
-			// 	that.currentVideo = index+1;
-			// 	nextVid.currentTime(0);
-			// 	nextVid.volume(that.volumeLevel);
-			// 	nextVid.show();
-			// 	nextVid.play();
-			// }
+			if (nextVid) {
+				that.currentVideo = index+1;
+				nextVid.currentTime(0);
+				nextVid.volume(that.volumeLevel);
+				nextVid.show();		
+			}
 		}
 	}
 

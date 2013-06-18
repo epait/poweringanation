@@ -34,7 +34,8 @@ function createPausePoint(selection) {
                 .attr('id', function(d, i) { return "sentence"+(i+1);})
                 .style('display', function(d, i) { return i == 0 ? 'block' : 'none'})
                 .text(String)
-                .append('button')
+                .append('image')
+                    .attr('src','./img/clickToContinue.png')
                     .attr('class','advanceSlide')
                     .attr('id',function(d, i) { return "button"+(i+1);})
                     .text('Next!');
@@ -55,8 +56,11 @@ createPausePoint(selection);
         $('#button2').on('click',function(d){
             $('#button2').fadeOut(500);
             $('#sentence2').fadeOut(500);
-            $('.videoLoopContainer').fadeOut(1000);
-            $('#button1').show();
+            $('.videoLoopContainer').fadeOut(1000, function(){
+                $('#button1').show(2500);
+                $('#sentence1').show(2500);
+            });
+            panPlayer.play();
             console.log('Click2!');
         });
 

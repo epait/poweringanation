@@ -1,66 +1,82 @@
 var sequence = [
 	{ 
 		videoId: "videoAct1", 
-		transitionLoop: "loopRiver", 
+		type: "videoContent",
+		transitionLoop: "loopRiver",
+		loopId: "videoAct1Loop", 
 		transitionText: [
-			'videoAct1 John Powell only has one harm. How can he paddle down the Colorado with only one arm?',
-			'videoAct1 John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
+			'John Powell only has one arm. How can he paddle down the Colorado with only one arm?',
+			'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
 		] 
 	}, 
 	{ 
 		videoId: "videoAct2",
-		transitionLoop: "loopCanyon", 
+		type: "videoContent",
+		transitionLoop: "loopCanyon",
+		loopId: "videoAct2Loop", 
 		transitionText: [
-			'videoAct2 John Powell only has one harm. How can he paddle down the Colorado with only one arm?',
-			'videoAct2 John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
+			'John Powell only has one arm. How can he paddle down the Colorado with only one arm?',
+			'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
 		] 
 	}, 
 	{ 
 		videoId: "motionDams",
-		transitionLoop: "loopWripple", 
+		type: "motionGraphic",
+		transitionLoop: "loopWripple",
+		loopId: "motionDamsLoop", 
 		transitionText: [
-			'motionDams John Powell only has one harm. How can he paddle down the Colorado with only one arm?',
-			'motionDams John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
+			'John Powell only has one arm. How can he paddle down the Colorado with only one arm?',
+			'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
 		] 
 	}, 
 	{ 
 		videoId: "videoAct3",
-		transitionLoop: "loopFire", 
+		type: "videoContent",
+		transitionLoop: "loopFire",
+		loopId: "videoAct3Loop", 
 		transitionText: [
-			'videoAct3 John Powell only has one harm. How can he paddle down the Colorado with only one arm?',
-			'videoAvideoAct3ct1 John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
+			'John Powell only has one arm. How can he paddle down the Colorado with only one arm?',
+			'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
 		] 
 	},
 	{ 
 		videoId: "motionPopulation",
-		transitionLoop: "loopClouds", 
+		type: "motionGraphic",
+		transitionLoop: "loopClouds",
+		loopId: "motionPopulationLoop", 
 		transitionText: [
-			'motionPopulation John Powell only has one harm. How can he paddle down the Colorado with only one arm?',
-			'motionPopulation John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
+			'John Powell only has one arm. How can he paddle down the Colorado with only one arm?',
+			'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
 		] 
 	}, 
 	{ 
 		videoId: "videoAct4",
-		transitionLoop: "loopRiver", 
+		type: "videoContent",
+		transitionLoop: "loopRiver",
+		loopId: "videoAct4Loop", 
 		transitionText: [
-			'videoAct4 John Powell only has one harm. How can he paddle down the Colorado with only one arm?',
-			'videoAct4 John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
+			'John Powell only has one arm. How can he paddle down the Colorado with only one arm?',
+			'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
 		] 
 	},
 	{ 
 		videoId: "motionDeltaMead",
-		transitionLoop: "loopFire", 
+		type: "motionGraphic",
+		transitionLoop: "loopFire",
+		loopId: "motionDeltaMeadLoop", 
 		transitionText: [
-			'motionDeltaMead John Powell only has one harm. How can he paddle down the Colorado with only one arm?',
-			'motionDeltaMead John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
+			'John Powell only has one arm. How can he paddle down the Colorado with only one arm?',
+			'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
 		] 
 	},
 	{ 
 		videoId:  "videoAct5",
-		transitionLoop: "loopCanyon", 
+		type: "videoContent",
+		transitionLoop: "loopCanyon",
+		loopId: "videoAct5Loop", 
 		transitionText: [
-			'videoAct5 John Powell only has one harm. How can he paddle down the Colorado with only one arm?',
-			'videoAct5 John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
+			'John Powell only has one arm. How can he paddle down the Colorado with only one arm?',
+			'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him'
 		] 
 	}
 ];

@@ -1,4 +1,34 @@
 /*Main Styles*/
+@font-face {
+				font-family: Interstate-Thin;
+				src:	url("../fonts/Interstate-Thin.otf"),
+						url("../fonts/Interstate-Thin.ttf");
+			}
+			@font-face {
+				font-family: Interstate-Light;
+				src:url("../fonts/Interstate-Light.otf"),
+					url("../fonts/Interstate-Light.ttf");
+			}
+			@font-face {
+				font-family: Interstate-Bold;
+				src:url("../fonts/Interstate-Bold.otf"),
+					url("../fonts/Interstate-Bold.ttf");
+			}
+			@font-face {
+				font-family: Interstate-Regular;
+				src:url("../fonts/Interstate-Regular.otf"),
+					url("../fonts/Interstate-Regular.ttf");
+			}
+			@font-face {
+				font-family: Interstate-ExtraLight;
+				src:url("../fonts/Interstate-ExtraLight.otf"),
+					url("../fonts/Interstate-ExtraLight.ttf");
+			}
+			@font-face {
+				font-family: Interstate-Lightitalic;
+				src:url("../fonts/Interstate-Lightitalic.otf"),
+					url("../fonts/Interstate-Lightitalic.ttf");
+			}
 body {
 	min-width: 960px;
 	margin: 0;
@@ -162,15 +192,26 @@ g#dragButton:hover {
 }
 .textOverlay {
 	color: #fff;
-	width: 900px;
-	height: 540px;
-	color: #fff;
-	overflow: scroll;
+	font-family: 'Interstate-Regular';
+	font-size: 40px;
+	line-height: 50px;
+	width: 65%;
 	position: absolute;
-	margin-left: 30px;
+	left: 100px;
+	top: 150px;
 	z-index: 998;
-	/*opacity: 1  !important;*/
-	/*display: none;*/
+	-moz-text-shadow: 3px 3px 10px #000;
+	-webkit-text-shadow: 3px 3px 10px #000;
+	text-shadow: 3px 3px 10px #000;
+}
+.advanceSlide {
+	position: absolute;
+	z-index:999;
+	bottom:-130px;
+	left:0;
+}
+.advanceSlide:hover {
+	cursor: pointer;
 }
 
 
