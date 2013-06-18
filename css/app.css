@@ -10,6 +10,7 @@ body {
 	height: inherit;
 	position: absolute;
 	z-index: 980;
+	top:0;
 }
 #fullscreen {
 	width: 300px;
@@ -17,7 +18,7 @@ body {
 	position: absolute;
 	z-index: 999;
 }
-#mainTrack {
+#videoAct1, #videoAct2, #videoAct3, #videoAct4, #videoAct5, #motionDams, #motionPopulation, #motionDeltaMead {
 	z-index: -1000;
 	position: absolute;
 	/*min-width: 960px;*/
@@ -168,7 +169,7 @@ g#dragButton:hover {
 	position: absolute;
 	margin-left: 30px;
 	z-index: 998;
-	opacity: 1 !important;
+	/*opacity: 1  !important;*/
 	/*display: none;*/
 }
 

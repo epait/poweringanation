@@ -1,0 +1,5 @@
+function PanPlayer(sequence) {
+
+	
+
+}

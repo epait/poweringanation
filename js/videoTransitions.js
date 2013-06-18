@@ -1,196 +1,223 @@
 Popcorn.player( "baseplayer" );
-var pop = Popcorn.baseplayer( "#basePlayer" );
-// Start Baseplayer
-pop.duration(1110);
-pop.play(0);
-videoAct1.play();	
 
-// Initialize Additional Videos
-$('#videoAct2').hide();
-$('#videoAct3').hide();
-$('#videoAct4').hide();
-$('#videoAct5').hide();
-$('#motionDams').hide();
-$('#motionPopulation').hide();
-$('#motionDeltaMead').hide();
-var videoArray = [videoAct2, videoAct3, videoAct4, videoAct5, motionDams, motionPopulation, motionDeltaMead];
-// for (var i=0; i<videoArray.length; i=i+1) {}
-function bufferElement (element) {
-	element.play();
-	var bufferLimit = 30;
-	function bufferTime(){return element.buffered().end(0)};
-	element.on('progress',bufferTime);
-	if (bufferTime < bufferLimit) {
-	    element.play();
+function Player(sequence) {
+	var that = this;
+	this.pop = Popcorn.baseplayer("#basePlayer");
+	this.pop.duration(1110);
+	this.pop.play(0);
+
+	this.sequence = sequence;
+	this.currentVideo = 0;
+	this.volumeLevel = 1;
+
+	var timeUpdateCallbackCaller = function(index) {
+		return function() {
+			if (that.timeUpdateCallback && that.currentVideo == index) {
+				that.timeUpdateCallback(this);
+			}
+		}
 	}
-	else {
-	    element.pause();
-	    element.off('progress')
+
+	var transitioner = function(index) {
+		return function() {
+			var curVid = that.vidAt(index);
+			curVid.hide();
+			curVid.volume(0);
+
+			$('#'+sequence[index].transitionLoop).fadeIn(1000);
+
+
+
+
+
+
+
+			// var nextVid = that.vidAt(index+1);
+			// if (nextVid) {
+			// 	that.currentVideo = index+1;
+			// 	nextVid.currentTime(0);
+			// 	nextVid.volume(that.volumeLevel);
+			// 	nextVid.show();
+			// 	nextVid.play();
+			// }
+		}
+	}
+
+
+
+
+	this.videos = [];
+	for(var i = 0; i < sequence.length; i++) {
+		var video = videojs(sequence[i].videoId);
+		video.hide();
+		video.volume(0);
+		this.videos.push(video);
+	}
+
+	this.readyCallback = function() {
+		console.log("setting up end event handler")
+		for(var i = 0; i < that.videos.length; i++) {
+			var video = that.videos[i];
+			video.on("ended", transitioner(i));
+			video.on("timeupdate", timeUpdateCallbackCaller(i));
+		}
+	}
+
+	var loading = this.videos.slice();
+
+	this.videos.forEach(function(element) {
+
+		// var bufferFunc = function () {
+//   var bufferLimit = 30;
+//   var bufferTime = myPlayer.buffered().end(0);
+//   var bufferPercent = parseFloat((bufferTime/bufferLimit)*100).toFixed(0);
+//   console.log('Current Time: ' + myPlayer.currentTime());
+//   console.log('Buffered Until: ' + bufferTime);
+//   $('#preloadScreen').text('The video is ' + bufferPercent + '% buffered.');
+//   if (bufferTime >= bufferLimit) {
+//     myPlayer.currentTime(0);
+//     myPlayer.volume(1);
+//     $('#preloadScreen').hide();
+//     $('.pageWrapper').fadeIn(500);
+//     myPlayer.off('progress');
+//     myPlayer.play();
+//   }
+//   else if (bufferTime < 1) {
+//     myPlayer.play();
+//   }
+//   else {
+//     myPlayer.pause();
+//   }
+// }
+
+
+		element.on("progress", function() {
+			var bufferedTime = element.buffered().end(0);
+			console.log(element);
+			console.log("bufferedTime is " + bufferedTime);
+			if (bufferedTime > 1) {
+				element.pause();
+				element.volume(that.volumeLevel);
+				element.currentTime(0);
+			}
+
+			if (bufferedTime > 20) {
+
+				element.off("progress");
+				loading.splice(loading.indexOf(element), 1);
+				console.log(loading);
+				console.log(that.videos);
+				if (loading.length == 0) {
+					that.ready();
+				}
+			}  
+		});
+		element.play();
+
+	});
+
+	
+
+	this.videos[this.currentVideo].show();
+	this.videos[this.currentVideo].volume(that.volumeLevel);
+	//this.videos[this.currentVideo].play();
+
+	this.currentVid = function() {
+		if (arguments.length > 0) {
+			var index = arguments[0];
+			if (index != this.currentVideo) {
+				var paused = this.videos[this.currentVideo].paused();
+				this.videos[this.currentVideo].pause();
+				this.videos[this.currentVideo].hide();
+				this.videos[this.currentVideo].volume(0);
+				this.currentVideo = index;
+				this.videos[this.currentVideo].show();
+				this.videos[this.currentVideo].volume(this.volumeLevel);
+				if (!paused) {
+					this.videos[this.currentVideo].play();
+				}
+			}
+
+		} else {
+			return this.videos[this.currentVideo];
+		}
+	}
+
+	this.vidAt = function(index) {
+		return this.videos[index];
+	}
+
+	this.pause = function() {
+		console.log("pausing");
+		for(var i = 0; i < this.videos.length; i++) {
+			this.videos[i].pause();
+		}
+	}
+
+	this.paused = function() {
+		return this.currentVid().paused();
+	}
+
+	this.play = function() {
+		console.log("playing");
+		this.currentVid().play();
+	}
+
+	this.currentTime = function() {
+
+		if (arguments.length > 0) {
+			var time = arguments[0];
+			var lastEnd = 0.0;
+			for(var i = 0; i < this.videos.length; i++) {
+				var nextEnd = lastEnd + this.videos[i].duration();
+				if (lastEnd <= time && time < nextEnd) {
+					this.currentVid(i);
+					this.currentVid().currentTime(time-lastEnd);
+					return;
+				}
+				lastEnd = nextEnd;
+			}
+
+		} else {
+			var time = 0.0;
+			for(var i = 0; i < this.currentVideo; i++) {
+				time += this.videos[i].duration();
+			}
+			time += this.currentVid().currentTime();
+			return time;
+		}
+	}
+	this.duration = function() {
+		var time = 0.0;
+		for(var i = 0; i < this.videos.length; i++) {
+			time += this.videos[i].duration();
+		}
+		return time;
+	}
+	this.volume = function(level) {
+		this.volumeLevel = level;
+		this.currentVid().volume(level);
+	}
+	this.onTimeUpdate = function(callback) {
+		this.timeUpdateCallback = callback;
+	}
+
+	var chain = function(that, cb1, cb2) {
+		return function() {
+			if (cb1) { cb1(that); }
+			if (cb2) { cb2(that); } 
+		}
+	}
+	this.ready = function() {
+		var that = this;
+		if (arguments.length > 0) {
+			cb = arguments[0];
+			this.readyCallback = chain(this, this.readyCallback, cb);
+		} else {
+			if (this.readyCallback) {
+				this.readyCallback(this);
+			}
+		}
 	}
 }
-videoArray.forEach(bufferElement);
-
-
-videoAct2.volume(0);
-videoAct3.volume(0);
-videoAct4.volume(0);
-videoAct5.volume(0);
-motionDams.volume(0);
-motionPopulation.volume(0);
-motionDeltaMead.volume(0);
-
-
-// Set Baseplayer Duration
-var durationFunc = function() {
-	pop.duration(
-		videoAct1.duration() +
-		videoAct2.duration() +
-		videoAct3.duration() +
-		videoAct4.duration() +
-		videoAct5.duration() +
-		motionDams.duration() +
-		motionPopulation.duration() +
-		motionDeltaMead.duration() 
-	);
-	console.log('Baseplayer Duration: ' + pop.duration());
-};
-// videoAct5.on('timeupdate',durationFunc);
-
-
-// Switch Out Videos
-var loadVideo2 = function() {
-	videoAct2.currentTime(0);
-	videoAct1.volume(0);
-	videoAct2.volume(1);
-	videoAct2.play();
-	var myPlayer = videoAct2;
-	$('#videoAct2').show();
-	$('#videoAct1').hide();
-	videoAct1.off('ended');
-}
-var loadMotionDams = function() {
-	motionDams.currentTime(0);
-	videoAct2.volume(0);
-	motionDams.volume(1);
-	motionDams.play();
-	$('#motionDams').show();
-	$('#videoAct2').hide();
-	videoAct1.off('ended');
-}
-var loadVideo3 = function() {
-	videoAct3.currentTime(0);
-	motionDams.volume(0);
-	videoAct3.volume(1);
-	videoAct3.play();
-	$('#videoAct3').show();
-	$('#motionDams').hide();
-	videoAct1.off('ended');
-}
-var loadMotionPopulation = function() {
-	motionPopulation.currentTime(0);
-	videoAct3.volume(0);
-	motionPopulation.volume(1);
-	motionPopulation.play();
-	$('#motionPopulation').show();
-	$('#videoAct3').hide();
-	videoAct1.off('ended');
-}
-var loadVideo4 = function() {
-	videoAct4.currentTime(0);
-	motionPopulation.volume(0);
-	videoAct4.volume(1);
-	videoAct4.play();
-	$('#videoAct4').show();
-	$('#motionPopulation').hide();
-	videoAct1.off('ended');
-}
-var loadMotionDeltaMead = function() {
-	motionDeltaMead.currentTime(0);
-	videoAct4.volume(0);
-	motionDeltaMead.volume(1);
-	motionDeltaMead.play();
-	$('#motionDeltaMead').show();
-	$('#videoAct4').hide();
-	videoAct1.off('ended');
-}
-var loadVideo5 = function() {
-	videoAct4.currentTime(0);
-	motionDeltaMead.volume(0);
-	videoAct4.volume(1);
-	videoAct4.play();
-	$('#videoAct4').show();
-	$('#motionDeltaMead').hide();
-	videoAct1.off('ended');
-}
-videoAct1.on('ended',loadVideo2);
-videoAct2.on('ended',loadMotionDams);
-motionDams.on('ended',loadVideo3);
-videoAct3.on('ended',loadMotionPopulation);
-motionPopulation.on('ended',loadVideo4);
-videoAct4.on('ended',loadMotionDeltaMead);
-motionDeltaMead.on('ended',loadVideo5);
-
-function setPlayer () {
-	var video1Class = $('#videoAct1').attr('class');
-	var video2Class = $('#videoAct2').attr('class');
-	var video3Class = $('#videoAct3').attr('class');
-	var video4Class = $('#videoAct4').attr('class');
-	var video5Class = $('#videoAct5').attr('class');
-	var motionDamsClass = $('#motionDams').attr('class');
-	var motionPopulationClass = $('#motionPopulation').attr('class');
-	var motionDeltaMeadClass = $('#motionDeltaMead').attr('class');
-	if (video1Class='video-js vjs-playing') {
-		myPlayer = videoAct1;
-	}
-	else if (video2Class='video-js vjs-playing') {
-		myPlayer = videoAct2;
-	}
-	else if (video3Class='video-js vjs-playing') {
-		myPlayer = videoAct3;
-	}
-	else if (video4Class='video-js vjs-playing') {
-		myPlayer = videoAct4;
-	}
-	else if (video5Class='video-js vjs-playing') {
-		myPlayer = videoAct5;
-	}
-	else if (motionDamsClass='video-js vjs-playing') {
-		myPlayer = motionDams;
-	}
-	else if (motionPopulationClass='video-js vjs-playing') {
-		myPlayer = motionPopulation;
-	}
-	else {
-		myPlayer = motionDeltaMead;
-	}
-}
-pop.on('timeupdate',setPlayer);
-// Play/Pause wrapper
-$('#playToggle').click(function() {
-	var isPaused = pop.paused();
-	var isPlaying = !pop.paused();
-	if (isPaused) {
-    pop.play();
-    myPlayer.play();
-    console.log('Play!');
-	}
-	else {
-    pop.pause();
-    myPlayer.pause();
-    console.log('Pause!');
-	}
-});
-
-
-// Toggle Audio Mute
-$('#soundOn').click(function() {
-  myPlayer.volume(0);
-  $(this).hide();
-  $('#soundOff').show();
-})
-$('#soundOff').click(function() {
-  myPlayer.volume(1);
-  $(this).hide();
-  $('#soundOn').show();
-})
 
