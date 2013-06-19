@@ -1,3 +1,13 @@
+//registry = {};
+
+var dragHandler = function() {
+	console.log("looking for dragHandlers")
+	console.log(registry);
+	if (registry.dragHandler) {
+		registry.dragHandler();
+	}
+}
+
 $(function() {
 	$("#dragButton").draggable({
 		axis: 'x',
@@ -8,7 +18,8 @@ $(function() {
 			if (ui.position.left > dragButtonStart()+365) {
 				$('#dragButton').hide();
 				$('#dragPath').hide();
-				pop.play();
+				$('#clickForMore').hide();
+				dragHandler();
 				$('#resumeVideo').attr('transform',dragButtonPositioning);
   				$('#dragArrow').attr('transform',dragButtonPositioning);
   				$('#dragClick').attr('transform',dragButtonPositioning);
@@ -23,3 +34,10 @@ $(function() {
 		}
 	});
 });
+
+
+$('#clickForMore').on('click',function(){
+	alert("You've discovered how to access second level content!");
+});
+
+

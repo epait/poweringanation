@@ -117,6 +117,7 @@
 			<div class="overlayWrapper">
 				<div id="playToggle"></div>
 				<div id="dragWrapper" style="width:100%;">
+					<img id="clickForMore" src="./img/clickToContinue.png" />
 					<svg id="dragPath" width="100%" height="151px">
 						<g transform="scale(1)" id="svgPath">
 							<polygon fill="#FFFFFF" points="316.021,94.307 301.247,79.885 315.675,65.101 330.444,79.534"/>
@@ -212,13 +213,14 @@ var windowWidth = $(window).width();
 var windowAspectRatio = parseFloat(windowWidth/windowHeight).toFixed(2);
 var widthAspectRatio = 1.77;
 var heightAspectRatio = 0.5625;
+var registry = {};
 
 </script>
-<script src="./js/sequence.js"></script>
-<script src="./js/loops.js"></script>
+<script src="./js/sequence2.js"></script>
+<!-- <script src="./js/loops.js"></script> -->
 <script src="./js/app.js"></script>
-<script src='./js/videoTransitions.js'></script>
 <script src='./js/slideToContinue.js'></script>
+<script src='./js/videoTransitions.js'></script>
 <script src="./js/progressBar.js"></script>
 <script>
 var panPlayer = new Player(sequence);

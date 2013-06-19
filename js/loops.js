@@ -1,6 +1,39 @@
 //var pop = Popcorn("#basePlayer");
 // var myPlayer = videojs("videoAct1");
-
+function createTextTransitions(selection) {
+     var that = this;
+            selection
+                .append('div')
+                .attr('class', 'textOverlay')
+                .attr('id', function(d, i) { return d.id+"Sentence"+(i+1);})
+                .style('display', function(d, i) { return i == 0 ? 'block' : 'none'})
+                .text(function(d){ return d.content ;})
+                .append('image')
+                    .attr('src','./img/clickToContinue.png')
+                    .attr('class','advanceSlide')
+                    .attr('id',function(d, i) { return d.id+"Button"+(i+1);})
+                    .on('click',function(d, i){
+                        var prefix = '#' + d.id;
+                        console.log(prefix + i);
+                        if (i==0) {
+                            console.log('Click1');
+                            $('#'+d.id+'Button1').fadeOut(500);
+                            $('#'+d.id+'Sentence1').fadeOut(500);
+                            $('#'+d.id+'Sentence2').fadeIn(1000);
+                            $('#'+d.id+'Button2').fadeIn(1000);
+                        }
+                        else {
+                            console.log('Click2');
+                            $('#'+d.id+'Button2').fadeOut(500);
+                            $('#'+d.id+'Sentence2').fadeOut(500);
+                            $('.videoLoopContainer').fadeOut(1000, function(){
+                                $('#'+d.id+'Button1').show(2500);
+                                $('#'+d.id+'Sentence1').show(2500);
+                            });
+                            panPlayer.play();
+                        }
+                    });
+}
 
 function createPausePoint(selection) {
     var videoLoopContainer = selection
@@ -28,40 +61,12 @@ function createPausePoint(selection) {
                     .append('source')
                     .attr('src', function (t) { return './vid/' + d.transitionLoop + '.' + t.s; })
                     .attr('type', function (t) { return 'video/' + t.t; });
-            videoLoopContainer.selectAll('.textOverlay').data(function(d) { return  d.transitionText; }).enter()
-                .append('div')
-                .attr('class', 'textOverlay')
-                .attr('id', function(d, i) { return "sentence"+(i+1);})
-                .style('display', function(d, i) { return i == 0 ? 'block' : 'none'})
-                .text(String)
-                .append('image')
-                    .attr('src','./img/clickToContinue.png')
-                    .attr('class','advanceSlide')
-                    .attr('id',function(d, i) { return "button"+(i+1);})
-                    .text('Next!');
+            var selection = videoLoopContainer.selectAll('.textOverlay').data(function(d) { return  d.transitionText; }).enter();
+            createTextTransitions(selection);
         });
 
 }
 
 var selection = d3.select('.overlayWrapper').selectAll('.videoLoopContainer').data(sequence).enter();
 createPausePoint(selection);
-
-        $('#button1').on('click',function(){
-            console.log('Click!');
-            $('#button1').fadeOut(500);
-            $('#sentence1').fadeOut(500);
-            $('#sentence2').fadeIn(1000);
-            $('#button2').fadeIn(1000);
-        });
-        $('#button2').on('click',function(d){
-            $('#button2').fadeOut(500);
-            $('#sentence2').fadeOut(500);
-            $('.videoLoopContainer').fadeOut(1000, function(){
-                $('#button1').show(2500);
-                $('#sentence1').show(2500);
-            });
-            panPlayer.play();
-            console.log('Click2!');
-        });
-
 

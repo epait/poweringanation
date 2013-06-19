@@ -160,6 +160,15 @@ g#dragButton:hover {
 	left:54px;
 	/*bottom: 50px*/
 }
+#clickForMore {
+	position: absolute;
+	z-index: 999;
+	left: 90px;
+	bottom: 100px;
+}
+#clickForMore:hover {
+	cursor: pointer;
+}
  
 
 /*Video Loops*/
@@ -172,9 +181,9 @@ g#dragButton:hover {
 	overflow: hidden;
 	/*display: none;*/
 }
-#loopContainer {
+#videoAct1Loop, #videoAct2Loop, #videoAct3Loop, #videoAct4Loop, #videoAct5Loop {
 	position: absolute;
-	z-index: 950;
+	z-index: 980;
 	min-width: 960px;
 	width: inherit;
 	height: inherit;

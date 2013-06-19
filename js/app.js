@@ -189,6 +189,7 @@ $('#videoLoop3').hide();
 $('#dragButton').hide();
 $('#dragPath').hide();
 $('#dragArrow').hide();
+$('#clickForMore').hide();
 
 
 // Hide Video Options
