@@ -91,16 +91,16 @@ var sequence = [
 
 var diamondPoints = [
     {
-        start: 123.5
+        start: 100.85
     },
     {
-        start: 485.5
+        start: 221.5
     },
     {
-        start: 875.5
+        start: 651.5
     },
     {
-        start: 1237
+        start: 928.5
     }
 ];
 
