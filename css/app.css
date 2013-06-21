@@ -33,7 +33,7 @@ body {
 	min-width: 960px;
 	margin: 0;
 	padding: 0;
-	background: #000;
+	background-color: #000;
 }
 #playToggle {
 	width: inherit;
@@ -160,13 +160,28 @@ g#dragButton:hover {
 	left:54px;
 	/*bottom: 50px*/
 }
-#clickForMore {
+.clickForMore {
 	position: absolute;
 	z-index: 999;
-	left: 90px;
+	bottom: -145px;
+	left:0;
+}
+#motionDeltaMeadButton {
+	position: absolute;
+	z-index: 999;
 	bottom: 100px;
 }
-#clickForMore:hover {
+#motionPopulationButton {
+	position: absolute;
+	z-index: 999;
+	bottom: 100px;
+}
+#motionDamsButton {
+	position: absolute;
+	z-index: 999;
+	top: 500px;
+}
+.clickForMore:hover {
 	cursor: pointer;
 }
  
@@ -176,18 +191,24 @@ g#dragButton:hover {
 	position: absolute;
 	z-index: 996;
 	min-width: 960px;
+	height:100%;
+	width: 100%;
 	width: inherit;
 	height: inherit;
 	overflow: hidden;
+	background-color: #000;
 	/*display: none;*/
 }
 #videoAct1Loop, #videoAct2Loop, #videoAct3Loop, #videoAct4Loop, #videoAct5Loop {
 	position: absolute;
 	z-index: 980;
 	min-width: 960px;
+	height:100%;
+	width: 100%;
 	width: inherit;
 	height: inherit;
 	overflow: hidden;
+	background-color: #000;
 	/*display: none;*/
 }
 .overlayWrapper {
@@ -202,8 +223,8 @@ g#dragButton:hover {
 .textOverlay {
 	color: #fff;
 	font-family: 'Interstate-Regular';
-	font-size: 40px;
-	line-height: 50px;
+	font-size: 30px;
+	line-height: 40px;
 	width: 65%;
 	position: absolute;
 	left: 100px;
@@ -229,5 +250,5 @@ g#dragButton:hover {
 	stroke: white;
 	stroke-width: 2;
 	fill: white;
-	opacity: 0;
+	/*opacity: 0;*/
 }

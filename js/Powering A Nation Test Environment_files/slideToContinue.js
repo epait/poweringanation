@@ -19,7 +19,6 @@ $(function() {
 				$('#dragButton').hide();
 				$('#dragPath').hide();
 				$('#clickForMore').hide();
-				$('.clickForMore').hide();
 				dragHandler();
 				$('#resumeVideo').attr('transform',dragButtonPositioning);
   				$('#dragArrow').attr('transform',dragButtonPositioning);
@@ -34,6 +33,11 @@ $(function() {
 			}
 		}
 	});
+});
+
+
+$('#clickForMore').on('click',function(){
+	alert("You've discovered how to access second level content!");
 });
 
 

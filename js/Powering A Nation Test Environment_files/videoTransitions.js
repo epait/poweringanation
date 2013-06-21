@@ -24,10 +24,6 @@ function VideoJSPlayer(info) {
 		if (that.timeUpdateCallback) {
 			that.timeUpdateCallback.call(that);
 		}
-		$('#dragButton').hide();
-		$('#dragPath').hide();
-		$('#clickForMore').hide();
-		$('.clickForMore').hide();
 	});
 
 	this.video.on("progress", function() {
@@ -275,11 +271,6 @@ function PowellPlayer(info) {
 		.append('div')
         .attr('class', 'textOverlay')
         .text(String);
-    videoLoopContainer.selectAll('.textOverlay').data([info.id])
-        .append('img')
-	        .attr('src','./img/clickToContinue.png')
-	        .attr('class','clickForMore')
-	        .attr('id', function(d){ return info.loopId+'Button';});
 
 
 
@@ -294,127 +285,6 @@ function PowellPlayer(info) {
         setTimeout(function(){
         	that.timerEnded();
         },10000);
-    }
-
-	this.pause = function() {
-	}
-
-	this.paused = function() {
-		return false;
-	}
-
-	this.play = function() {
-	}
-
-	this.volume = function(level) {
-	}
-
-	this.currentTime = function() {
-		return 0.0;
-	}
-
-	this.duration = function() {
-		return 0.0;
-	}
-
-	this.timerEnded = function() {
-		console.log('timer started');
-		var that = this;
-		var handler = function() {
-			console.log(name)
-			delete registry.dragHandler;
-			that.ended();
-		}
-		registry.dragHandler = handler;
-		console.log(registry);
-		$('#dragButton').fadeIn(500);
-		$('#dragPath').fadeIn(500);
-		$('#powellLoopButton').fadeIn(500);
-	}
-
-
-	this.ended = function() {
-		console.log("PowellPlayer.ended");
-		if (this.endedCallback) {
-			this.endedCallback.call(this);
-		}
-	}
-
-	this.onEnded = function(cb) {
-		this.endedCallback = chain(this, cb, this.endedCallback);
-	}
-
-	this.onTimeUpdate = function(cb) {
-	}
-
-	this.ready = function() {
-		console.log("calling ready");
-		console.log(this);
-		var that = this;
-		if (arguments.length > 0) {
-			cb = arguments[0];
-			this.readyCallback = chain(this, this.readyCallback, cb);
-			if (this.isReady) {
-				this.readyCallback(this);
-			}
-		} else {
-			this.isReady = true;
-			if (this.readyCallback) {
-				this.readyCallback(this);
-			}
-		}
-	}	
-
-
-}
-
-
-function ConclusionPlayer(info) {
-	var that = this;
-	this.isReady = true;
-	this.info = info;
-
-
-	var videoLoopContainer = d3.select('.overlayWrapper')
-		.append('div')
-    	.attr('class', 'videoLoopContainer')
-    	.attr('id', info.loopId)
-   		.style('display', 'none');
-
-
-	var video = videoLoopContainer
-        .append('video')
-        .attr('class', 'videoLoop')
-        .attr('preload', 'auto')
-        .attr('autoplay', 'true')
-        .attr('loop', 'loop')
-        .attr('muted', 'muted')
-        .attr('volume', 0)
-        .attr('id', info.loopId+'Video');
-
-    video.selectAll('source').data([{s: 'mp4',t: 'mp4'}, {s: 'webm',t: 'webm'}, {s: 'ogv',t: 'ogg'}]).enter()
-        .append('source')
-        .attr('src', function (d) { return './vid/' + info.transitionLoop + '.' + d.s; })
-        .attr('type', function (d) { return 'video/' + d.t; });
-
-
-    videoLoopContainer.selectAll('.textOverlay').data([info.content]).enter()
-		.append('div')
-        .attr('class', 'textOverlay')
-        .text(String);        
-
-
-	this.hide = function() {
-		$('#'+this.info.loopId).hide();
-	}
-
-	this.show = function() {
-		var that = this;
-		$('#'+this.info.loopId).show();
-		console.log('show PowellPlayer');
-        // setTimeout(function(){
-        // 	that.timerEnded();
-        // },10000);
     }
 
 	this.pause = function() {
@@ -488,7 +358,6 @@ function ConclusionPlayer(info) {
 
 
 }
-
 
 function MotionGraphicPlayer(info) {
 	var that = this;
@@ -569,7 +438,7 @@ function MotionGraphicPlayer(info) {
 		console.log(registry);
 		$('#dragButton').fadeIn(500);
 		$('#dragPath').fadeIn(500);
-		$('#'+info.buttonId).fadeIn(500);
+		$('#clickForMore').fadeIn(500);
 	}
 
 

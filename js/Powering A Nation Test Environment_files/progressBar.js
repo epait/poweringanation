@@ -51,7 +51,6 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	that.clickOverlay().click(function(e) {
 		var clickLocation = e.pageX - (pageWrapperOffset().left + 45);
 		that.player.currentTime(eventTime(clickLocation));
-		d3.select(that.dragElement()).transition().ease('linear').duration(250).attr('cx',progressPosition());
 	});
 
 
@@ -68,13 +67,14 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 
 	var progressFunc = function () {
 			var sliderWidthInSeconds = 10*secondsPerPixel();
+
 			var pauseDiamonds = d3.select('.diamonds').selectAll('.pauseDiamond').data(diamondPoints);
 			var diamondTransform = function(d) {return 'translate(' + (timePosition(d.start)) + ',16) rotate(-45)'};
 
 			pauseDiamonds.enter().append('g').attr('transform',diamondTransform).attr('class','pauseDiamond').append('rect').attr('x',-4).attr('y',-4).attr('width',8).attr('height',8);
 			d3.select(that.dragElement()).transition().ease('linear').duration(250).attr('cx',progressPosition());
 			pauseDiamonds.attr('transform', diamondTransform);
-			// pauseDiamonds.select('rect').transition().duration(1000).style('opacity', pausePointVisible);
+			pauseDiamonds.select('rect').transition().duration(1000).style('opacity', pausePointVisible);
 			pauseDiamonds.on('click',function(d){that.player.currentTime(d.start);});
 			var now = that.player.currentTime();
 			var end = that.player.duration();
@@ -84,11 +84,11 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	}
 
 
-	// 	console.log("pb ready");
-	// $(window).ready(function() {
+	that.player.ready(function() {
+		console.log("pb ready");
 		d3.select(that.dragElement()).call(drag);
 		that.player.onTimeUpdate(progressFunc);
-	// });
+	});
 
 	$(window).resize(function() {
 		progressFunc();
