@@ -274,10 +274,11 @@ function PowellPlayer(info) {
     videoLoopContainer.selectAll('.textOverlay').data([info.content]).enter()
 		.append('div')
         .attr('class', 'textOverlay')
+        .attr('id', 'powellText')
         .text(String);
     videoLoopContainer.selectAll('.textOverlay').data([info.id])
         .append('img')
-	        .attr('src','./img/clickToContinue.png')
+	        .attr('src','./img/clickForMore.png')
 	        .attr('class','clickForMore')
 	        .attr('id', function(d){ return info.loopId+'Button';});
 
@@ -497,11 +498,21 @@ function MotionGraphicPlayer(info) {
 	this.video = videojs(info.videoId);
 	this.volumeLevel = this.video.volume();
 	this.video.volume(0);
-	this.video.on("ended", function() {
-		console.log("MotionGraphicPlayer.videoEnded");
-		that.videoEnded();
-	});
+	// this.video.on("ended", function() {
+	// 	console.log("MotionGraphicPlayer.videoEnded");
+	// 	that.videoEnded();
+	// });
 	this.video.on("timeupdate", function() {
+		var timeRemaining = that.duration()-that.currentTime();
+		if (timeRemaining<=10) {
+			console.log('Buttons Revealed');
+			that.revealButtons();
+		}
+		else {
+			$('#dragButton').hide();
+			$('#dragPath').hide();
+			$('#'+info.buttonId).hide();
+		}
 		if (that.timeUpdateCallback) {
 			that.timeUpdateCallback.call(that);
 		}
@@ -558,7 +569,7 @@ function MotionGraphicPlayer(info) {
 		return this.video.duration();
 	}
 
-	this.videoEnded = function() {
+	this.revealButtons = function() {
 		var that = this;
 		var handler = function() {
 			console.log(name)

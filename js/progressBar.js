@@ -71,7 +71,7 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 			var pauseDiamonds = d3.select('.diamonds').selectAll('.pauseDiamond').data(diamondPoints);
 			var diamondTransform = function(d) {return 'translate(' + (timePosition(d.start)) + ',16) rotate(-45)'};
 
-			pauseDiamonds.enter().append('g').attr('transform',diamondTransform).attr('class','pauseDiamond').append('rect').attr('x',-4).attr('y',-4).attr('width',8).attr('height',8);
+			pauseDiamonds.enter().append('g').attr('transform',diamondTransform).attr('class','pauseDiamond').attr('title',function(d){return d.pointTitle}).append('rect').attr('x',-4).attr('y',-4).attr('width',8).attr('height',8);
 			d3.select(that.dragElement()).transition().ease('linear').duration(250).attr('cx',progressPosition());
 			pauseDiamonds.attr('transform', diamondTransform);
 			// pauseDiamonds.select('rect').transition().duration(1000).style('opacity', pausePointVisible);
@@ -81,6 +81,7 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 			if (now>=end) {
 				that.player.pause();
 			}
+			$('.pauseDiamond').tooltip({ position: { my: "center+8 bottom", at: "top" } });
 	}
 
 

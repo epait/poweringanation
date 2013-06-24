@@ -75,6 +75,61 @@ body {
     width: 100%;
     height: 100%;
   }
+ .ui-tooltip {
+	padding: 8px;
+	color: #fff;
+	font-family: 'Interstate-Regular';
+	position: absolute;
+	z-index: 9999;
+	max-width: 300px;
+	-moz-text-shadow: 3px 3px 10px #000;
+	-webkit-text-shadow: 3px 3px 10px #000;
+	text-shadow: 3px 3px 10px #000;
+}
+
+
+
+/*Second Level Content*/
+#powellExtendedText, #landgrabText, #addictedText, #damagesText {
+	color: #fff;
+	font-family: 'Interstate-Regular';
+	font-size: 25px;
+	line-height: 35px;
+	width: 65%;
+	height: 65%;
+	position: absolute;
+	overflow: scroll;
+	left: 5%;
+	top: 5%;
+	z-index: 998;
+	-moz-text-shadow: 3px 3px 10px #000;
+	-webkit-text-shadow: 3px 3px 10px #000;
+	text-shadow: 3px 3px 10px #000;
+	padding: 0;
+	margin: 0;
+}
+#powellExtendedText h4, #landgrabText h4, #addictedText h4, #damagesText h4 {
+	padding: 0;
+	margin: 0;
+	font-size: 30px;
+}
+#motionIntake, #motionImperial, #motionHoover {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: 981;
+}
+#motionIntakeButton, #motionImperialButton, #motionHooverButton {
+	bottom: 250px;
+}
+.secondLevelToggle {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: 985;
+}
+
+
 
 
 /*Preload Screen*/
@@ -227,8 +282,8 @@ g#dragButton:hover {
 	line-height: 40px;
 	width: 65%;
 	position: absolute;
-	left: 100px;
-	top: 150px;
+	left: 5%;
+	top: 5%;
 	z-index: 998;
 	-moz-text-shadow: 3px 3px 10px #000;
 	-webkit-text-shadow: 3px 3px 10px #000;

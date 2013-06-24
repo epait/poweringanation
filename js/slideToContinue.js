@@ -20,6 +20,9 @@ $(function() {
 				$('#dragPath').hide();
 				$('#clickForMore').hide();
 				$('.clickForMore').hide();
+				$('.secondLevelContent').hide();
+				$('#powellText').show();
+				$('#powellLoopButton').show();
 				dragHandler();
 				$('#resumeVideo').attr('transform',dragButtonPositioning);
   				$('#dragArrow').attr('transform',dragButtonPositioning);
