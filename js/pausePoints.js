@@ -57,12 +57,3 @@ var diamondPoints = [
         start: 1237
     }
 ];
-
-// var secondLevel = [
-//     {
-//         start: ,
-//         end: ,
-//         delay: ,
-//         loop:
-//     }
-// ];

@@ -21,6 +21,7 @@ $(function() {
 				$('#clickForMore').hide();
 				$('.clickForMore').hide();
 				$('.secondLevelContent').hide();
+				$('.extendedTextBackground').hide();
 				$('#powellText').show();
 				$('#powellLoopButton').show();
 				dragHandler();

@@ -24,7 +24,7 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 		            timer = 0;
 		        } 
 		        if(down) { 
-		            that.container().animate({bottom:'10px'},'fast');  
+		            that.container().animate({bottom:'10px'},'fast');
 		           down = false;
 		        }
 		        timer = setTimeout(function() {

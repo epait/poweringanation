@@ -128,6 +128,12 @@ body {
 	position: absolute;
 	z-index: 985;
 }
+.extendedTextBackground {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: 984;
+}
 
 
 
@@ -225,16 +231,21 @@ g#dragButton:hover {
 	position: absolute;
 	z-index: 999;
 	bottom: 100px;
+	left: 2%;
+	top: 35%;
 }
 #motionPopulationButton {
 	position: absolute;
 	z-index: 999;
 	bottom: 100px;
+	left: 3%;
+	top: 35%;
 }
 #motionDamsButton {
 	position: absolute;
 	z-index: 999;
-	top: 500px;
+	top: 70%;
+	left: 3%;
 }
 .clickForMore:hover {
 	cursor: pointer;

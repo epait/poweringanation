@@ -43,7 +43,7 @@ var sequence = [
 	},
 	{
 		type: "transitionText",
-		transitionLoop: "loopFire",
+		transitionLoop: "loopSky",
 		loopId: "videoAct3Loop", 
 		transitionText: [
 			{ id: 'videoAct3Text',  content: 'John Powell only has one arm. How can he paddle down the Colorado with only one arm?' },
@@ -97,19 +97,19 @@ var sequence = [
 
 var diamondPoints = [
 	{
-		start: 100.85,
+		start: 119.75,
 		pointTitle: 'Powell'
 	},
     {
-        start: 221.5,
+        start: 280.75,
         pointTitle: 'Dams'
     },
     {
-        start: 651.5,
+        start: 545.5,
         pointTitle: 'Population'
     },
     {
-        start: 928.5,
+        start: 753.5,
         pointTitle: 'River Delta and Lake Mead'
     }
 ];
