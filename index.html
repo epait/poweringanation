@@ -17,6 +17,17 @@
 <script>
   videojs.options.flash.swf = "./js/video-js/video-js.swf"
 </script>
+<script>
+	function windowpop(url, width, height) {
+		var leftPosition, topPosition;
+		//Allow for borders.
+		leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+		//Allow for title and status bars.
+		topPosition = (window.screen.height / 2) - ((height / 2) + 50);
+		//Open the window.
+		window.open(url, "Window2", "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no");
+	}
+</script>
 </head>
 
 <body>
@@ -83,7 +94,7 @@
 					</svg>
 					<div id="menuItems">
 						<div id="followButtons">
-							<a href="#"><img id="shareTwitter" src="./img/twitter.png" /></a>
+							<a class="tweet" href="https://twitter.com/share" data-text="Check out our interactive film on the battle for power on the Colorado River" data-via="poweringanation" data-hashtags="overwaterunderfire" target="_blank" onclick="return windowpop(this.href, 545, 433)"><img id="shareTwitter" src="./img/twitter.png" /></a>
 							<a href="#"><img id="shareFacebook" src="./img/facebook.png" /></a>
 							<a href="#"><img id="shareGooglePlus" src="./img/googlePlus.png" /></a>
 							<div id="shareText">SHARE</div>
@@ -471,9 +482,39 @@ var registry = {};
 <script src='./js/videoTransitions.js'></script>
 <script src="./js/progressBar.js"></script>
 <script src="./js/popcornPlugins.js"></script>
+
+
 <script>
+	var API_URL = "http://cdn.api.twitter.com/1/urls/count.json",
+    TWEET_URL = "https://twitter.com/intent/tweet";
+     
+	$(".tweet").each(function() {
+	    var elem = $(this),
+	    // Use current page URL as default link
+	    url = encodeURIComponent(elem.attr("data-url") || document.location.href),
+	    // Use page title as default tweet message
+	    text = elem.attr("data-text") || "",
+	    via = elem.attr("data-via") || "",
+	    related = encodeURIComponent(elem.attr("data-related")) || "",
+	    hashtags = encodeURIComponent(elem.attr("data-hashtags")) || "";
+	     
+	    // Set href to tweet page
+	    elem.attr({
+	        href: TWEET_URL + "?hashtags=" + hashtags + "&original_referer=" +
+	                encodeURIComponent(document.location.href) + "&related=" + related +
+	                "&source=tweetbutton&text=" + text + "&url=" + url + "&via=" + via,
+	        target: "_blank"
+	    });
+	     
+	    // Get count and set it as the inner HTML of .count
+	    $.getJSON(API_URL + "?callback=?&url=" + url, function(data) {
+	        elem.find(".count").html(data.count);
+	    });
+	});
+</script>
 
 
+<script>
 var panPlayer = new Player(sequence);
 // TODO do I need to pass pageWrapper in also inorder to get the offset correct?
 new ProgressBar("progressBar", "progressLine", "pageWrapper", "videoControls", "drag", panPlayer);
@@ -494,13 +535,74 @@ $('#playToggle').click(function() {
 // Toggle Audio Mute
 $('#soundOn').click(function() {
   panPlayer.volume(0);
+  motionHooverPlayer.volume(0);
+  motionImperialPlayer.volume(0);
+  motionIntakePlayer.volume(0);
+  document.getElementById('natSoundAct1A').volume=0;
+  document.getElementById('natSoundAct1B').volume=0;
+  document.getElementById('natSoundAct2A').volume=0;
+  document.getElementById('natSoundAct2B').volume=0;
+  document.getElementById('natSoundAct3A').volume=0;
+  document.getElementById('natSoundAct3B').volume=0;
+  document.getElementById('natSoundAct4A').volume=0;
+  document.getElementById('natSoundAct4B').volume=0;
+  document.getElementById('natSoundAct5A').volume=0;
+  document.getElementById('natSoundAct5B').volume=0;
+  document.getElementById('natSoundAct1A').pause();
+  document.getElementById('natSoundAct1B').pause();
+  document.getElementById('natSoundAct2A').pause();
+  document.getElementById('natSoundAct2B').pause();
+  document.getElementById('natSoundAct3A').pause();
+  document.getElementById('natSoundAct3B').pause();
+  document.getElementById('natSoundAct4A').pause();
+  document.getElementById('natSoundAct4B').pause();
+  document.getElementById('natSoundAct5A').pause();
+  document.getElementById('natSoundAct5B').pause();
   $(this).hide();
   $('#soundOff').show();
 })
 $('#soundOff').click(function() {
   panPlayer.volume(1);
+  motionHooverPlayer.volume(1);
+  motionImperialPlayer.volume(1);
+  motionIntakePlayer.volume(1);
   $(this).hide();
   $('#soundOn').show();
+  document.getElementById('natSoundAct1A').volume=1;
+  document.getElementById('natSoundAct1B').volume=1;
+  document.getElementById('natSoundAct2A').volume=1;
+  document.getElementById('natSoundAct2B').volume=1;
+  document.getElementById('natSoundAct3A').volume=1;
+  document.getElementById('natSoundAct3B').volume=1;
+  document.getElementById('natSoundAct4A').volume=1;
+  document.getElementById('natSoundAct4B').volume=1;
+  document.getElementById('natSoundAct5A').volume=1;
+  document.getElementById('natSoundAct5B').volume=1;
+  var powellLoopState = function() {return d3.select('#powellLoop').style('display')};
+  var videoAct2LoopState = function() {return d3.select('#videoAct2Loop').style('display')};
+  var videoAct3LoopState = function() {return d3.select('#videoAct3Loop').style('display')};
+  var videoAct4LoopState = function() {return d3.select('#videoAct4Loop').style('display')};
+  var conclusionLoopState = function() {return d3.select('#conclusionLoop').style('display')};
+  var displayBlock = 'block';
+  var displayNone = 'none';
+  if(powellLoopState()==displayBlock) {
+  	document.getElementById('natSoundAct1A').play();
+  }
+  else if(videoAct2LoopState()==displayBlock) {
+  	document.getElementById('natSoundAct2A').play();
+  }
+  else if(videoAct3LoopState()==displayBlock) {
+  	document.getElementById('natSoundAct3A').play();
+  }
+  else if(videoAct4LoopState()==displayBlock) {
+  	document.getElementById('natSoundAct4A').play();
+  }
+  else if(conclusionLoopState()==displayBlock) {
+  	document.getElementById('natSoundAct5A').play();
+  }
+  else {
+  	//DO NOTHING
+  }
 })
 
 
