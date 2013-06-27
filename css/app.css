@@ -162,8 +162,101 @@ body {
 	margin: 0 auto;
 }
 #progressBar {
-	height: 2em;
-}
+		height: 72px;
+	}
+	.videoControls {
+		bottom: 0;
+	}
+	#menuItems {
+		bottom: 0;
+		position: absolute;
+		z-index: 999;
+		width: 100%;
+		font-family: 'Interstate-ExtraLight';
+		font-size: 17px;
+		color: #fff;
+	}
+	#menuItems a {
+		text-decoration: none;
+		color: #fff;
+	}
+	#menuItems a:hover {
+		text-decoration: none;
+		color: #fff;
+	}
+	#shareTwitter {
+		position: absolute;
+		z-index: 999;
+		bottom: 0;
+	}
+	#shareFacebook {
+		position: absolute;
+		z-index: 999;
+		bottom: 2px;
+		float: left;
+		left: 39px;
+	}
+	#shareGooglePlus {
+		position: absolute;
+		z-index: 999;
+		bottom: 1px;
+		left: 60px;
+	}
+	#fullscreenOn {
+		position: absolute;
+		z-index: 999;
+		bottom: 0;
+		right: 7px;
+	}
+	#fullscreenOff {
+		position: absolute;
+		z-index: 999;
+		bottom: 0;
+		right: 7px;
+	}
+	#soundOn {
+		position: absolute;
+		z-index: 999;
+		bottom: 0;
+		right: 52px;
+	}
+	#soundOff {
+		position: absolute;
+		z-index: 999;
+		bottom: 0;
+		right: 52px;
+	}
+	#shareText {
+		position: absolute;
+		z-index: 999;
+		bottom: 9px;
+		left: 110px;
+	}
+	#creditsToggle {
+		position: absolute;
+		z-index: 999;
+		bottom: 9px;
+		right: 125px;
+	}
+	#aboutToggle {
+		position: absolute;
+		z-index: 999;
+		bottom: 9px;
+		right: 210px;
+	}
+	#editorialToggle {
+		position: absolute;
+		z-index: 999;
+		bottom: 9px;
+		right: 310px;
+	}
+	#copyrightText {
+		position: absolute;
+		z-index: 999;
+		bottom: 9px;
+		right: 480px;
+		opacity: 0.6;
+	}
 #progressCircle {
 	background-color: #fff;
 }
@@ -177,10 +270,10 @@ circle#drag:hover {
 #progressWrapper:hover {
 	cursor: pointer;
 }
-#progressClickOverlay {
+/*#progressClickOverlay {
 	height: 2em;
-}
-#progressClickOverlay:hover, .diamonds:hover, #fullscreenOn:hover, #fullscreenOff:hover, #soundOn:hover, #sondOff:hover {
+}*/
+#progressClickOverlay:hover, #progressLine:hover, .diamonds:hover, #fullscreenOn:hover, #fullscreenOff:hover, #soundOn:hover, #sondOff:hover {
 	cursor: pointer;
 }
 #playerOptions {

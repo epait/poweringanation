@@ -47,6 +47,18 @@ var dragToResumePositioning = function () {
   d3.select('#dragArrow').attr('transform',dragButtonPositioning);
   d3.select('#dragClick').attr('transform',dragButtonPositioning);
 };
+var grayBoxRightPositioning = function() {
+  d3.select('#grayBoxRight').attr('x',function(){
+    var wrapperWidth = $('.pageWrapper').width();
+    return wrapperWidth - 100;
+  });
+};
+var progressLineWidth = function() {
+  d3.select('#progressLine').attr('width',function(){
+    var wrapperWidth = $('.pageWrapper').width();
+    return wrapperWidth - 40;
+  });
+}
 var resizePageElements = function() {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
@@ -55,11 +67,15 @@ var resizePageElements = function() {
     pageWrapperMin();
     playerControlsPositioning();
     dragToResumePositioning();
+    grayBoxRightPositioning();
+    progressLineWidth();
   }
   else if (windowHeight <= 540) {
     pageWrapperMin();
     playerControlsPositioning();
     dragToResumePositioning();
+    grayBoxRightPositioning();
+    progressLineWidth();
   }
     else if (windowAspectRatio < widthAspectRatio){
     $('.pageWrapper').width(windowWidth);
@@ -71,6 +87,8 @@ var resizePageElements = function() {
     $('.pageWrapper').css('margin-top',wrapperMargin);
     playerControlsPositioning();
     dragToResumePositioning();
+    grayBoxRightPositioning();
+    progressLineWidth();
   }
   else if (windowAspectRatio > widthAspectRatio) {
     $('.pageWrapper').height(windowHeight);
@@ -79,6 +97,8 @@ var resizePageElements = function() {
     $('.pageWrapper').css('margin-top',0);
     playerControlsPositioning();
     dragToResumePositioning();
+    grayBoxRightPositioning();
+    progressLineWidth();
   }
   else {
     // Do Nothing

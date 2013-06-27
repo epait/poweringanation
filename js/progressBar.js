@@ -24,11 +24,11 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 		            timer = 0;
 		        } 
 		        if(down) { 
-		            that.container().animate({bottom:'10px'},'fast');
+		            that.container().animate({bottom:'0'},'fast');
 		           down = false;
 		        }
 		        timer = setTimeout(function() {
-		           that.container().animate({bottom:'-40px'},'fast');
+		           that.container().animate({bottom:'-150px'},'fast');
 		           down = true;
 		        }, 5000);
 
@@ -37,21 +37,22 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	hideMenu();
 
 
-	var progressBarWidth = function() { return that.element().width() - 195; }
+	var progressBarWidth = function() { return that.element().width() - 40; }
 	var timeAsPercent = function(time) { return time/ that.player.duration(); }
-	var timePosition = function(time) { return timeAsPercent(time)*progressBarWidth() + 45; }
+	var timePosition = function(time) { return timeAsPercent(time)*progressBarWidth() + 20; }
 	var progressPosition = function() { return timePosition(that.player.currentTime()); }
 	var secondsPerPixel = function() { return that.player.duration()/progressBarWidth(); }
 	var timeToPausePoint = function (pauseTime) { return pauseTime - that.player.currentTime(); }
 	var pausePointVisible = function(d) { return timeToPausePoint(d.start) < 10*secondsPerPixel() ? 1 : 0; }
 	var pageWrapperOffset = function() {return that.offsetContainer().offset(); }
 	var eventTime = function (position) {return (position/progressBarWidth())*that.player.duration(); }
-	var progressCirclePosition = function () {return d3.select(that.dragElement()).attr('cx') - 45; }
+	var progressCirclePosition = function () {return d3.select(that.dragElement()).attr('cx') - 20; }
 
 	that.clickOverlay().click(function(e) {
-		var clickLocation = e.pageX - (pageWrapperOffset().left + 45);
+		var clickLocation = e.pageX - (pageWrapperOffset().left + 20);
 		that.player.currentTime(eventTime(clickLocation));
 		d3.select(that.dragElement()).transition().ease('linear').duration(250).attr('cx',progressPosition());
+		d3.select('#completedLine').attr('width',progressCirclePosition());
 	});
 
 
@@ -62,6 +63,7 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	        })
 	        .on("dragend", function() {
 	        	that.player.currentTime(eventTime(progressCirclePosition()));
+	        	d3.select('#completedLine').attr('width',progressCirclePosition());
 	        	that.player.play();
 	        });
 
@@ -69,9 +71,9 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	var progressFunc = function () {
 			var sliderWidthInSeconds = 10*secondsPerPixel();
 			var pauseDiamonds = d3.select('.diamonds').selectAll('.pauseDiamond').data(diamondPoints);
-			var diamondTransform = function(d) {return 'translate(' + (timePosition(d.start)) + ',16) rotate(-45)'};
+			var diamondTransform = function(d) {return 'translate(' + (timePosition(d.start)) + ',17.5) rotate(-45)'};
 
-			pauseDiamonds.enter().append('g').attr('transform',diamondTransform).attr('class','pauseDiamond').attr('title',function(d){return d.pointTitle}).append('rect').attr('x',-4).attr('y',-4).attr('width',8).attr('height',8);
+			pauseDiamonds.enter().append('g').attr('transform',diamondTransform).attr('class','pauseDiamond').attr('title',function(d){return d.pointTitle}).append('rect').attr('x',-6).attr('y',-6).attr('width',12).attr('height',12);
 			d3.select(that.dragElement()).transition().ease('linear').duration(250).attr('cx',progressPosition());
 			pauseDiamonds.attr('transform', diamondTransform);
 			// pauseDiamonds.select('rect').transition().duration(1000).style('opacity', pausePointVisible);
@@ -82,6 +84,7 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 				that.player.pause();
 			}
 			$('.pauseDiamond').tooltip({ position: { my: "center+8 bottom", at: "top" } });
+			d3.select('#completedLine').attr('width',progressCirclePosition());
 	}
 
 
