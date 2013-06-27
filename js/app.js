@@ -18,6 +18,8 @@ var soundOff = function() {
 var pageWrapperMin = function() {
   $('.pageWrapper').width(960);
   $('.pageWrapper').height(540);
+  $('#loadingWrapper').width(960);
+  $('#loadingWrapper').height(540);
 };
 var playerControlsPositioning = function () {
   var wrapperWidth = $('.pageWrapper').width();
@@ -70,6 +72,24 @@ var additionalContentBackgroundResize = function() {
       return wrapperWidth + 'px';
     });
 }
+var  playPausePositioning = function() {
+  var wrapperWidth = $('.pageWrapper').width();
+  var wrapperHeight = $('.pageWrapper').height();
+  d3.select('#playImage')
+    .style('top',function(){
+      return wrapperHeight/2 - 75 + 'px';
+    })
+    .style('left',function(){
+      return wrapperWidth/2 - 75 + 'px';
+    });
+  d3.select('#pauseImage')
+    .style('top',function(){
+      return wrapperHeight/2 - 75 + 'px';
+    })
+    .style('left',function(){
+      return wrapperWidth/2 - 75 + 'px';
+    });
+}
 var resizePageElements = function() {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
@@ -81,6 +101,7 @@ var resizePageElements = function() {
     grayBoxRightPositioning();
     progressLineWidth();
     additionalContentBackgroundResize();
+    playPausePositioning();
   }
   else if (windowHeight <= 540) {
     pageWrapperMin();
@@ -89,31 +110,40 @@ var resizePageElements = function() {
     grayBoxRightPositioning();
     progressLineWidth();
     additionalContentBackgroundResize();
+    playPausePositioning();
   }
     else if (windowAspectRatio < widthAspectRatio){
     $('.pageWrapper').width(windowWidth);
+    $('#loadingWrapper').width(windowWidth);
     var wrapperWidth = $('.pageWrapper').width();
     $('.pageWrapper').height(wrapperWidth*heightAspectRatio);
+    $('#loadingWrapper').height(wrapperWidth*heightAspectRatio);
     var wrapperHeight = $('.pageWrapper').height();
     var windowMargin = windowHeight - wrapperHeight;
     var wrapperMargin = windowMargin/2;
     $('.pageWrapper').css('margin-top',wrapperMargin);
+     $('#loadingWrapper').css('margin-top',wrapperMargin);
     playerControlsPositioning();
     dragToResumePositioning();
     grayBoxRightPositioning();
     progressLineWidth();
     additionalContentBackgroundResize();
+    playPausePositioning();
   }
   else if (windowAspectRatio > widthAspectRatio) {
     $('.pageWrapper').height(windowHeight);
+    $('#loadingWrapper').height(windowHeight);
     var wrapperHeight = $('.pageWrapper').height();
     $('.pageWrapper').width(wrapperHeight*widthAspectRatio);
     $('.pageWrapper').css('margin-top',0);
+    $('#loadingWrapper').width(wrapperHeight*widthAspectRatio);
+    $('#loadingWrapper').css('margin-top',0);
     playerControlsPositioning();
     dragToResumePositioning();
     grayBoxRightPositioning();
     progressLineWidth();
     additionalContentBackgroundResize();
+    playPausePositioning();
   }
   else {
     // Do Nothing

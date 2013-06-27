@@ -509,7 +509,6 @@ function MotionGraphicPlayer(info) {
 	this.video.on("timeupdate", function() {
 		var timeRemaining = that.duration()-that.currentTime();
 		$('.extendedTextBackground').hide();
-		console.log('Current time of ' + that + 'is' + that.currentTime());
 		$('.secondLevelContent').hide();
 		if (that.timeUpdateCallback) {
 			that.timeUpdateCallback.call(that);
@@ -543,7 +542,6 @@ function MotionGraphicPlayer(info) {
 		if (bufferedTime > 20) {
 			that.video.off("progress");
 			that.ready();
-			
 		}  
 	});
 	this.video.play();
@@ -690,6 +688,8 @@ function Player(sequence) {
 	}
 
 	this.readyCallback = function() {
+		$('#loadingWrapper').hide();
+		$('#pageWrapper').show();
 		console.log("setting up end event handler")
 		for(var i = 0; i < that.players.length; i++) {
 			var player = that.players[i];

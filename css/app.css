@@ -63,9 +63,10 @@ body {
 	margin: auto;
 	overflow: hidden;
 }
-.preloadWrapper {
-	height: inherit;
-	width: inherit;
+#loadingWrapper {
+	background-color: red;
+	margin-left: auto;
+	margin-right: auto;
 }
 #pageWrapper:-webkit-full-screen {
     width: 100%;
@@ -173,7 +174,7 @@ body {
 		z-index: 999;
 		width: 100%;
 		font-family: 'Interstate-ExtraLight';
-		font-size: 17px;
+		font-size: 15px;
 		color: #fff;
 	}
 	#menuItems a {
@@ -305,6 +306,18 @@ circle#drag:hover {
 
 
 /*Overlays*/
+#playImage {
+	position: absolute;
+	z-index: 999;
+	left: 50%;
+	top: 50%;
+}
+#pauseImage {
+	position: absolute;
+	z-index: 999;
+	left: 50%;
+	top: 50%;
+}
 #dragWrapper {
 	position: absolute;
 	z-index: 997;

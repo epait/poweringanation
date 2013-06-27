@@ -31,7 +31,7 @@
 </head>
 
 <body>
-	<!-- <div id="preloadScreen"></div> -->
+	<div id="loadingWrapper"></div>
 	<div class="pageWrapper" id="pageWrapper">
 			<div class="videoWrapper">
 				<video id="videoAct1" class="video-js" autoplay preload="auto" width="100%" height="100%">
@@ -95,8 +95,8 @@
 					<div id="menuItems">
 						<div id="followButtons">
 							<a class="tweet" href="https://twitter.com/share" data-text="Check out our interactive film on the battle for power on the Colorado River" data-via="poweringanation" data-hashtags="overwaterunderfire" target="_blank" onclick="return windowpop(this.href, 545, 433)"><img id="shareTwitter" src="./img/twitter.png" /></a>
-							<a href="#"><img id="shareFacebook" src="./img/facebook.png" /></a>
-							<a href="#"><img id="shareGooglePlus" src="./img/googlePlus.png" /></a>
+							<a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://www.overwaterunderfire.org&amp;p[images][0]=http://www.poweringanation.org/water2013/img/fbTnail.png&amp;p[title]=Powering A Nation Presents: Over Water Under Fire&amp;p[summary]=The upcoming interactive documentary, “Over Water Under Fire,” combines a video narrative with motion graphics and text to present the Colorado river as a living timeline of our nation’s innovations and exploitations with water. The river's uncertain future echoes the precarious state of water resources in this country." target="_blank" onclick="return windowpop(this.href, 545, 433)"><img id="shareFacebook" src="./img/facebook.png" /></a>
+							<a href="https://plus.google.com/share?url=http://www.overwaterunderfire.org" target="_blank" onclick="return windowpop(this.href, 545, 433)"><img id="shareGooglePlus" src="./img/googlePlus.png" /></a>
 							<div id="shareText">SHARE</div>
 						</div>
 						<div id="copyright">
@@ -118,6 +118,8 @@
 			</div>
 			<div class="overlayWrapper">
 				<div id="playToggle"></div>
+				<img id="playImage" src="./img/playImage.png" />
+				<img id="pauseImage" src="./img/pauseImage.png" />
 				<div class="buttonWrapper"></div>
 				<div class="natSoundContainer">
 					<audio preload id="natSoundAct1A" class="natSound">
@@ -474,7 +476,8 @@ var windowAspectRatio = parseFloat(windowWidth/windowHeight).toFixed(2);
 var widthAspectRatio = 1.77;
 var heightAspectRatio = 0.5625;
 var registry = {};
-
+$('#loadingWrapper').show();
+$('#pageWrapper').hide();
 </script>
 <script src="./js/sequence2.js"></script>
 <script src="./js/app.js"></script>
@@ -520,16 +523,40 @@ var panPlayer = new Player(sequence);
 new ProgressBar("progressBar", "progressLine", "pageWrapper", "videoControls", "drag", panPlayer);
 
 // Play/Pause wrapper
+$('#playImage').hide();
+$('#pauseImage').hide();
+
 $('#playToggle').click(function() {
 	if (panPlayer.paused()) {
 		panPlayer.play();
+		$('#playImage').show();
+		$('#playImage').fadeOut(500);
 	    console.log('Play!');
 	}
 	else {
     	panPlayer.pause();
+    	$('#pauseImage').show();
+		$('#pauseImage').fadeOut(500);
 	    console.log('Pause!');
 	}
 });
+var waitForLoad = function() {
+	var pageWrapperState = function() {return d3.select('#pageWrapper').style('display')};
+  	var displayBlock = 'block';
+  	console.log('Waiting for Buffering');
+	if(pageWrapperState()==displayBlock) {
+		panPlayer.play();
+		clearInterval(preloadTimer);
+	}
+};
+var preloadTimer = setInterval(function(){waitForLoad()},250);
+setInterval(function() {
+	var pageWrapperState = function() {return d3.select('#pageWrapper').style('display')};
+	var displayBlock = 'block';
+	if(pageWrapperState()==displayBlock) {
+		clearInterval(preloadTimer);
+	}
+},250);
 
 
 // Toggle Audio Mute
@@ -661,6 +688,7 @@ motionImperialPlayer.play();
 motionIntakePlayer.play();
 
 
+
 $('.additionalContentToggle').on('click',function(){
 	$('#additionalContentBackground').show('slide',{direction:'down'});
 	setTimeout(function(){
@@ -712,10 +740,14 @@ $('#closeOverlay').on('click',function(){
 		if (motionHooverPlayer.paused()) {
 			motionHooverPlayer.play();
 		    console.log('Play!');
+		    $('#playImage').show();
+			$('#playImage').fadeOut(500);
 		}
 		else {
 	    	motionHooverPlayer.pause();
 		    console.log('Pause!');
+		    $('#pauseImage').show();
+			$('#pauseImage').fadeOut(500);
 		}
 	});
 	motionHooverPlayer.on('ended',function() {
@@ -758,10 +790,14 @@ $('#closeOverlay').on('click',function(){
 		if (motionImperialPlayer.paused()) {
 			motionImperialPlayer.play();
 		    console.log('Play!');
+		    $('#playImage').show();
+			$('#playImage').fadeOut(500);
 		}
 		else {
 	    	motionImperialPlayer.pause();
 		    console.log('Pause!');
+		    $('#pauseImage').show();
+			$('#pauseImage').fadeOut(500);
 		}
 	});
 	motionImperialPlayer.on('ended',function() {
@@ -803,10 +839,14 @@ $('#closeOverlay').on('click',function(){
 		if (motionIntakePlayer.paused()) {
 			motionIntakePlayer.play();
 		    console.log('Play!');
+		    $('#playImage').show();
+			$('#playImage').fadeOut(500);
 		}
 		else {
 	    	motionIntakePlayer.pause();
 		    console.log('Pause!');
+		    $('#pauseImage').show();
+			$('#pauseImage').fadeOut(500);
 		}
 	});
 	motionIntakePlayer.on('ended',function() {
