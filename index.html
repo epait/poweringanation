@@ -72,12 +72,13 @@
 							<rect id="menuBackground" width="100%" height="36" y="36" fill="black" />
 							<rect id="grayBoxLeft" width="100" height="36" y="36" fill="#252525" />
 							<rect id="grayBoxRight" width="100" height="36" y="36" fill="#252525" />
-							<rect id="completedLine" height="3" x="20" y="16" rx="1.5" ry="1.5" stroke-width="2" fill="white" stroke="white" style="opacity:0.5"/>
-						    <rect id="progressLine" height="3" x="20" y="16" rx="1.5" ry="1.5" stroke-width="2" fill="white" stroke="white" style="opacity:0.4"/>
-						    <!-- <rect id="progressClickOverlay" width="200%" height="10" x="10" y="20" rx="5" ry="5" stroke-width="2" fill="white" stroke="white" style="opacity:0.7" /> -->
-						    <g class="diamonds">
-						    </g>
-						    <circle id="drag" cx="20" cy="17" r="10" stroke-width="2" stroke="white" fill="white" />
+							<g id="progressPathHide">
+								<rect id="completedLine" height="3" x="20" y="16" rx="1.5" ry="1.5" stroke-width="2" fill="white" stroke="white" style="opacity:0.5"/>
+								<rect id="progressLine" height="3" x="20" y="16" rx="1.5" ry="1.5" stroke-width="2" fill="white" stroke="white" style="opacity:0.4"/>
+								<!-- <rect id="progressClickOverlay" width="200%" height="10" x="10" y="20" rx="5" ry="5" stroke-width="2" fill="white" stroke="white" style="opacity:0.7" /> -->
+								<g class="diamonds"></g>
+								<circle id="drag" cx="20" cy="17" r="10" stroke-width="2" stroke="white" fill="white" fill-opacity="0" />
+							</g>
 						</g>
 					</svg>
 					<div id="menuItems">
@@ -91,9 +92,9 @@
 							<div id="copyrightText">Copyright © 2013 <a href="http://www.poweringanation.org" target="_blank">Powering A Nation</a> </div>
 						</div>
 						<div id="additionalContent">
-							<div id="editorialToggle"><a href="#">STAFF EDITORIAL</a></div>
-							<div id="aboutToggle"><a href="#">ABOUT US</a></div>
-							<div id="creditsToggle"><a href="#">CREDITS</a></div>
+							<div class="additionalContentToggle" id="editorialToggle">STAFF EDITORIAL</div>
+							<div class="additionalContentToggle" id="aboutToggle">ABOUT US</div>
+							<div class="additionalContentToggle" id="creditsToggle">CREDITS</div>
 						</div>
 						<div id="playerControls">
 							<a href="#"><img id="soundOn" src="./img/soundOn.png" /></a>
@@ -149,6 +150,8 @@
 						<source src="./audio/natSoundAct5.mp3" type="austio/mpeg">
 					</audio>
 				</div>
+				<div id="additionalContentBackground"></div>
+				<div id="closeOverlay"><img src="./img/closeOverlay.png" /></div>
 				<div id="powellExtendedText" class="secondLevelContent">
 					<h4>In a bind</h4>
 					<p>John Wesley Powell was stuck. In search of pitch from Pinyon Pines to caulk what was left of the Colorado River Exploring Expedition boats, Powell now found himself braced halfway up a chimney of rock, thousands of feet above the Colorado River and his men recuperating in the camp below. He couldn’t down-climb without risking a deadly fall to the narrow ledge he had started from, and the chimney began to widen above him. Finding himself unable to go up or down, he went sideways, further into the crevice he was wedged in. Here, he was able to rest enough to keep climbing, topping out to the rare sight of a sky un-confined by canyon walls. </p>
@@ -530,6 +533,8 @@ $('#motionDeltaMeadButton').hide();
 
 
 $('.extendedTextBackground').hide();
+$('#additionalContentBackground').hide();
+$('#closeOverlay').hide();
 
 
 $('#powellExtendedText').hide();
@@ -552,6 +557,24 @@ motionIntakePlayer.volume(0);
 motionHooverPlayer.play();
 motionImperialPlayer.play();
 motionIntakePlayer.play();
+
+
+$('.additionalContentToggle').on('click',function(){
+	$('#additionalContentBackground').show('slide',{direction:'down'});
+	setTimeout(function(){
+		$('#closeOverlay').show();
+	},350);
+	panPlayer.pause();
+	d3.select('#progressPathHide').attr('transform','translate(0,200)');
+});
+$('#closeOverlay').on('click',function(){
+	$('#additionalContentBackground').hide('slide',{direction:'down'});
+	setTimeout(function(){
+		d3.select('#progressPathHide').attr('transform','translate(0,0)');
+	},350);
+	$('#closeOverlay').hide();
+	panPlayer.play();
+});
 
 
 // Powell Second Level
@@ -709,20 +732,23 @@ setInterval(function() {
 	var motionHooverState = function() {return $('#motionHoover').attr('style')};
 	var motionImperialState = function() {return $('#motionImperial').attr('style')};
 	var motionIntakeState = function() {return $('#motionIntake').attr('style')};
+	// var additionalContentBackgroundState = function() {return d3.select('#additionalContentBackground').style('display')};
+	// var displayBlock = 'block';
+	// var displayNone = 'none';
 	var hiddenState = 'display: none;';
 	var visibleState = 'display: block;';
 	if(motionHooverState()==hiddenState) {
-		// console.log('motionHoover is hidden');
 		motionHooverPlayer.pause();
 	}
 	if(motionImperialState()==hiddenState) {
-		// console.log('motionImperial is hidden');
 		motionImperialPlayer.pause();
 	}
 	if(motionIntakeState()==hiddenState) {
-		// console.log('motionIntake is hidden');
 		motionIntakePlayer.pause();
 	}
+	// if(additionalContentBackgroundState()==displayBlock) {
+	// 	d3.select('#progressPathHide').attr('transform','translate(0,200)');
+	// }
 },250);
 // panPlayer.ready(function() {
 // 	console.log("Ready");

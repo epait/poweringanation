@@ -14,7 +14,7 @@ var sequence = [
 	// }, 
 	{
 		type: 'powell',
-		transitionLoop: 'loopFire',
+		transitionLoop: 'loopRiver',
 		loopId: "powellLoop",
 		content: 'This river was different. Back before the war, when he still had both arms, the Major had rowed the length of the Mississippi, but this river held a different power than the coiled currents of that old, low waterway. The Colorado was temperamental and young, a greenbroke horse with a thousand pounds a second to play with if it bucked you off. The men he’d recruited were mountain men, and used to lonely frontier solitude. Many had recently witnessed unprecedented violence that had split the country, making the untrammeled lands in the west attractive to men spat out by war.'
 	},
@@ -43,7 +43,7 @@ var sequence = [
 	},
 	{
 		type: "transitionText",
-		transitionLoop: "loopSky",
+		transitionLoop: "loopUnderwater",
 		loopId: "videoAct3Loop", 
 		transitionText: [
 			{ id: 'videoAct3Text',  content: 'John Powell only has one arm. How can he paddle down the Colorado with only one arm?' },
@@ -61,7 +61,7 @@ var sequence = [
 	},
 	{
 		type: "transitionText",
-		transitionLoop: "loopFire",
+		transitionLoop: "loopWood",
 		loopId: "videoAct4Loop", 
 		transitionText: [
 			{ id: 'videoAct4Text',  content: 'John Powell only has one arm. How can he paddle down the Colorado with only one arm?' },
@@ -88,7 +88,7 @@ var sequence = [
 	// },
 	{
 		type: 'conclusion',
-		transitionLoop: 'loopFire',
+		transitionLoop: 'loopTree',
 		loopId: "conclusionLoop",
 		content: 'Conclusion Text will Go Here.'
 	}

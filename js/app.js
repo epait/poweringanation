@@ -59,6 +59,17 @@ var progressLineWidth = function() {
     return wrapperWidth - 40;
   });
 }
+var additionalContentBackgroundResize = function() {
+  var wrapperWidth = $('.pageWrapper').width();
+  var wrapperHeight = $('.pageWrapper').height();
+  d3.select('#additionalContentBackground')
+    .style('height',function(){
+      return wrapperHeight + 'px';
+    })
+    .style('width',function(){
+      return wrapperWidth + 'px';
+    });
+}
 var resizePageElements = function() {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
@@ -69,6 +80,7 @@ var resizePageElements = function() {
     dragToResumePositioning();
     grayBoxRightPositioning();
     progressLineWidth();
+    additionalContentBackgroundResize();
   }
   else if (windowHeight <= 540) {
     pageWrapperMin();
@@ -76,6 +88,7 @@ var resizePageElements = function() {
     dragToResumePositioning();
     grayBoxRightPositioning();
     progressLineWidth();
+    additionalContentBackgroundResize();
   }
     else if (windowAspectRatio < widthAspectRatio){
     $('.pageWrapper').width(windowWidth);
@@ -89,6 +102,7 @@ var resizePageElements = function() {
     dragToResumePositioning();
     grayBoxRightPositioning();
     progressLineWidth();
+    additionalContentBackgroundResize();
   }
   else if (windowAspectRatio > widthAspectRatio) {
     $('.pageWrapper').height(windowHeight);
@@ -99,6 +113,7 @@ var resizePageElements = function() {
     dragToResumePositioning();
     grayBoxRightPositioning();
     progressLineWidth();
+    additionalContentBackgroundResize();
   }
   else {
     // Do Nothing
