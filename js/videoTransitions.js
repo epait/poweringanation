@@ -11,6 +11,7 @@ function VideoJSPlayer(info) {
 	var that = this;
 	this.isReady = false;
 	this.video = videojs(info.videoId);
+	this.videoId = info.videoId;
 	this.volumeLevel = this.video.volume();
 	this.video.volume(0);
 	this.video.on("ended", function() {
@@ -34,15 +35,15 @@ function VideoJSPlayer(info) {
 
 	this.video.on("progress", function() {
 		var bufferedTime = that.video.buffered().end(0);
-		console.log(that.video);
-		console.log("bufferedTime is " + bufferedTime);
+		// console.log(that.video);
+		console.log(that.videoId + " is buffered through " + bufferedTime);
 		if (bufferedTime > 1) {
 			that.video.pause();
 			that.video.volume(that.volumeLevel);
 			that.video.currentTime(0);
 		}
 
-		if (bufferedTime > 20) {
+		if (bufferedTime > 10) {
 			that.video.off("progress");
 			that.ready();
 			
@@ -154,12 +155,17 @@ function TransitionTextPlayer(info) {
         .on('click',function(d, i){ that.sentenceEnded(i); });
 
 	this.sentenceEnded = function(sentenceIndex) {
+			var that = this;
         	// each one.. fadesOut 'i-1' then fades in 'i+1'
 	        this.fadeSentenceOut(sentenceIndex);
         	if (sentenceIndex < info.transitionText.length-1) {
-        		this.fadeSentenceIn(sentenceIndex+1);
+        		setTimeout(function() {
+        			that.fadeSentenceIn(sentenceIndex+1);
+        		},1500);
         	} else {
-        		this.ended();
+        		setTimeout(function() {
+        			that.ended();
+        		},1500);
         	}
 
 	}
@@ -276,7 +282,7 @@ function PowellPlayer(info) {
 		.append('div')
         .attr('class', 'textOverlay')
         .attr('id', 'powellText')
-        .text(String);
+        .html(String);
     videoLoopContainer.selectAll('.textOverlay').data([info.id])
         .append('img')
 	        .attr('src','./img/clickForMore.png')
@@ -287,16 +293,82 @@ function PowellPlayer(info) {
 
 	this.hide = function() {
 		$('#'+this.info.loopId).hide();
+		$('.showFirst').css('opacity','0');
+		$('.showSecond').css('opacity','0');
+		$('.showThird').css('opacity','0');
+		$('.showFourth').css('opacity','0');
+		$('.showFifth').css('opacity','0');
+		$('.showSixth').css('opacity','0');
+		$('.showSeventh').css('opacity','0');
+		$('.showEigth').css('opacity','0');
+		$('.showNinth').css('opacity','0');
+		$('.showTenth').css('opacity','0');
+		$('.showLast').css('opacity','0');
 	}
 
 	this.show = function() {
 		var that = this;
 		$('.secondLevelContent').hide();
 		$('#'+this.info.loopId).show();
+		setTimeout(function() {
+			$('.showFirst').animate({
+				opacity: 1
+			}, 1000);
+		}, 1000);
+		setTimeout(function() {
+			$('.showSecond').animate({
+				opacity: 1
+			}, 1000);
+		}, 2000);
+		setTimeout(function() {
+			$('.showThird').animate({
+				opacity: 1
+			}, 1000);
+		}, 3000);
+		setTimeout(function() {
+			$('.showFourth').animate({
+				opacity: 1
+			}, 1000);
+		}, 4000);
+		setTimeout(function() {
+			$('.showFifth').animate({
+				opacity: 1
+			}, 1000);
+		}, 5000);
+		setTimeout(function() {
+			$('.showSixth').animate({
+				opacity: 1
+			}, 1000);
+		}, 6000);
+		setTimeout(function() {
+			$('.showSeventh').animate({
+				opacity: 1
+			}, 1000);
+		}, 7000);
+		setTimeout(function() {
+			$('.showEighth').animate({
+				opacity: 1
+			}, 1000);
+		}, 8000);
+		setTimeout(function() {
+			$('.showNinth').animate({
+				opacity: 1
+			}, 1000);
+		}, 9000);
+		setTimeout(function() {
+			$('.showTenth').animate({
+				opacity: 1
+			}, 1000);
+		}, 10000);
+		setTimeout(function() {
+			$('.showLast').animate({
+				opacity: 1
+			}, 1500);
+		}, 12000);
 		console.log('show PowellPlayer');
         setTimeout(function(){
         	that.timerEnded();
-        },10000);
+        },22000);
     }
 
 	this.pause = function() {
@@ -498,6 +570,7 @@ function MotionGraphicPlayer(info) {
 	this.isReady = false;
 	this.info = info;
 	this.video = videojs(info.videoId);
+	this.videoId = info.videoId;
 	this.volumeLevel = this.video.volume();
 	this.video.volume(0);
 	this.video.on('ended',function() {
@@ -518,7 +591,7 @@ function MotionGraphicPlayer(info) {
 			$('#dragPath').fadeOut(500);
 			$('#'+info.buttonId).fadeOut(500);
 		}
-		else if (timeRemaining<=10) {
+		else if (timeRemaining<=25) {
 			console.log('Buttons Revealed');
 			that.revealButtons();
 		}
@@ -531,15 +604,15 @@ function MotionGraphicPlayer(info) {
 
 	this.video.on("progress", function() {
 		var bufferedTime = that.video.buffered().end(0);
-		console.log(that.video);
-		console.log("bufferedTime is " + bufferedTime);
+		// console.log(that.video);
+		console.log(that.videoId + " is buffered through " + bufferedTime);
 		if (bufferedTime > 1) {
 			that.video.pause();
 			that.video.volume(that.volumeLevel);
 			that.video.currentTime(0);
 		}
 
-		if (bufferedTime > 20) {
+		if (bufferedTime > 10) {
 			that.video.off("progress");
 			that.ready();
 		}  
@@ -688,9 +761,9 @@ function Player(sequence) {
 	}
 
 	this.readyCallback = function() {
+		console.log("setting up end event handler");
 		$('#loadingWrapper').hide();
 		$('#pageWrapper').show();
-		console.log("setting up end event handler")
 		for(var i = 0; i < that.players.length; i++) {
 			var player = that.players[i];
 			player.onEnded(transitioner(i));

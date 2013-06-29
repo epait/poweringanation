@@ -33,15 +33,15 @@ var playerControlsPositioning = function () {
 };
 var dragButtonStart = function() {
   var wrapperWidth = $('.pageWrapper').width();
-  return wrapperWidth - 550;
+  return wrapperWidth - 440;
 }
 var dragButtonPositioning = function() {
   var wrapperWidth = $('.pageWrapper').width();
-  return 'translate('+ dragButtonStart() +',13) scale(0.85)';
+  return 'translate('+ dragButtonStart() +',13) scale(0.65)';
 };
 var dragPathPositioning = function () {
   var wrapperWidth = $('.pageWrapper').width();
-  return 'translate('+(wrapperWidth - 418)+',0)';
+  return 'translate('+(wrapperWidth - 340)+',0) scale(0.8)';
 };
 var dragToResumePositioning = function () {
   d3.select('#svgPath').attr('transform',dragPathPositioning);

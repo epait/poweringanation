@@ -16,7 +16,7 @@ var sequence = [
 		type: 'powell',
 		transitionLoop: 'loopRiver',
 		loopId: "powellLoop",
-		content: 'This river was different. Back before the war, when he still had both arms, the Major had rowed the length of the Mississippi, but this river held a different power than the coiled currents of that old, low waterway. The Colorado was temperamental and young, a greenbroke horse with a thousand pounds a second to play with if it bucked you off. The men he’d recruited were mountain men, and used to lonely frontier solitude. Many had recently witnessed unprecedented violence that had split the country, making the untrammeled lands in the west attractive to men spat out by war.'
+		content: '<span class="showLast">This river is different. The Colorado is </span><span class="showFirst">young</span><span class="showLast">, walled at the bottom of a canyon of its own making. It is </span><span class="showSecond">tempermental</span><span class="showLast"> -- dangerous as a borrowed </span><span class="showThird">warhorse</span><span class="showLast">. Water crossing fallen boulders is a </span><span class="showFourth">force</span><span class="showLast">, a concussion, a </span><span class="showFifth">fate</span><span class="showLast">. Nations </span><span class="showSixth">boomed</span><span class="showLast"> only to </span><span class="showSeventh">collapse</span><span class="showLast"> beside it, fortunate explorers staggered away from its rapids. Piled behind dams and </span><span class="showEighth">diversions</span><span class="showLast">, the Colorado continues to </span><span class="showNinth">power</span><span class="showLast">, fund, water and float millions of human dreams as we continue to underestimate its capacity for </span><span class="showTenth">impact</span><span class="showLast">.</span>'
 	},
 	{ 
 		type: 'video',
@@ -27,8 +27,8 @@ var sequence = [
 		transitionLoop: "loopFire",
 		loopId: "videoAct2Loop", 
 		transitionText: [
-			{ id: 'videoAct2Text',  content: 'John Powell only has one arm. How can he paddle down the Colorado with only one arm?' },
-			{ id: 'videoAct2Text', content: 'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him' }
+			{ id: 'videoAct2Text',  content: 'Heroes are humans set apart when they decide to change the outcome of a situation and summon the strength to do so.' },
+			{ id: 'videoAct2Text', content: 'Without thought to the later costs of their efforts, they are ordinary people with the audacity to decide they can change their circumstances.' }
 		] 
 	}, 
 	
@@ -46,8 +46,8 @@ var sequence = [
 		transitionLoop: "loopUnderwater",
 		loopId: "videoAct3Loop", 
 		transitionText: [
-			{ id: 'videoAct3Text',  content: 'John Powell only has one arm. How can he paddle down the Colorado with only one arm?' },
-			{ id: 'videoAct3Text', content: 'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him' }
+			{ id: 'videoAct3Text',  content: 'Reliance makes us vulnerable to the unknown. ' },
+			{ id: 'videoAct3Text', content: 'Unattended, our tolerances creep towards out of control.' }
 		] 
 	},
 	{ 
@@ -64,8 +64,8 @@ var sequence = [
 		transitionLoop: "loopWood",
 		loopId: "videoAct4Loop", 
 		transitionText: [
-			{ id: 'videoAct4Text',  content: 'John Powell only has one arm. How can he paddle down the Colorado with only one arm?' },
-			{ id: 'videoAct4Text', content: 'John Powell is a super hero. He traveled the Colorado with only one arm, thanks to that pesky canon, but that did not stop him' }
+			{ id: 'videoAct4Text',  content: 'It is hard to see things whole.' },
+			{ id: 'videoAct4Text', content: 'In the midst of struggle, the strengths we use are often the same talents we must enlist in reaction to consequences of that fight. ' }
 		] 
 	},
 	{ 
@@ -97,19 +97,19 @@ var sequence = [
 
 var diamondPoints = [
 	{
-		start: 119.75,
+		start: 119,
 		pointTitle: 'Powell'
 	},
     {
-        start: 280.75,
+        start: 253.75,
         pointTitle: 'Dams'
     },
     {
-        start: 545.5,
+        start: 577.5,
         pointTitle: 'Population'
     },
     {
-        start: 753.5,
+        start: 777.5,
         pointTitle: 'River Delta and Lake Mead'
     }
 ];

@@ -1,5 +1,5 @@
 /*Main Styles*/
-@font-face {
+			@font-face {
 				font-family: Interstate-Thin;
 				src:	url("../fonts/Interstate-Thin.otf"),
 						url("../fonts/Interstate-Thin.ttf");
@@ -91,15 +91,30 @@ body {
 
 
 /*Second Level Content*/
+.pullQuote {
+	float: right;
+	background-image: url('../img/bgOpaque.png');
+	background-repeat: repeat;
+	font-family: 'Interstate-Regular';
+	font-size: 22px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	padding: 10px;
+	width: 50%;
+}
+.pullQuoteAuthor {
+	font-family: 'Interstate-Light';
+}
 #powellExtendedText, #landgrabText, #addictedText, #damagesText {
 	color: #fff;
-	font-family: 'Interstate-Regular';
-	font-size: 25px;
-	line-height: 35px;
-	width: 65%;
-	height: 65%;
+	font-family: 'Interstate-Light';
+	font-size: 20px;
+	line-height: 30px;
+	width: 40%;
+	height: 85%;
 	position: absolute;
 	overflow: scroll;
+	overflow-x: hidden;
 	left: 5%;
 	top: 5%;
 	z-index: 998;
@@ -109,10 +124,11 @@ body {
 	padding: 0;
 	margin: 0;
 }
-#powellExtendedText h4, #landgrabText h4, #addictedText h4, #damagesText h4 {
+#powellExtendedText h4, #landgrab fText h4, #addictedText h4, #damagesText h4 {
+	font-family: 'Interstate-Regular';
 	padding: 0;
 	margin: 0;
-	font-size: 30px;
+	font-size: 25px;
 }
 #motionIntake, #motionImperial, #motionHoover {
 	height: 100%;
@@ -120,8 +136,13 @@ body {
 	position: absolute;
 	z-index: 981;
 }
-#motionIntakeButton, #motionImperialButton, #motionHooverButton {
-	bottom: 250px;
+#motionIntakeButton, #motionImperialButton {
+	top: 50%;
+	left: 3%;
+}
+#motionHooverButton {
+	left: 3%;
+	top: 44%;
 }
 .secondLevelToggle {
 	height: 100%;
@@ -260,16 +281,16 @@ body {
 	}
 #additionalContentBackground {
 	position: absolute;
-	z-index: 985;
+	z-index: 997;
 	background-color:black;
-	opacity: 0.75;
+	opacity: 0.85;
 }
 .additionalContentToggle:hover {
 	cursor: pointer;
 }
 #closeOverlay {
 	position: absolute;
-	z-index: 986;
+	z-index: 999;
 	top:0;
 	right:0;
 	padding: 5px;
@@ -303,7 +324,33 @@ circle#drag:hover {
 	height: 31px;
 	overflow: hidden;
 }
-
+#aboutContent {
+	position: absolute;
+	font-size: 24px;
+	line-height: 30px;
+	margin-top: 2%;
+	margin-left: 25%;
+	width: 50%;
+	font-family: 'Interstate-Thin';
+}
+#aboutContent h3 {
+	font-size: 36px;
+	text-align: center;
+}
+.additionalContent {
+	position: absolute;
+	z-index: 998;
+	color: #fff;
+}
+.additionalContent a {
+	text-decoration: none;
+	font-family: 'Interstate-Light';
+	color: #fff;
+}
+.additionalContent a:hover {
+	text-decoration: none;
+	color: #fff;
+}
 
 /*Overlays*/
 #playImage {
@@ -356,8 +403,8 @@ g#dragButton:hover {
 	position: absolute;
 	z-index: 999;
 	bottom: 100px;
-	left: 2%;
-	top: 35%;
+	left: 2.5%;
+	top: 42%;
 }
 #motionPopulationButton {
 	position: absolute;
@@ -369,11 +416,14 @@ g#dragButton:hover {
 #motionDamsButton {
 	position: absolute;
 	z-index: 999;
-	top: 70%;
+	top: 48%;
 	left: 3%;
 }
 .clickForMore:hover {
 	cursor: pointer;
+}
+.showFirst, .showSecond, .showThird, .showFourth, .showFifth, .showSixth, .showSeventh, .showEighth, .showNinth, .showTenth, .showLast {
+	opacity: 0;
 }
  
 
@@ -413,9 +463,9 @@ g#dragButton:hover {
 }
 .textOverlay {
 	color: #fff;
-	font-family: 'Interstate-Regular';
-	font-size: 30px;
-	line-height: 40px;
+	font-family: 'Interstate-Light';
+	font-size: 28px;
+	line-height: 38px;
 	width: 65%;
 	position: absolute;
 	left: 5%;
@@ -424,6 +474,12 @@ g#dragButton:hover {
 	-moz-text-shadow: 3px 3px 10px #000;
 	-webkit-text-shadow: 3px 3px 10px #000;
 	text-shadow: 3px 3px 10px #000;
+}
+#videoAct2TextSentence1, #videoAct2TextSentence2, #videoAct3TextSentence1, #videoAct3TextSentence2, #videoAct4TextSentence1, #videoAct4TextSentence2 {
+	left: 5%;
+	top: 10%;
+	font-size: 32px;
+	line-height: 40px;
 }
 .advanceSlide {
 	position: absolute;
@@ -443,3 +499,105 @@ g#dragButton:hover {
 	fill: white;
 	/*opacity: 0;*/
 }
+
+
+
+
+/*Credits*/
+#creditsContent {
+	margin: 0 auto;
+	overflow: scroll;
+	font-family: 'Interstate-Light';
+	height: 100%;
+	width: 100%;
+}
+.sectionWrapper img {
+		max-height: 30px;
+		margin-top: 50px;
+	}
+#creditsLogo {
+	height: 450px;
+	margin-top: 50px;
+}
+	.creditWrapper {
+		overflow: scroll;
+		text-align: center;
+		height: 3100px;
+		margin: 0 auto;
+	}
+	.logoFunders {
+		padding: 15px;
+		max-height: 56px;
+		float: left;
+	}
+	.sectionWrapper p {
+		font-size: 30px;
+		/*font-family: 'Interstate-Light';*/
+		line-height: 36px;
+	}
+	.creditsRoles {
+		font-size: 30px;
+		font-family: 'Interstate-Thin';
+	}
+	.creditsLeft {
+		text-align: right;
+		float: left;
+		margin-bottom: 50px;
+		opacity: 0.8;
+		font-family: 'Interstate-ExtraLight' !important;
+	}
+	.creditsRight {
+		text-align: left;
+		float: right;
+		margin-bottom: 50px;
+	}
+	#leadershipRight {
+		margin-right: 50px;
+	}
+	#leadershipLeft {
+		margin-left: 15px;
+		font-family: 'Interstate-ExtraLight' !important;
+	}
+	#coachesRight {
+		margin-right: 60px;
+	}
+	#coachesLeft {
+		margin-left: 55px;
+	}
+	.sectionWrapper {
+		position: relative;
+		width: 600px;
+		margin: 0 auto;
+	}
+	#fellowsWrapper p {
+		padding-bottom: 25px;
+	}
+	#contributorsWrapper {
+		padding-top: 15px;
+	}
+	#musicWrapper {
+		padding-top: 15px;
+	}
+	#leadershipWrapper {
+		padding-top: 15px;
+	}
+	#coachesWrapper {
+		padding-top: 15px;
+	}
+	#thanksWrapper {
+		padding-top: 15px;
+	}
+	#divider {
+		padding-top: 15px;
+	}
+	.logoFundersWrapper {
+		margin: 0 auto 50px;
+		width: 600px;
+		padding: 10px;
+	}
+	#logoKnight {
+		margin-top: 15px;
+	}
+	#logoJOMC {
+		margin-left: 30px;
+	}

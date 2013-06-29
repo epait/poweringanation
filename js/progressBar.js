@@ -65,7 +65,7 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	var drag = d3.behavior.drag()
 	        .on("drag", function() {
 	        	that.player.pause();
-	            d3.select(this).attr("cx", d3.event.x);
+	            d3.select(this).attr("cx", d3.event.x).style('cursor','pointer');
 	        })
 	        .on("dragend", function() {
 	        	that.player.currentTime(eventTime(progressCirclePosition()));
