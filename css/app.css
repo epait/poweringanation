@@ -5,6 +5,11 @@
 						url("../fonts/Interstate-Thin.ttf");
 			}
 			@font-face {
+				font-family: Interstate-ThinCondensed;
+				src:	url("../fonts/Interstate-ThinCondensed.otf"),
+						url("../fonts/Interstate-Thin.ttf");
+			}
+			@font-face {
 				font-family: Interstate-Light;
 				src:url("../fonts/Interstate-Light.otf"),
 					url("../fonts/Interstate-Light.ttf");
@@ -17,6 +22,11 @@
 			@font-face {
 				font-family: Interstate-Regular;
 				src:url("../fonts/Interstate-Regular.otf"),
+					url("../fonts/Interstate-Regular.ttf");
+			}
+			@font-face {
+				font-family: Interstate-RegularCondensed;
+				src:url("../fonts/Interstate-RegularCondensed.otf"),
 					url("../fonts/Interstate-Regular.ttf");
 			}
 			@font-face {
@@ -503,6 +513,73 @@ g#dragButton:hover {
 
 
 
+/*Staff Editorial*/
+#editorialContent {
+	width: 100%;
+}
+#editorialTitle {
+	margin: 50px 50px 10px;
+	font-size: 50px;
+	color: #fff;
+	font-family: 'Interstate-Thin';
+	position: absolute;
+	z-index: 985;
+}
+#editorialSubhead {
+	margin: 25px 50px;
+	font-size: 24px;
+	color: #fff;
+	font-family: 'Interstate-ThinCondensed';
+	position: absolute;
+	z-index: 985;
+	margin-top: 125px;
+}
+.fellowPortrait {
+	/*max-width: 215px;*/
+	float: left;
+	margin: 10px;
+}
+.fellowPortrait:hover {
+	cursor: pointer;
+}
+#portraitWrapper {
+	position: absolute;
+	z-index: 985;
+	margin-top: 190px;
+	margin-left: 40px;
+	width: 62%;
+}
+#editorialDivider {
+	top: 0;
+}
+#editorialSVG {
+	top: 0;
+	left: 0;
+	position: absolute;
+	z-index: 980;
+	width: inherit;
+	height: inherit;
+}
+#quoteWrapper {
+	position: absolute;
+	z-index: 985;
+	margin-top: 200px;
+}
+.editorialQuote {
+	font-family: 'Interstate-ThinCondensed';
+	font-size: 28px;
+	line-height: 36px;
+}
+.editorialQuoteAttribution {
+	font-family: 'Interstate-RegularCondensed';
+	float: right;
+	font-size: 32px;
+	padding-top: 25px;
+}
+
+
+
+
 /*Credits*/
 #creditsContent {
 	margin: 0 auto;
@@ -522,7 +599,7 @@ g#dragButton:hover {
 	.creditWrapper {
 		overflow: scroll;
 		text-align: center;
-		height: 3100px;
+		height: 3200px;
 		margin: 0 auto;
 	}
 	.logoFunders {

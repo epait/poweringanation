@@ -90,6 +90,45 @@ var  playPausePositioning = function() {
       return wrapperWidth/2 - 75 + 'px';
     });
 }
+var portraitWrapperSize = function() {
+  var wrapperWidth = $('.pageWrapper').width();
+  d3.select('#portraitWrapper')
+    .style('width', function() {
+      return wrapperWidth*0.62 + 'px';
+    });
+}
+var fellowPortraitSize = function() {
+  var portraitWrapperWidth = $('#portraitWrapper').width();
+  d3.selectAll('.fellowPortrait')
+    .style('width',function() {
+      return portraitWrapperWidth/5 - 25 + 'px';
+    });
+}
+var editorialDividerPosition = function() {
+  var portraitWrapperWidth = $('#portraitWrapper').width();
+  var wrapperHeight = $('.pageWrapper').height();
+  d3.select('#editorialDivider')
+    .attr('x1',function() {
+      return portraitWrapperWidth + 65 + 'px';
+    })
+    .attr('x2',function() {
+      return portraitWrapperWidth + 65 + 'px';
+    })
+    .attr('y2',function() {
+      return wrapperHeight -100 + 'px';
+    });
+}
+var quoteWrapperPosition = function() {
+  var wrapperWidth = $('.pageWrapper').width();
+  var portraitWrapperWidth = $('#portraitWrapper').width();
+  d3.select('#quoteWrapper')
+    .style('width',function() {
+      return wrapperWidth - portraitWrapperWidth - 175 + 'px';
+    })
+    .style('left',function() {
+      return portraitWrapperWidth + 125 + 'px';
+    })
+}
 var resizePageElements = function() {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
@@ -102,6 +141,10 @@ var resizePageElements = function() {
     progressLineWidth();
     additionalContentBackgroundResize();
     playPausePositioning();
+    portraitWrapperSize();
+    fellowPortraitSize();
+    editorialDividerPosition();
+    quoteWrapperPosition();
   }
   else if (windowHeight <= 540) {
     pageWrapperMin();
@@ -111,6 +154,10 @@ var resizePageElements = function() {
     progressLineWidth();
     additionalContentBackgroundResize();
     playPausePositioning();
+    portraitWrapperSize();
+    fellowPortraitSize();
+    editorialDividerPosition();
+    quoteWrapperPosition();
   }
     else if (windowAspectRatio < widthAspectRatio){
     $('.pageWrapper').width(windowWidth);
@@ -129,6 +176,10 @@ var resizePageElements = function() {
     progressLineWidth();
     additionalContentBackgroundResize();
     playPausePositioning();
+    portraitWrapperSize();
+    fellowPortraitSize();
+    editorialDividerPosition();
+    quoteWrapperPosition();
   }
   else if (windowAspectRatio > widthAspectRatio) {
     $('.pageWrapper').height(windowHeight);
@@ -144,6 +195,10 @@ var resizePageElements = function() {
     progressLineWidth();
     additionalContentBackgroundResize();
     playPausePositioning();
+    portraitWrapperSize();
+    fellowPortraitSize();
+    editorialDividerPosition();
+    quoteWrapperPosition();
   }
   else {
     // Do Nothing
