@@ -1,43 +1,43 @@
 /*Main Styles*/
 			@font-face {
 				font-family: Interstate-Thin;
-				src:	url("../fonts/Interstate-Thin.otf"),
-						url("../fonts/Interstate-Thin.ttf");
+				src:	url("./fonts/Interstate-Thin.otf"),
+						url("./fonts/Interstate-Thin.ttf");
 			}
 			@font-face {
 				font-family: Interstate-ThinCondensed;
-				src:	url("../fonts/Interstate-ThinCondensed.otf"),
-						url("../fonts/Interstate-Thin.ttf");
+				src:	url("./fonts/Interstate-ThinCondensed.otf"),
+						url("./fonts/Interstate-Thin.ttf");
 			}
 			@font-face {
 				font-family: Interstate-Light;
-				src:url("../fonts/Interstate-Light.otf"),
-					url("../fonts/Interstate-Light.ttf");
+				src:url("./fonts/Interstate-Light.otf"),
+					url("./fonts/Interstate-Light.ttf");
 			}
 			@font-face {
 				font-family: Interstate-Bold;
-				src:url("../fonts/Interstate-Bold.otf"),
-					url("../fonts/Interstate-Bold.ttf");
+				src:url("./fonts/Interstate-Bold.otf"),
+					url("./fonts/Interstate-Bold.ttf");
 			}
 			@font-face {
 				font-family: Interstate-Regular;
-				src:url("../fonts/Interstate-Regular.otf"),
-					url("../fonts/Interstate-Regular.ttf");
+				src:url("./fonts/Interstate-Regular.otf"),
+					url("./fonts/Interstate-Regular.ttf");
 			}
 			@font-face {
 				font-family: Interstate-RegularCondensed;
-				src:url("../fonts/Interstate-RegularCondensed.otf"),
-					url("../fonts/Interstate-Regular.ttf");
+				src:url("./fonts/Interstate-RegularCondensed.otf"),
+					url("./fonts/Interstate-Regular.ttf");
 			}
 			@font-face {
 				font-family: Interstate-ExtraLight;
-				src:url("../fonts/Interstate-ExtraLight.otf"),
-					url("../fonts/Interstate-ExtraLight.ttf");
+				src:url("./fonts/Interstate-ExtraLight.otf"),
+					url("./fonts/Interstate-ExtraLight.ttf");
 			}
 			@font-face {
 				font-family: Interstate-Lightitalic;
-				src:url("../fonts/Interstate-Lightitalic.otf"),
-					url("../fonts/Interstate-Lightitalic.ttf");
+				src:url("./fonts/Interstate-Lightitalic.otf"),
+					url("./fonts/Interstate-Lightitalic.ttf");
 			}
 body {
 	min-width: 960px;
@@ -102,14 +102,14 @@ body {
 
 /*Second Level Content*/
 .pullQuote {
-	float: left;
+	float: right;
 	background-image: url('../img/bgOpaque.png');
 	background-repeat: repeat;
 	font-family: 'Interstate-Regular';
 	font-size: 22px;
-	margin-right: 10px;
+	margin-left: 5px;
 	margin-bottom: 5px;
-	padding: 10px 5px 10px 10px;
+	padding: 10px;
 	width: 50%;
 }
 .pullQuoteAuthor {
@@ -128,34 +128,17 @@ body {
 	left: 5%;
 	top: 5%;
 	z-index: 998;
-	/*-moz-text-shadow: 3px 3px 10px #000;
+	-moz-text-shadow: 3px 3px 10px #000;
 	-webkit-text-shadow: 3px 3px 10px #000;
-	text-shadow: 3px 3px 10px #000;*/
+	text-shadow: 3px 3px 10px #000;
 	padding: 0;
 	margin: 0;
 }
-#powellExtendedText h2, #landgrabText h2, #addictedText h2, #damagesText h2 {
-	font-family: 'Interstate-Regular';
-	padding: 0;
-	margin: 0;
-	font-size: 36px;
-}
-#powellExtendedText h3, #landgrabText h3, #addictedText h3, #damagesText h3 {
-	font-family: 'Interstate-Light';
-	padding: 0;
-	margin: 0 0  30px 0;
-	font-size: 20px;
-}
-#powellExtendedText h4, #landgrabText h4, #addictedText h4, #damagesText h4 {
+#powellExtendedText h4, #landgrab fText h4, #addictedText h4, #damagesText h4 {
 	font-family: 'Interstate-Regular';
 	padding: 0;
 	margin: 0;
 	font-size: 25px;
-	text-align: center !important;
-}
-.openingQuote {
-	text-align: center !important;
-	font-family: 'Interstate-Regular';
 }
 #motionIntake, #motionImperial, #motionHoover {
 	height: 100%;
@@ -182,15 +165,6 @@ body {
 	height: 100%;
 	width: 100%;
 	z-index: 984;
-}
-.secondLevelContent a {
-	text-decoration: none;
-	font-family: 'Interstate-Light';
-	color: #fff;
-}
-.secondLevelContent a:hover {
-	text-decoration: none;
-	color: #fff;
 }
 
 
@@ -317,7 +291,7 @@ body {
 	}
 #additionalContentBackground {
 	position: absolute;
-	z-index: 1100;
+	z-index: 997;
 	background-color:black;
 	opacity: 0.85;
 }
@@ -326,7 +300,7 @@ body {
 }
 #closeOverlay {
 	position: absolute;
-	z-index: 1200;
+	z-index: 999;
 	top:0;
 	right:0;
 	padding: 5px;
@@ -375,7 +349,7 @@ circle#drag:hover {
 }
 .additionalContent {
 	position: absolute;
-	z-index: 1150;
+	z-index: 998;
 	color: #fff;
 }
 .additionalContent a {
