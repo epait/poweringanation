@@ -6,11 +6,51 @@
 	}
 
 
+function Loader(panPlayer) {
+	var that = this;
+
+
+	this.next = function(player) {
+		var nextIndex = panPlayer.currentPlayerIndex+1 % panPlayer.players.length;
+
+		for(var i = 0; i < panPlayer.players.length; i++) {
+			var index = (nextIndex+i) % panPlayer.players.length;
+			console.log("index is " + index);
+			console.log("length is " + panPlayer.players.length);
+			console.log(panPlayer.players[index]);
+			if (!panPlayer.players[index].isLoaded) {
+				return panPlayer.players[index];
+			}
+		}
+		return null;
+	}
+
+	this.loaded = function(player) {
+		console.log("Loader finished loading " + player.videoId);
+		var nextPlayer = this.next(player);
+		console.log("nextPlayer")
+		console.log(nextPlayer);
+		if (nextPlayer != null) {
+			nextPlayer.load();
+		}
+	};
+
+	this.currentVid = function(index) {
+		this.nextToLoad = panPlayer.currentPlayerIndex+1 % panPlayer.players.length;
+	}
+
+	panPlayer.players.forEach(function(player) {
+		player.onLoaded(function() { that.loaded(player); })
+	});
+
+}
+
 
 function VideoJSPlayer(info) {
 	var that = this;
 	this.isReady = false;
 	this.isVideo = true;
+	this.isLoaded = false;
 	this.video = videojs(info.videoId);
 	this.videoId = info.videoId;
 	this.volumeLevel = this.video.volume();
@@ -45,8 +85,10 @@ function VideoJSPlayer(info) {
 			that.progressCallback.call(that);
 		}
 		if (that.isReady && (that.duration() - that.bufferedTime() < 2.0)) {
+			that.isLoaded = true;
 			if (that.loadedCallback) {
 				that.loadedCallback.call(that);
+				that.video.off('progress');
 			}
 		}
 	});
@@ -88,11 +130,17 @@ function VideoJSPlayer(info) {
 		this.video.play();
 	}
 
-	this.load = function(cb) {
-		this.preloading = true;
-		this.video.volume(0);
-		this.video.play();
-		this.onLoaded(cb);
+	this.load = function() {
+		if (this.isLoaded) {
+			if (this.loadedCallback) {
+				this.loadedCallback.call(this);
+			}
+		}
+		else if (!this.preloading && this.paused()) {
+			this.preloading = true;
+			this.video.volume(0);
+			this.video.play();
+		}
 	}
 
 	this.volume = function(level) {
@@ -150,6 +198,7 @@ function TransitionTextPlayer(info) {
 	this.isReady = true;
 	this.info = info;
 	this.isVideo = false;
+	this.isLoaded = true;
 	this.currentSentenceIndex = 0;
 
 	var videoLoopContainer = d3.select('.overlayWrapper')
@@ -215,8 +264,10 @@ function TransitionTextPlayer(info) {
         $('#'+d.id+'Sentence'+(sentenceIndex+1)).fadeIn(1000);
 	}
 
-	this.load = function(cb) {
-		this.onLoaded(cb);
+	this.load = function() {
+		if (this.loadedCallback) {
+			this.loadedCallback.call(this);
+		}
 	}
 
 	this.hide = function() {
@@ -274,9 +325,7 @@ function TransitionTextPlayer(info) {
 	}
 
 	this.onLoaded = function(cb) {
-		if (cb) {
-			cb.call(this);
-		}
+		this.loadedCallback = chain(this, cb, this.loadedCallback);
 	}
 
 	this.ready = function() {
@@ -303,6 +352,7 @@ function PowellPlayer(info) {
 	this.isReady = true;
 	this.info = info;
 	this.isVideo = false;
+	this.isLoaded = true;
 
 	var videoLoopContainer = d3.select('.overlayWrapper')
 		.append('div')
@@ -430,8 +480,10 @@ function PowellPlayer(info) {
 	this.play = function() {
 	}
 
-	this.load = function(cb) {
-		this.onLoaded(cb);
+	this.load = function() {
+		if (this.loadedCallback) {
+			this.loadedCallback.call(this);
+		}
 	}
 
 	this.volume = function(level) {
@@ -483,9 +535,7 @@ function PowellPlayer(info) {
 
 	}
 	this.onLoaded = function(cb) {
-		if (cb) {
-			cb.call(this);
-		}
+		this.loadedCallback = chain(this, cb, this.loadedCallback);
 	}
 
 
@@ -516,6 +566,7 @@ function ConclusionPlayer(info) {
 	this.isReady = true;
 	this.isVideo = false;
 	this.info = info;
+	this.isLoaded = true;
 
 
 	var videoLoopContainer = d3.select('.overlayWrapper')
@@ -570,8 +621,10 @@ function ConclusionPlayer(info) {
 	this.play = function() {
 	}
 
-	this.load = function(cb) {
-		this.onLoaded(cb);
+	this.load = function() {
+		if (this.loadedCallback) {
+			this.loadedCallback.call(this);
+		}
 	}
 
 	this.volume = function(level) {
@@ -623,9 +676,7 @@ function ConclusionPlayer(info) {
 
 	}
 	this.onLoaded = function(cb) {
-		if (cb) {
-			cb.call(this);
-		}
+		this.loadedCallback = chain(this, cb, this.loadedCallback);
 	}
 
 
@@ -656,6 +707,7 @@ function MotionGraphicPlayer(info) {
 	this.isReady = false;
 	this.isVideo = true;
 	this.info = info;
+	this.isLoaded = false;
 	this.video = videojs(info.videoId);
 	this.videoId = info.videoId;
 	this.cachedDuration = info.duration;
@@ -700,8 +752,10 @@ function MotionGraphicPlayer(info) {
 			that.progressCallback.call(that);
 		}
 		if (that.isReady && (that.duration() - that.bufferedTime() < 2.0)) {
+			that.isLoaded = true; 
 			if (that.loadedCallback) {
 				that.loadedCallback.call(that);
+				that.video.off('progress');
 			}
 		}
 	});
@@ -723,11 +777,17 @@ function MotionGraphicPlayer(info) {
 		this.video.pause();
 	}
 
-	this.load = function(cb) {
-		this.preloading = true;
-		this.video.volume(0);
-		this.video.play();
-		this.onLoaded(cb);
+	this.load = function() {
+		if (this.isLoaded) {
+			if (this.loadedCallback) {
+				this.loadedCallback.call(this);
+			}
+		}
+		else if (!this.preloading && this.paused()) {
+			this.preloading = true;
+			this.video.volume(0);
+			this.video.play();
+		}
 	}
 
 	this.paused = function() {
@@ -847,18 +907,7 @@ function Player(sequence) {
 	var transitioner = function(index) {
 		return function() {
 			console.log("Transition from player " + index);
-			var curVid = that.vidAt(index);
-			curVid.hide();
-			curVid.volume(0);
-			var nextVid = that.vidAt(index+1);
-			console.log(nextVid);
-			if (nextVid) {
-				that.currentPlayerIndex = index+1;
-				nextVid.currentTime(0);
-				nextVid.volume(that.volumeLevel);
-				nextVid.show();	
-				nextVid.play();	
-			}
+			that.currentVid(index+1);
 		}
 	}
 
@@ -901,7 +950,6 @@ function Player(sequence) {
 		console.log("setting up end event handler");
 		$('#loadingWrapper').hide();
 		$('#pageWrapper').show();
-
 		for(var i = 0; i < that.players.length; i++) {
 			var player = that.players[i];
 			player.onEnded(transitioner(i));
@@ -910,8 +958,8 @@ function Player(sequence) {
 		}
 	}
 
-	this.players[0].load(preloader(0));
 
+	this.loader = new Loader(this);
 
 
 	this.players[0].ready(function() {
@@ -939,12 +987,13 @@ function Player(sequence) {
 	this.currentVid = function() {
 		if (arguments.length > 0) {
 			var index = arguments[0];
-			if (index != this.currentPlayerIndex) {
+			if (index != this.currentPlayerIndex && index < this.players.length) {
 				var paused = this.players[this.currentPlayerIndex].paused();
 				this.players[this.currentPlayerIndex].pause();
 				this.players[this.currentPlayerIndex].hide();
 				this.players[this.currentPlayerIndex].volume(0);
 				this.currentPlayerIndex = index;
+
 				this.players[this.currentPlayerIndex].show();
 				this.players[this.currentPlayerIndex].volume(this.volumeLevel);
 				if (!paused) {
