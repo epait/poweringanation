@@ -992,6 +992,7 @@ function Player(sequence) {
 				this.players[this.currentPlayerIndex].pause();
 				this.players[this.currentPlayerIndex].hide();
 				this.players[this.currentPlayerIndex].volume(0);
+				this.players[this.currentPlayerIndex].currentTime(0);
 				this.currentPlayerIndex = index;
 
 				this.players[this.currentPlayerIndex].show();

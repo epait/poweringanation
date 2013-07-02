@@ -8,6 +8,9 @@ var natSoundAct4A = $('#natSoundAct4A');
 var natSoundAct4B = $('#natSoundAct4B');
 var natSoundAct5A = $('#natSoundAct5A');
 var natSoundAct5B = $('#natSoundAct5B');
+
+
+
 var popAct1 = Popcorn('#videoAct1');
 var popAct2 = Popcorn('#videoAct2');
 var popAct3 = Popcorn('#videoAct3');
@@ -17,6 +20,47 @@ var popMotionDams = Popcorn('#motionDams');
 var popMotionPopulation = Popcorn('#motionPopulation');
 var popMotionDeltaMead = Popcorn('#motionDeltaMead');
 
+
+
+var videoAct1 = videojs('videoAct1');
+var videoAct2 = videojs('videoAct2');
+var videoAct3 = videojs('videoAct3');
+var videoAct4 = videojs('videoAct4');
+var videoAct5 = videojs('videoAct5');
+var motionDams = videojs('motionDams');
+var motionPopulation = videojs('motionPopulation');
+var motionDeltaMead = videojs('motionDeltaMead');
+
+
+
+videoAct1.on('timeupdate',function() {
+	natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
+	natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
+});
+videoAct2.on('timeupdate',function() {
+	natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
+	natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
+});
+videoAct3.on('timeupdate',function() {
+	natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
+	natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
+});
+videoAct4.on('timeupdate',function() {
+	natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
+	natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
+});
+motionDams.on('timeupdate',function() {
+	natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
+	natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
+});
+motionPopulation.on('timeupdate',function() {
+	natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
+	natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
+});
+motionDeltaMead.on('timeupdate',function() {
+	natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
+	natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
+});
 
 // Start Audio Loop 1
 popAct1.code({
@@ -298,7 +342,7 @@ popAct5.code({
 });
 popAct5.code({
 	start:1,
-	end:62.3,
+	end:49,
 	onStart: function() {
 		natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
@@ -310,7 +354,7 @@ popAct5.code({
 	onStart: function() {
 		console.log('Play Audio Track A');
 		document.getElementById('natSoundAct5A').currentTime=0;
-		natSoundAct5A.animate({volume: 1},1000);
+		natSoundAct5A.animate({volume: 0.7},1000);
     	document.getElementById('natSoundAct5A').play();
 	}
 });
@@ -318,7 +362,7 @@ natSoundAct5A.on('timeupdate',function() {
 	if (this.currentTime>this.duration-1) {
 		console.log('Play Audio Track B');
 		document.getElementById('natSoundAct5B').currentTime=0;
-		document.getElementById('natSoundAct5B').volume=1;
+		document.getElementById('natSoundAct5B').volume=0.7;
 		document.getElementById('natSoundAct5B').play();
 		this.pause();
 		this.currentTime=0;
@@ -328,7 +372,7 @@ natSoundAct5B.on('timeupdate',function() {
 	if (this.currentTime>this.duration-1) {
 		console.log('Play Audio Track A');
 		document.getElementById('natSoundAct5A').currentTime=0;
-		document.getElementById('natSoundAct5A').volume=1;
+		document.getElementById('natSoundAct5A').volume=0.7;
 		document.getElementById('natSoundAct5A').play();
 		this.pause();
 		this.currentTime=0;

@@ -96,7 +96,7 @@ var sequence = [
 	// },
 	{
 		type: 'conclusion',
-		transitionLoop: 'loopTree',
+		transitionLoop: 'loopRock',
 		loopId: "conclusionLoop",
 		content: 'Conclusion Text will Go Here.'
 	}
@@ -105,7 +105,7 @@ var sequence = [
 
 var diamondPoints = [
 	{
-		start: 125,
+		start: 124.5,
 		pointTitle: 'Powell'
 	},
     {

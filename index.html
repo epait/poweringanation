@@ -400,12 +400,7 @@
 						<source  src="./vid/motionHoover.ogv" type='video/ogg' />
 					</video>
 				</div>
-				<video class="extendedTextBackground" id="bgLandgrab" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0" id="powellLoopVideo">
-					<source src="./vid/loopRiver.mp4" type="video/mp4">
-					<source src="./vid/loopRiver.webm" type="video/webm">
-					<source src="./vid/loopRiver.ogv" type="video/ogg">
-				</video>
-				<!-- <img class="extendedTextBackground" id="bgLandgrab" src="./img/bgLandgrab.jpg" /> -->
+				<img class="extendedTextBackground" id="bgLandgrab" src="./img/bgLandgrab.png" />
 				<div id="landgrabText" class="secondLevelContent">
 						<h2>LANDGRAB</h2>
 						<h3>By Hannah Weinberger</h3>
@@ -850,7 +845,7 @@
 						<source  src="./vid/motionImperial.ogv" type='video/ogg' />
 					</video>
 				</div>
-				<img class="extendedTextBackground" id="bgAddicted" src="./img/bgAddicted.jpg" />
+				<img class="extendedTextBackground" id="bgAddicted" src="./img/bgAddicted.png" />
 				<div id="addictedText" class="secondLevelContent">
 					<h4>In a bind</h4>
 					<p>John Wesley Powell was stuck. In search of pitch from Pinyon Pines to caulk what was left of the Colorado River Exploring Expedition boats, Powell now found himself braced halfway up a chimney of rock, thousands of feet above the Colorado River and his men recuperating in the camp below. He couldn’t down-climb without risking a deadly fall to the narrow ledge he had started from, and the chimney began to widen above him. Finding himself unable to go up or down, he went sideways, further into the crevice he was wedged in. Here, he was able to rest enough to keep climbing, topping out to the rare sight of a sky un-confined by canyon walls. </p>
@@ -906,7 +901,7 @@
 						<source  src="./vid/motionIntake.ogv" type='video/ogg' />
 					</video>
 				</div>
-				<img class="extendedTextBackground" id="bgDamages" src="./img/bgDamages.jpg" />
+				<img class="extendedTextBackground" id="bgDamages" src="./img/bgDamages.png" />
 				<div id="damagesText" class="secondLevelContent">
 					<h2>DAMAGES</h2>
 					<h3>By Natalie Taylor</h3>
@@ -1253,12 +1248,47 @@ $('#playToggle').click(function() {
 		panPlayer.play();
 		$('#playImage').show();
 		$('#playImage').fadeOut(500);
-	    console.log('Play!');
+	    console.log('Play!'); 
+	    if (videoAct1.currentTime() > 92.3) {
+	    	document.getElementById('natSoundAct1A').currentTime=0;
+			document.getElementById('natSoundAct1A').volume=0.5;
+    		document.getElementById('natSoundAct1A').play();
+	    }
+	    if (videoAct2.currentTime() > 118.15) {
+	    	document.getElementById('natSoundAct2A').currentTime=0;
+			document.getElementById('natSoundAct2A').volume=0.5;
+    		document.getElementById('natSoundAct2A').play();
+	    }
+	    if (videoAct3.currentTime() > 194) {
+	    	document.getElementById('natSoundAct3A').currentTime=0;
+			document.getElementById('natSoundAct3A').volume=0.5;
+    		document.getElementById('natSoundAct3A').play();
+	    }
+	    if (videoAct4.currentTime() > 25.5) {
+	    	document.getElementById('natSoundAct4A').currentTime=0;
+			document.getElementById('natSoundAct4A').volume=0.5;
+    		document.getElementById('natSoundAct4A').play();
+	    }
+	    if (videoAct5.currentTime() > 63.3) {
+	    	document.getElementById('natSoundAct5A').currentTime=0;
+			document.getElementById('natSoundAct5A').volume=0.5;
+    		document.getElementById('natSoundAct5A').play();
+	    }
 	}
 	else {
     	panPlayer.pause();
     	$('#pauseImage').show();
 		$('#pauseImage').fadeOut(500);
+		natSoundAct1A.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct1B.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct2A.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct2B.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct3A.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct3B.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct4A.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct4B.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct5A.animate({volume: 0},250,function(){this.pause()});
+		natSoundAct5B.animate({volume: 0},250,function(){this.pause()});
 	    console.log('Pause!');
 	}
 });
@@ -1344,6 +1374,11 @@ $(document).keypress(function(event) {
   		var damagesTextState = function() {return d3.select('#damagesText').style('display')};
   		var addictedTextState = function() {return d3.select('#addictedText').style('display')};
   		var landgrabTextState = function() {return d3.select('#landgrabText').style('display')};
+  		var powellLoopState = function() {return d3.select('#powellLoop').style('display')};
+  		var videoAct2LoopState = function() {return d3.select('#videoAct2Loop').style('display')};
+  		var videoAct3LoopState = function() {return d3.select('#videoAct3Loop').style('display')};
+  		var videoAct4LoopState = function() {return d3.select('#videoAct4Loop').style('display')};
+  		var conclusionLoopState = function() {return d3.select('#conclusionLoop').style('display')};
   		var displayBlock = 'block';
   		if (additionalContentState()==displayBlock) {
   			// DO NOTHING
@@ -1355,6 +1390,21 @@ $(document).keypress(function(event) {
   			// DO NOTHING
   		}
   		else if (damagesTextState()==displayBlock) {
+  			// DO NOTHING
+  		}
+  		else if (powellLoopState()==displayBlock) {
+  			// DO NOTHING
+  		}
+  		else if (videoAct2LoopState()==displayBlock) {
+  			// DO NOTHING
+  		}
+  		else if (videoAct3LoopState()==displayBlock) {
+  			// DO NOTHING
+  		}
+  		else if (videoAct4LoopState()==displayBlock) {
+  			// DO NOTHING
+  		}
+  		else if (conclusionLoopState()==displayBlock) {
   			// DO NOTHING
   		}
 		else if (motionHooverState()==displayBlock) {
@@ -1410,16 +1460,31 @@ $('#soundOff').click(function() {
   motionIntakePlayer.volume(1);
   $(this).hide();
   $('#soundOn').show();
-  document.getElementById('natSoundAct1A').volume=1;
-  document.getElementById('natSoundAct1B').volume=1;
-  document.getElementById('natSoundAct2A').volume=1;
-  document.getElementById('natSoundAct2B').volume=1;
-  document.getElementById('natSoundAct3A').volume=1;
-  document.getElementById('natSoundAct3B').volume=1;
-  document.getElementById('natSoundAct4A').volume=1;
-  document.getElementById('natSoundAct4B').volume=1;
-  document.getElementById('natSoundAct5A').volume=1;
-  document.getElementById('natSoundAct5B').volume=1;
+  if (videoAct1.currentTime() > 92.3) {
+	    	document.getElementById('natSoundAct1A').currentTime=0;
+			document.getElementById('natSoundAct1A').volume=0.5;
+    		document.getElementById('natSoundAct1A').play();
+	    }
+	    if (videoAct2.currentTime() > 118.15) {
+	    	document.getElementById('natSoundAct2A').currentTime=0;
+			document.getElementById('natSoundAct2A').volume=0.5;
+    		document.getElementById('natSoundAct2A').play();
+	    }
+	    if (videoAct3.currentTime() > 194) {
+	    	document.getElementById('natSoundAct3A').currentTime=0;
+			document.getElementById('natSoundAct3A').volume=0.5;
+    		document.getElementById('natSoundAct3A').play();
+	    }
+	    if (videoAct4.currentTime() > 25.5) {
+	    	document.getElementById('natSoundAct4A').currentTime=0;
+			document.getElementById('natSoundAct4A').volume=0.5;
+    		document.getElementById('natSoundAct4A').play();
+	    }
+	    if (videoAct5.currentTime() > 63.3) {
+	    	document.getElementById('natSoundAct5A').currentTime=0;
+			document.getElementById('natSoundAct5A').volume=0.7;
+    		document.getElementById('natSoundAct5A').play();
+	    }
   var powellLoopState = function() {return d3.select('#powellLoop').style('display')};
   var videoAct2LoopState = function() {return d3.select('#videoAct2Loop').style('display')};
   var videoAct3LoopState = function() {return d3.select('#videoAct3Loop').style('display')};
