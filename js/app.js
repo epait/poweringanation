@@ -24,7 +24,6 @@ var pageWrapperMin = function() {
 var playerControlsPositioning = function () {
   var wrapperWidth = $('.pageWrapper').width();
   d3.select('#circleRight').attr('cx',wrapperWidth-150);
-  d3.select('#progressLine').attr('x2',wrapperWidth-165);
   d3.select('#progressClickOverlay').attr('width',wrapperWidth-165);
   d3.select('#fullscreenOn').attr('transform',fullscreenOn).attr('onclick','goFullscreen("pageWrapper"); return false');
   d3.select('#fullscreenOff').attr('transform',fullscreenOff).attr('onclick','cancelFullscreen("pageWrapper")');
@@ -57,6 +56,10 @@ var grayBoxRightPositioning = function() {
 };
 var progressLineWidth = function() {
   d3.select('#progressLine').attr('width',function(){
+    var wrapperWidth = $('.pageWrapper').width();
+    return wrapperWidth - 40;
+  });
+  d3.select('#progressIndicator').attr('width',function(){
     var wrapperWidth = $('.pageWrapper').width();
     return wrapperWidth - 40;
   });
@@ -235,7 +238,8 @@ var resizePageElements = function() {
 
 
 // Size Page Wrapper On Load
-$(window).load(function() {
+$(document).ready(function() {
+  console.log('initial page sizing');
   resizePageElements();
 });
 

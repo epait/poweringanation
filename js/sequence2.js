@@ -1,7 +1,8 @@
 var sequence = [
 	{ 
 		type: 'video',
-		videoId: "videoAct1"
+		videoId: "videoAct1",
+		duration: 125
 	}, 
 	// {
 	// 	type: "transitionText",
@@ -20,7 +21,8 @@ var sequence = [
 	},
 	{ 
 		type: 'video',
-		videoId: "videoAct2"
+		videoId: "videoAct2",
+		duration: 184
 	},
 	{
 		type: "transitionText",
@@ -35,11 +37,13 @@ var sequence = [
 	{ 
 		type: "motionGraphic",
 		videoId: "motionDams",
-		buttonId: "motionDamsButton"
+		buttonId: "motionDamsButton",
+		duration: 105
 	},
 	{ 
 		type: 'video',
 		videoId: "videoAct3",
+		duration: 243
 	},
 	{
 		type: "transitionText",
@@ -53,11 +57,13 @@ var sequence = [
 	{ 
 		type: "motionGraphic",
 		videoId: "motionPopulation",
-		buttonId: "motionPopulationButton"
+		buttonId: "motionPopulationButton",
+		duration: 75
 	},
 	{ 
 		type: 'video',
-		videoId: "videoAct4"
+		videoId: "videoAct4",
+		duration: 82
 	},
 	{
 		type: "transitionText",
@@ -71,11 +77,13 @@ var sequence = [
 	{ 
 		type: "motionGraphic",
 		videoId: "motionDeltaMead",
-		buttonId: "motionDeltaMeadButton"
+		buttonId: "motionDeltaMeadButton",
+		duration: 97
 	},
 	{ 
 		type: 'video',
-		videoId:  "videoAct5"
+		videoId:  "videoAct5",
+		duration: 70
 	},
 	// {
 	// 	type: "transitionText",
@@ -97,19 +105,19 @@ var sequence = [
 
 var diamondPoints = [
 	{
-		start: 119,
+		start: 125,
 		pointTitle: 'Powell'
 	},
     {
-        start: 253.75,
+        start: 309.75,
         pointTitle: 'Dams'
     },
     {
-        start: 577.5,
+        start: 657.5,
         pointTitle: 'Population'
     },
     {
-        start: 777.5,
+        start: 814.5,
         pointTitle: 'River Delta and Lake Mead'
     }
 ];

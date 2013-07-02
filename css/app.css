@@ -77,6 +77,8 @@ body {
 	background-color: red;
 	margin-left: auto;
 	margin-right: auto;
+	width: 100%;
+	height: 100%;
 }
 #pageWrapper:-webkit-full-screen {
     width: 100%;
@@ -507,9 +509,9 @@ g#dragButton:hover {
 	left: 5%;
 	top: 5%;
 	z-index: 998;
-	-moz-text-shadow: 3px 3px 10px #000;
+	/*-moz-text-shadow: 3px 3px 10px #000;
 	-webkit-text-shadow: 3px 3px 10px #000;
-	text-shadow: 3px 3px 10px #000;
+	text-shadow: 3px 3px 10px #000;*/
 }
 #videoAct2TextSentence1, #videoAct2TextSentence2, #videoAct3TextSentence1, #videoAct3TextSentence2, #videoAct4TextSentence1, #videoAct4TextSentence2 {
 	left: 5%;

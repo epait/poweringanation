@@ -10,10 +10,13 @@
 function VideoJSPlayer(info) {
 	var that = this;
 	this.isReady = false;
+	this.isVideo = true;
 	this.video = videojs(info.videoId);
 	this.videoId = info.videoId;
 	this.volumeLevel = this.video.volume();
+	this.cachedDuration = info.duration;
 	this.video.volume(0);
+	this.preloading = false;
 	this.video.on("ended", function() {
 		console.log("VideoJSPlayer.ended");
 		if (that.endedCallback) {
@@ -34,22 +37,25 @@ function VideoJSPlayer(info) {
 	});
 
 	this.video.on("progress", function() {
-		var bufferedTime = that.video.buffered().end(0);
-		// console.log(that.video);
-		console.log(that.videoId + " is buffered through " + bufferedTime);
-		if (bufferedTime > 1) {
+		if (that.preloading && that.bufferedTime() > 1) {
+			that.preloading = false;
 			that.video.pause();
-			that.video.volume(that.volumeLevel);
-			that.video.currentTime(0);
 		}
-
-		if (bufferedTime > 10) {
-			that.video.off("progress");
-			that.ready();
-			
-		}  
+		if (that.progressCallback) {
+			that.progressCallback.call(that);
+		}
+		if (that.isReady && (that.duration() - that.bufferedTime() < 2.0)) {
+			if (that.loadedCallback) {
+				that.loadedCallback.call(that);
+			}
+		}
 	});
-	this.video.play();
+
+	this.video.on("loadedmetadata", function() {
+		that.cachedDuration = that.video.duration();
+		that.ready();
+	});
+
 
 	this.hide = function() {
 		this.video.hide();
@@ -67,8 +73,26 @@ function VideoJSPlayer(info) {
 		return this.video.paused();
 	}
 
+	this.bufferedTime = function() {
+		var b = this.video.buffered();
+		return b.end(0) - b.start(0);
+	}
+
+	this.bufferStats = function() {
+		return '<'+this.videoId+": "+this.bufferedTime()+" of "+this.duration()+">";
+	}
+
+
 	this.play = function() {
+		this.preloading = false;
 		this.video.play();
+	}
+
+	this.load = function(cb) {
+		this.preloading = true;
+		this.video.volume(0);
+		this.video.play();
+		this.onLoaded(cb);
 	}
 
 	this.volume = function(level) {
@@ -81,7 +105,7 @@ function VideoJSPlayer(info) {
 	}
 
 	this.duration = function() {
-		return this.video.duration();
+		return this.cachedDuration;
 	}
 
 	this.onEnded = function(cb) {
@@ -90,6 +114,14 @@ function VideoJSPlayer(info) {
 
 	this.onTimeUpdate = function(cb) {
 		this.timeUpdateCallback = chain(this, cb, this.timeUpdateCallback);
+	}
+
+	this.onProgress = function(cb) {
+		this.progressCallback = chain(this, cb, this.progressCallback);
+	}
+
+	this.onLoaded = function(cb) {
+		this.loadedCallback = chain(this, cb, this.loadedCallback);
 	}
 
 	this.ready = function() {
@@ -117,6 +149,7 @@ function TransitionTextPlayer(info) {
 	var that = this;
 	this.isReady = true;
 	this.info = info;
+	this.isVideo = false;
 	this.currentSentenceIndex = 0;
 
 	var videoLoopContainer = d3.select('.overlayWrapper')
@@ -182,7 +215,9 @@ function TransitionTextPlayer(info) {
         $('#'+d.id+'Sentence'+(sentenceIndex+1)).fadeIn(1000);
 	}
 
-
+	this.load = function(cb) {
+		this.onLoaded(cb);
+	}
 
 	this.hide = function() {
 		$('#'+this.info.loopId).hide();
@@ -208,6 +243,10 @@ function TransitionTextPlayer(info) {
 	this.volume = function(level) {
 	}
 
+	this.bufferedTime = function() {
+		return 0.0;
+	}
+
 	this.currentTime = function() {
 		return 0.0;
 	}
@@ -228,6 +267,16 @@ function TransitionTextPlayer(info) {
 	}
 
 	this.onTimeUpdate = function(cb) {
+	}
+
+	this.onProgress = function(cb) {
+
+	}
+
+	this.onLoaded = function(cb) {
+		if (cb) {
+			cb.call(this);
+		}
 	}
 
 	this.ready = function() {
@@ -253,7 +302,7 @@ function PowellPlayer(info) {
 	var that = this;
 	this.isReady = true;
 	this.info = info;
-
+	this.isVideo = false;
 
 	var videoLoopContainer = d3.select('.overlayWrapper')
 		.append('div')
@@ -381,7 +430,15 @@ function PowellPlayer(info) {
 	this.play = function() {
 	}
 
+	this.load = function(cb) {
+		this.onLoaded(cb);
+	}
+
 	this.volume = function(level) {
+	}
+
+	this.bufferedTime = function() {
+		return 0.0;
 	}
 
 	this.currentTime = function() {
@@ -422,6 +479,16 @@ function PowellPlayer(info) {
 	this.onTimeUpdate = function(cb) {
 	}
 
+	this.onProgress = function(cb) {
+
+	}
+	this.onLoaded = function(cb) {
+		if (cb) {
+			cb.call(this);
+		}
+	}
+
+
 	this.ready = function() {
 		console.log("calling ready");
 		console.log(this);
@@ -447,6 +514,7 @@ function PowellPlayer(info) {
 function ConclusionPlayer(info) {
 	var that = this;
 	this.isReady = true;
+	this.isVideo = false;
 	this.info = info;
 
 
@@ -502,7 +570,15 @@ function ConclusionPlayer(info) {
 	this.play = function() {
 	}
 
+	this.load = function(cb) {
+		this.onLoaded(cb);
+	}
+
 	this.volume = function(level) {
+	}
+
+	this.bufferedTime = function() {
+		return 0.0;
 	}
 
 	this.currentTime = function() {
@@ -543,6 +619,16 @@ function ConclusionPlayer(info) {
 	this.onTimeUpdate = function(cb) {
 	}
 
+	this.onProgress = function(cb) {
+
+	}
+	this.onLoaded = function(cb) {
+		if (cb) {
+			cb.call(this);
+		}
+	}
+
+
 	this.ready = function() {
 		console.log("calling ready");
 		console.log(this);
@@ -568,11 +654,14 @@ function ConclusionPlayer(info) {
 function MotionGraphicPlayer(info) {
 	var that = this;
 	this.isReady = false;
+	this.isVideo = true;
 	this.info = info;
 	this.video = videojs(info.videoId);
 	this.videoId = info.videoId;
+	this.cachedDuration = info.duration;
 	this.volumeLevel = this.video.volume();
 	this.video.volume(0);
+	this.preloading = false;
 	this.video.on('ended',function() {
 		if (that.endedCallback) {
 			console.log("calling endedCallback");
@@ -603,21 +692,24 @@ function MotionGraphicPlayer(info) {
 	});
 
 	this.video.on("progress", function() {
-		var bufferedTime = that.video.buffered().end(0);
-		// console.log(that.video);
-		console.log(that.videoId + " is buffered through " + bufferedTime);
-		if (bufferedTime > 1) {
+		if (that.preloading && that.bufferedTime() > 1.0) {
+			that.preloading = false;
 			that.video.pause();
-			that.video.volume(that.volumeLevel);
-			that.video.currentTime(0);
 		}
-
-		if (bufferedTime > 10) {
-			that.video.off("progress");
-			that.ready();
-		}  
+		if (that.progressCallback) {
+			that.progressCallback.call(that);
+		}
+		if (that.isReady && (that.duration() - that.bufferedTime() < 2.0)) {
+			if (that.loadedCallback) {
+				that.loadedCallback.call(that);
+			}
+		}
 	});
-	this.video.play();
+
+	this.video.on("loadedmetadata", function() {
+		that.cachedDuration = that.video.duration();
+		that.ready();
+	});
 
 	this.hide = function() {
 		this.video.hide();
@@ -631,11 +723,19 @@ function MotionGraphicPlayer(info) {
 		this.video.pause();
 	}
 
+	this.load = function(cb) {
+		this.preloading = true;
+		this.video.volume(0);
+		this.video.play();
+		this.onLoaded(cb);
+	}
+
 	this.paused = function() {
 		return this.video.paused();
 	}
 
 	this.play = function() {
+		this.preloading = false;
 		this.video.play();
 	}
 
@@ -644,12 +744,21 @@ function MotionGraphicPlayer(info) {
 		this.video.volume(level);
 	}
 
+	this.bufferedTime = function() {
+		var b = this.video.buffered();
+		return b.end(0) - b.start(0);
+	}
+
+	this.bufferStats = function() {
+		return '<'+this.videoId+": "+this.bufferedTime()+" of "+this.duration()+">";
+	}
+
 	this.currentTime = function() {
 		return this.video.currentTime.apply(this.video, arguments);
 	}
 
 	this.duration = function() {
-		return this.video.duration();
+		return this.cachedDuration;
 	}
 
 	this.revealButtons = function() {
@@ -682,6 +791,13 @@ function MotionGraphicPlayer(info) {
 		this.timeUpdateCallback = chain(this, cb, this.timeUpdateCallback);
 	}
 
+	this.onProgress = function(cb) {
+		this.progressCallback = chain(this, cb, this.progressCallback);
+	}
+	this.onLoaded = function(cb) {
+		this.loadedCallback = chain(this, cb, this.loadedCallback);
+	}
+
 	this.ready = function() {
 		console.log("calling ready");
 		console.log(this);
@@ -704,8 +820,10 @@ function MotionGraphicPlayer(info) {
 }
 
 function Player(sequence) {
+	alert("HELLO!");
 	var that = this;
 
+	this.isReady = false;
 	this.sequence = sequence;
 	this.currentPlayerIndex = 0;
 	this.volumeLevel = 1;
@@ -713,7 +831,15 @@ function Player(sequence) {
 	var timeUpdateCallbackCaller = function(index) {
 		return function() {
 			if (that.timeUpdateCallback && that.currentPlayerIndex == index) {
-				that.timeUpdateCallback(this);
+				that.timeUpdateCallback(that);
+			}
+		}
+	}
+
+	var progressCallbackCaller = function(index) {
+		return function() {
+			if (that.progressCallback) {
+				that.progressCallback(that);
 			}
 		}
 	}
@@ -734,6 +860,17 @@ function Player(sequence) {
 				nextVid.play();	
 			}
 		}
+	}
+
+	var preloader = function(index) {
+		return function() {
+			console.log("Finished loading " + index)
+			var nextVid = that.vidAt(index+1);
+			if (nextVid) {
+				console.log("Loading "+ nextVid);
+				nextVid.load(preloader(index+1));
+			}
+		} 
 	}
 
 	var playerFactory = {
@@ -764,31 +901,39 @@ function Player(sequence) {
 		console.log("setting up end event handler");
 		$('#loadingWrapper').hide();
 		$('#pageWrapper').show();
+
 		for(var i = 0; i < that.players.length; i++) {
 			var player = that.players[i];
 			player.onEnded(transitioner(i));
 			player.onTimeUpdate(timeUpdateCallbackCaller(i));
+			player.onProgress(progressCallbackCaller(i));
 		}
 	}
 
-	var loading = this.players.slice();
+	this.players[0].load(preloader(0));
 
-	this.players.forEach(function(player) {
-		console.log("calling ready for " + player);
-		player.ready(function() {
-			console.log("player " + player + " is ready");
-			loading.splice(loading.indexOf(player), 1);
-			console.log(loading);
-			if (loading.length == 0) {
-				that.ready();
-			}
-		});
+
+
+	this.players[0].ready(function() {
+		that.ready();
 	});
 
-	
+	// this.players.forEach(function(player) {
+	// 	console.log("calling ready for " + player);
+	// 	player.ready(function() {
+	// 		console.log("player " + player + " is ready");
+	// 		loading.splice(loading.indexOf(player), 1);
+	// 		console.log(loading);
+	// 		if (loading.length == 0) {
+	// 			that.ready();
+	// 		}
+	// 	});
+	// });
 
-	this.players[this.currentPlayerIndex].show();
-	this.players[this.currentPlayerIndex].volume(that.volumeLevel);
+	this.players[0].volume(0);
+	this.players[0].play();
+
+	
 	//this.players[this.currentPlayerIndex].play();
 
 	this.currentVid = function() {
@@ -814,6 +959,19 @@ function Player(sequence) {
 
 	this.vidAt = function(index) {
 		return this.players[index];
+	}
+
+	this.findNextVideo = function(index) {
+		console.log('calling findNextVideo' + this.players.length);
+		console.log(index);
+		for(var i = index+1; i < this.players.length; i++) {
+			console.log('next video function loaded');
+			if (this.players[i].isVideo) {
+				console.log('this player is a video');
+				return this.players[i];
+			}
+		}
+		return null;
 	}
 
 	this.pause = function() {
@@ -858,8 +1016,37 @@ function Player(sequence) {
 			return time;
 		}
 	}
-	this.duration = function() {
+
+	this.bufferedTime = function() {
 		var time = 0.0;
+		for(var i = 0; i < this.players.length; i++) {
+			var player = this.players[i];
+			if (player.isReady) {
+				time += this.players[i].bufferedTime();
+			}
+		}
+		return time;
+	}
+
+    this.bufferStats = function() {
+    	var results = "[\n";
+    	var first = true;
+    	for(var i = 0; i < this.players.length; i++) {
+    		var player = this.players[i];
+    		if (!player.hasOwnProperty('bufferStats')) continue;
+    		if (!first) {
+    			results += ",\n"
+    		} else {
+    			first = false;
+    		}
+    		results += this.players[i].bufferStats();
+    	}
+    	results += "\n]";
+    	return results;
+    }
+
+	this.duration = function() {
+ 		var time = 0.0;
 		for(var i = 0; i < this.players.length; i++) {
 			time += this.players[i].duration();
 		}
@@ -873,12 +1060,19 @@ function Player(sequence) {
 		this.timeUpdateCallback = callback;
 	}
 
+	this.onProgress = function(callback) {
+		this.progressCallback = callback;
+	}
+
 	this.ready = function() {
 		var that = this;
 		if (arguments.length > 0) {
 			cb = arguments[0];
 			this.readyCallback = chain(this, this.readyCallback, cb);
 		} else {
+			this.isReady = true;
+			this.players[this.currentPlayerIndex].show();
+			this.players[this.currentPlayerIndex].volume(that.volumeLevel);
 			if (this.readyCallback) {
 				this.readyCallback(this);
 			}

@@ -47,6 +47,7 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	var timeAsPercent = function(time) { return time/ that.player.duration(); }
 	var timePosition = function(time) { return timeAsPercent(time)*progressBarWidth() + 20; }
 	var progressPosition = function() { return timePosition(that.player.currentTime()); }
+	var bufferedPosition = function() { return timePosition(that.player.bufferedTime()); }
 	var secondsPerPixel = function() { return that.player.duration()/progressBarWidth(); }
 	var timeToPausePoint = function (pauseTime) { return pauseTime - that.player.currentTime(); }
 	var pausePointVisible = function(d) { return timeToPausePoint(d.start) < 10*secondsPerPixel() ? 1 : 0; }
@@ -93,11 +94,17 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 			d3.select('#completedLine').attr('width',progressCirclePosition());
 	}
 
+	var bufferedFunc = function() {
+		console.log(that.player.bufferStats());
+		d3.select('#bufferedProgressLine').attr('width',bufferedPosition()-20);
+	}
+
 
 	// 	console.log("pb ready");
 	// $(window).ready(function() {
 		d3.select(that.dragElement()).call(drag);
 		that.player.onTimeUpdate(progressFunc);
+		that.player.onProgress(bufferedFunc);
 	// });
 
 	$(window).resize(function() {

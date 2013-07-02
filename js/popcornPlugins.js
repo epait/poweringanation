@@ -21,7 +21,7 @@ var popMotionDeltaMead = Popcorn('#motionDeltaMead');
 // Start Audio Loop 1
 popAct1.code({
 	start: 1,
-	end: 120,
+	end: 125,
 	onStart: function() {
 		natSoundAct2A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct2B.animate({volume: 0},1000,function(){this.pause()});
@@ -35,15 +35,15 @@ popAct1.code({
 });
 popAct1.code({
 	start:1,
-	end:113,
+	end: 91.3,
 	onStart: function() {
 		natSoundAct1A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct1B.animate({volume: 0},1000,function(){this.pause()});
 	}
 });
 popAct1.code({
-	start: 113.1,
-	end: 120,
+	start: 92.3,
+	end: 125,
 	onStart: function() {
 		console.log('Play Audio Track A');
 		document.getElementById('natSoundAct1A').currentTime=0;
@@ -74,7 +74,7 @@ natSoundAct1B.on('timeupdate',function() {
 // End Audio Loop 1
 popAct2.code({
 	start: 1,
-	end: 160,
+	end: 184,
 	onStart: function() {
 		natSoundAct1A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct1B.animate({volume: 0},1000,function(){this.pause()});
@@ -89,15 +89,15 @@ popAct2.code({
 // Start Audio Loop 2
 popAct2.code({
 	start: 1,
-	end: 134,
+	end: 117.15,
 	onStart: function() {
 		natSoundAct2A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct2B.animate({volume: 0},1000,function(){this.pause()});
 	}
 });
 popAct2.code({
-	start: 130,
-	end: 134,
+	start: 118.15,
+	end: 184,
 	onStart: function() {
 		document.getElementById('natSoundAct2A').currentTime=0;
 		natSoundAct2A.animate({volume: 0.5},2000);
@@ -127,7 +127,7 @@ natSoundAct2B.on('timeupdate',function() {
 // End Audio Loop 2
 popMotionDams.code({
 	start: 1,
-	end: 128,
+	end: 105,
 	onStart: function() {
 		natSoundAct1A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct1B.animate({volume: 0},1000,function(){this.pause()});
@@ -144,7 +144,7 @@ popMotionDams.code({
 // Start Audio Loop 3
 popAct3.code({
 	start: 1,
-	end: 196,
+	end: 243,
 	onStart: function() {
 		natSoundAct1A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct1B.animate({volume: 0},1000,function(){this.pause()});
@@ -158,15 +158,15 @@ popAct3.code({
 });
 popAct3.code({
 	start:1,
-	end:189,
+	end:193,
 	onStart: function() {
 		natSoundAct3A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct3B.animate({volume: 0},1000,function(){this.pause()});
 	}
 });
 popAct3.code({
-	start: 190,
-	end: 196,
+	start: 194,
+	end: 243,
 	onStart: function() {
 		console.log('Play Audio Track A');
 		document.getElementById('natSoundAct3A').currentTime=0;
@@ -214,7 +214,7 @@ popMotionPopulation.code({
 // Start Audio Loop 4
 popAct4.code({
 	start: 1,
-	end: 125,
+	end: 82,
 	onStart: function() {
 		natSoundAct1A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct1B.animate({volume: 0},1000,function(){this.pause()});
@@ -227,16 +227,16 @@ popAct4.code({
 	}
 });
 popAct4.code({
-	start:1,
-	end:119,
+	start: 1,
+	end: 24.25,
 	onStart: function() {
 		natSoundAct4A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct4B.animate({volume: 0},1000,function(){this.pause()});
 	}
 });
 popAct4.code({
-	start: 120,
-	end: 125,
+	start: 25.25,
+	end: 82,
 	onStart: function() {
 		console.log('Play Audio Track A');
 		document.getElementById('natSoundAct4A').currentTime=0;
@@ -267,7 +267,7 @@ natSoundAct4B.on('timeupdate',function() {
 // End Audio Loop 4
 popMotionDeltaMead.code({
 	start: 1,
-	end: 65,
+	end: 97,
 	onStart: function() {
 		natSoundAct1A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct1B.animate({volume: 0},1000,function(){this.pause()});
@@ -284,7 +284,7 @@ popMotionDeltaMead.code({
 // Start Audio Loop 5
 popAct5.code({
 	start: 1,
-	end: 74,
+	end: 70,
 	onStart: function() {
 		natSoundAct1A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct1B.animate({volume: 0},1000,function(){this.pause()});
@@ -298,15 +298,15 @@ popAct5.code({
 });
 popAct5.code({
 	start:1,
-	end:69,
+	end:62.3,
 	onStart: function() {
 		natSoundAct5A.animate({volume: 0},1000,function(){this.pause()});
 		natSoundAct5B.animate({volume: 0},1000,function(){this.pause()});
 	}
 });
 popAct5.code({
-	start: 70,
-	end: 74,
+	start: 63.3,
+	end: 70,
 	onStart: function() {
 		console.log('Play Audio Track A');
 		document.getElementById('natSoundAct5A').currentTime=0;
