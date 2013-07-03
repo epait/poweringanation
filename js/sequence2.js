@@ -17,7 +17,7 @@ var sequence = [
 		type: 'powell',
 		transitionLoop: 'loopRiver',
 		loopId: "powellLoop",
-		content: '<span class="showLast">This river is different. The Colorado is </span><span class="showFirst">young</span><span class="showLast">, walled at the bottom of a canyon of its own making. It is </span><span class="showSecond">tempermental</span><span class="showLast"> -- dangerous as a borrowed </span><span class="showThird">warhorse</span><span class="showLast">. Water crossing fallen boulders is a </span><span class="showFourth">force</span><span class="showLast">, a concussion, a </span><span class="showFifth">fate</span><span class="showLast">. Nations </span><span class="showSixth">boomed</span><span class="showLast"> only to </span><span class="showSeventh">collapse</span><span class="showLast"> beside it, fortunate explorers staggered away from its rapids. Piled behind dams and </span><span class="showEighth">diversions</span><span class="showLast">, the Colorado continues to </span><span class="showNinth">power</span><span class="showLast">, fund, water and float millions of human dreams as we continue to underestimate its capacity for </span><span class="showTenth">impact</span><span class="showLast">.</span>'
+		content: '<span class="showLast">The Colorado is young, walled at the bottom of a </span><span class="focusWords" id="showThird">canyon</span><span class="showLast"> of its own making. It is temperamental -- </span><span class="focusWords" id="showFifth">dangerous</span><span class="showLast"> as a borrowed warhorse. Rapid water across </span><span class="focusWords" id="showFirst">fallen</span><span class="showLast"> boulders creates a </span><span class="focusWords" id="showSecond">force</span><span class="showLast">, a concussion, a </span><span class="focusWords" id="showSixth">fate</span><span class="showLast">. Nations have boomed along its shore only to collapse beside it. Fortunate explorers have staggered away from its cliffs. Yet, humans found ways to harness its power and tame its floods. In the past century, damming, quarreling and consuming have </span><span class="focusWords" id="showFourth">transformed</span><span class="showLast"> this living river beyond recognition.</span>'
 	},
 	{ 
 		type: 'video',
@@ -29,8 +29,8 @@ var sequence = [
 		transitionLoop: "loopFire",
 		loopId: "videoAct2Loop", 
 		transitionText: [
-			{ id: 'videoAct2Text',  content: 'Heroes are humans set apart when they decide to change the outcome of a situation and summon the strength to do so.' },
-			{ id: 'videoAct2Text', content: 'Without thought to the later costs of their efforts, they are ordinary people with the audacity to decide they can change their circumstances.' }
+			{ id: 'videoAct2Text',  content: 'Ever since the crash, its effects have been time-released, staggering and persistent.' },
+			{ id: 'videoAct2Text', content: 'An event is incited suddenly; the aftermath can be more complicated.' }
 		] 
 	}, 
 	
@@ -50,8 +50,8 @@ var sequence = [
 		transitionLoop: "loopUnderwater",
 		loopId: "videoAct3Loop", 
 		transitionText: [
-			{ id: 'videoAct3Text',  content: 'Reliance makes us vulnerable to the unknown. ' },
-			{ id: 'videoAct3Text', content: 'Unattended, our tolerances creep towards out of control.' }
+			{ id: 'videoAct3Text',  content: 'Whether underwater or at war, situations can get out of control. ' },
+			{ id: 'videoAct3Text', content: 'Once something ignites, its hard to predict how far it will spread.' }
 		] 
 	},
 	{ 
@@ -70,8 +70,8 @@ var sequence = [
 		transitionLoop: "loopWood",
 		loopId: "videoAct4Loop", 
 		transitionText: [
-			{ id: 'videoAct4Text',  content: 'It is hard to see things whole.' },
-			{ id: 'videoAct4Text', content: 'In the midst of struggle, the strengths we use are often the same talents we must enlist in reaction to consequences of that fight. ' }
+			{ id: 'videoAct4Text',  content: 'Trying a new course means accepting the unknown.' },
+			{ id: 'videoAct4Text', content: 'But, sometimes you can no longer ignore the warning signs.' }
 		] 
 	},
 	{ 
@@ -98,14 +98,14 @@ var sequence = [
 		type: 'conclusion',
 		transitionLoop: 'loopRock',
 		loopId: "conclusionLoop",
-		content: 'Conclusion Text will Go Here.'
+		content: '<span class="showConclusionLast">The Colorado is generous. The river baptized our </span><span class="focusWords" id="showConclusionThird">nation</span><span class="showConclusionLast"> in its infancy. Dusty outposts flourished into cities. We have plowed the desert, </span><span class="focusWords" id="showConclusionFirst">forced</span><span class="showConclusionLast"> the river into fields, and exported crops across continents. Our faith in the river\'s power leaves us vulnerable and dependent. When we flooded a natural cathedral, we irreversibly </span><span class="focusWords" id="showConclusionFourth">transformed</span><span class="showConclusionLast"> the landscape. Now a new consciousness demands exploration for </span><span class="focusWords" id="showConclusionSecond">change</span><span class="showConclusionLast">. Our decisions have shaped a fluid </span><span class="focusWords" id="showConclusionFifth">fate</span><span class="showConclusionLast">. The river graces us with opportunities to be </span><span class="focusWords" id="showConclusionSixth">remade</span><span class="showConclusionLast">.</span>'
 	}
 ];
 
 
 var diamondPoints = [
 	{
-		start: 124.5,
+		start: 124.4,
 		pointTitle: 'Powell'
 	},
     {

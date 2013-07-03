@@ -92,11 +92,13 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 			}
 			$('.pauseDiamond').tooltip({ position: { my: "center+8 bottom", at: "top" } });
 			d3.select('#completedLine').attr('width',progressCirclePosition());
+			//console.log(that.player.bufferStats());
+			d3.select('#bufferedProgressLine').attr('width',bufferedPosition() - 20);
 	}
 
 	var bufferedFunc = function() {
-		console.log(that.player.bufferStats());
-		d3.select('#bufferedProgressLine').attr('width',bufferedPosition()-20);
+		//console.log(that.player.bufferStats());
+		d3.select('#bufferedProgressLine').attr('width',bufferedPosition() - 20);
 	}
 
 
@@ -104,7 +106,7 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	// $(window).ready(function() {
 		d3.select(that.dragElement()).call(drag);
 		that.player.onTimeUpdate(progressFunc);
-		that.player.onProgress(bufferedFunc);
+		that.player.onProgress(progressFunc);
 	// });
 
 	$(window).resize(function() {

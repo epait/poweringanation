@@ -29,6 +29,7 @@ var playerControlsPositioning = function () {
   d3.select('#fullscreenOff').attr('transform',fullscreenOff).attr('onclick','cancelFullscreen("pageWrapper")');
   d3.select('#soundOn').attr('transform',soundOn);
   d3.select('#soundOff').attr('transform',soundOff);
+
 };
 var dragButtonStart = function() {
   var wrapperWidth = $('.pageWrapper').width();
@@ -47,6 +48,15 @@ var dragToResumePositioning = function () {
   d3.select('#resumeVideo').attr('transform',dragButtonPositioning);
   d3.select('#dragArrow').attr('transform',dragButtonPositioning);
   d3.select('#dragClick').attr('transform',dragButtonPositioning);
+};
+var dragToEnterPositioning = function () {
+  d3.select('#svgPath2').attr('transform',dragPathPositioning);
+  d3.select('#resumeVideo2').attr('transform',dragButtonPositioning);
+  d3.select('#dragArrow2').attr('transform',dragButtonPositioning);
+  d3.select('#dragClick2').attr('transform',dragButtonPositioning);
+  d3.select('#dragPath2').attr('width',function() {
+    return $('.pageWrapper').width();
+  });
 };
 var grayBoxRightPositioning = function() {
   d3.select('#grayBoxRight').attr('x',function(){
@@ -132,6 +142,17 @@ var quoteWrapperPosition = function() {
       return portraitWrapperWidth + 125 + 'px';
     })
 }
+var logoPosition = function() {
+  var wrapperWidth = $('.pageWrapper').width();
+  var wrapperHeight = $('.pageWrapper').height();
+  var logoX = (wrapperWidth - 559)/2;
+  var logoY = (wrapperHeight - 559)/2;
+  var canvasX = (wrapperWidth - 152)/2;
+  var canvasY = (wrapperHeight - 459)/2;
+  d3.select('#logoWrapper').attr('transform','scale(0.6) translate('+logoX+','+logoY+')');
+  $('.circleDraw').css('top',canvasY);
+  $('.circleDraw').css('left',canvasX);
+}
 var resizePageElements = function() {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
@@ -140,6 +161,7 @@ var resizePageElements = function() {
     pageWrapperMin();
     playerControlsPositioning();
     dragToResumePositioning();
+    dragToEnterPositioning();
     grayBoxRightPositioning();
     progressLineWidth();
     additionalContentBackgroundResize();
@@ -148,11 +170,13 @@ var resizePageElements = function() {
     fellowPortraitSize();
     editorialDividerPosition();
     quoteWrapperPosition();
+    logoPosition();
   }
   else if (windowHeight <= 540) {
     pageWrapperMin();
     playerControlsPositioning();
     dragToResumePositioning();
+    dragToEnterPositioning();
     grayBoxRightPositioning();
     progressLineWidth();
     additionalContentBackgroundResize();
@@ -161,6 +185,7 @@ var resizePageElements = function() {
     fellowPortraitSize();
     editorialDividerPosition();
     quoteWrapperPosition();
+    logoPosition();
   }
     else if (windowAspectRatio < widthAspectRatio){
     $('.pageWrapper').width(windowWidth);
@@ -175,6 +200,7 @@ var resizePageElements = function() {
      $('#loadingWrapper').css('margin-top',wrapperMargin);
     playerControlsPositioning();
     dragToResumePositioning();
+    dragToEnterPositioning();
     grayBoxRightPositioning();
     progressLineWidth();
     additionalContentBackgroundResize();
@@ -183,6 +209,7 @@ var resizePageElements = function() {
     fellowPortraitSize();
     editorialDividerPosition();
     quoteWrapperPosition();
+    logoPosition();
   }
   else if (windowAspectRatio > widthAspectRatio) {
     $('.pageWrapper').height(windowHeight);
@@ -194,6 +221,7 @@ var resizePageElements = function() {
     $('#loadingWrapper').css('margin-top',0);
     playerControlsPositioning();
     dragToResumePositioning();
+    dragToEnterPositioning();
     grayBoxRightPositioning();
     progressLineWidth();
     additionalContentBackgroundResize();
@@ -202,6 +230,7 @@ var resizePageElements = function() {
     fellowPortraitSize();
     editorialDividerPosition();
     quoteWrapperPosition();
+    logoPosition();
   }
   else {
     // Do Nothing
@@ -276,6 +305,7 @@ function goFullscreen(id) {
    // Hooray, now we're in fullscreen mode!
 }
 function cancelFullscreen(id) {
+    console.log('cancelling fullscreen');
     // Get the element that we want to take into fullscreen mode
     var element = document.getElementById(id);
     
@@ -313,6 +343,7 @@ $('#videoLoop3').hide();
 $('#dragButton').hide();
 $('#dragPath').hide();
 $('#dragArrow').hide();
+$('#dragArrow2').hide();
 $('#clickForMore').hide();
 
 
@@ -330,6 +361,16 @@ $('#dragClick').hover(
     function() {
       $('#resumeVideo').show();
       $('#dragArrow').hide();  
+    }
+  );
+$('#dragClick2').hover(
+    function() {
+      $('#resumeVideo2').hide();
+      $('#dragArrow2').show(); 
+    },
+    function() {
+      $('#resumeVideo2').show();
+      $('#dragArrow2').hide();  
     }
   );
 

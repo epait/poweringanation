@@ -51,7 +51,7 @@ function VideoJSPlayer(info) {
 	this.isReady = false;
 	this.isVideo = true;
 	this.isLoaded = false;
-	this.video = videojs(info.videoId);
+	this.video = videos[info.videoId];
 	this.videoId = info.videoId;
 	this.volumeLevel = this.video.volume();
 	this.cachedDuration = info.duration;
@@ -65,11 +65,17 @@ function VideoJSPlayer(info) {
 		}
 	});
 	this.video.on("timeupdate", function() {
+		console.log('timeupdate for ' + that.videoId);
+		if (that.preloading) {return;}
+		if (that.paused()) {return;}
+		console.log(that.videoId + 'is paused?' + that.paused());
+		console.log(that.videoId + 'is not preloading');
 		if (that.timeUpdateCallback) {
 			that.timeUpdateCallback.call(that);
 		}
 		$('#dragButton').hide();
 		$('#dragPath').hide();
+		console.log('drag path is hidden by ' + that.videoId);
 		$('#clickForMore').hide();
 		$('.clickForMore').hide();
 		$('.extendedTextBackground').hide();
@@ -80,15 +86,18 @@ function VideoJSPlayer(info) {
 		if (that.preloading && that.bufferedTime() > 1) {
 			that.preloading = false;
 			that.video.pause();
+			console.log(that.videoId + 'paused by preloader');
 		}
 		if (that.progressCallback) {
 			that.progressCallback.call(that);
+			// that.video.pause();
 		}
 		if (that.isReady && (that.duration() - that.bufferedTime() < 2.0)) {
 			that.isLoaded = true;
 			if (that.loadedCallback) {
 				that.loadedCallback.call(that);
 				that.video.off('progress');
+				// that.video.pause();
 			}
 		}
 	});
@@ -137,8 +146,8 @@ function VideoJSPlayer(info) {
 			}
 		}
 		else if (!this.preloading && this.paused()) {
-			this.preloading = true;
 			this.video.volume(0);
+			this.preloading = true;
 			this.video.play();
 		}
 	}
@@ -392,16 +401,7 @@ function PowellPlayer(info) {
 
 	this.hide = function() {
 		$('#'+this.info.loopId).hide();
-		$('.showFirst').css('opacity','0');
-		$('.showSecond').css('opacity','0');
-		$('.showThird').css('opacity','0');
-		$('.showFourth').css('opacity','0');
-		$('.showFifth').css('opacity','0');
-		$('.showSixth').css('opacity','0');
-		$('.showSeventh').css('opacity','0');
-		$('.showEigth').css('opacity','0');
-		$('.showNinth').css('opacity','0');
-		$('.showTenth').css('opacity','0');
+		$('.focusWords').css('opacity','0');
 		$('.showLast').css('opacity','0');
 	}
 
@@ -410,64 +410,44 @@ function PowellPlayer(info) {
 		$('.secondLevelContent').hide();
 		$('#'+this.info.loopId).show();
 		setTimeout(function() {
-			$('.showFirst').animate({
+			$('#showFirst').animate({
 				opacity: 1
 			}, 1000);
-		}, 1000);
+		}, 100);
 		setTimeout(function() {
-			$('.showSecond').animate({
+			$('#showSecond').animate({
 				opacity: 1
 			}, 1000);
-		}, 2000);
+		}, 433);
 		setTimeout(function() {
-			$('.showThird').animate({
+			$('#showThird').animate({
 				opacity: 1
 			}, 1000);
-		}, 3000);
+		}, 2433);
 		setTimeout(function() {
-			$('.showFourth').animate({
+			$('#showFourth').animate({
 				opacity: 1
 			}, 1000);
-		}, 4000);
+		}, 2766);
 		setTimeout(function() {
-			$('.showFifth').animate({
+			$('#showFifth').animate({
 				opacity: 1
 			}, 1000);
-		}, 5000);
+		}, 3766);
 		setTimeout(function() {
-			$('.showSixth').animate({
+			$('#showSixth').animate({
 				opacity: 1
 			}, 1000);
-		}, 6000);
-		setTimeout(function() {
-			$('.showSeventh').animate({
-				opacity: 1
-			}, 1000);
-		}, 7000);
-		setTimeout(function() {
-			$('.showEighth').animate({
-				opacity: 1
-			}, 1000);
-		}, 8000);
-		setTimeout(function() {
-			$('.showNinth').animate({
-				opacity: 1
-			}, 1000);
-		}, 9000);
-		setTimeout(function() {
-			$('.showTenth').animate({
-				opacity: 1
-			}, 1000);
-		}, 10000);
+		}, 3100);
 		setTimeout(function() {
 			$('.showLast').animate({
-				opacity: 1
+				opacity: 0.6
 			}, 1500);
-		}, 12000);
+		}, 6600);
 		console.log('show PowellPlayer');
         setTimeout(function(){
         	that.timerEnded();
-        },22000);
+        },12000);
     }
 
 	this.pause = function() {
@@ -595,20 +575,58 @@ function ConclusionPlayer(info) {
     videoLoopContainer.selectAll('.textOverlay').data([info.content]).enter()
 		.append('div')
         .attr('class', 'textOverlay')
-        .text(String);        
+        .html(String);        
 
 
 	this.hide = function() {
 		$('#'+this.info.loopId).hide();
+		$('.focusWords').css('opacity','0');
+		$('.showConclusionLast').css('opacity','0');
 	}
 
 	this.show = function() {
 		var that = this;
+		$('.secondLevelContent').hide();
 		$('#'+this.info.loopId).show();
+		setTimeout(function() {
+			$('#showConclusionFirst').animate({
+				opacity: 1
+			}, 1000);
+		}, 100);
+		setTimeout(function() {
+			$('#showConclusionSecond').animate({
+				opacity: 1
+			}, 1000);
+		}, 433);
+		setTimeout(function() {
+			$('#showConclusionThird').animate({
+				opacity: 1
+			}, 1000);
+		}, 2433);
+		setTimeout(function() {
+			$('#showConclusionFourth').animate({
+				opacity: 1
+			}, 1000);
+		}, 2766);
+		setTimeout(function() {
+			$('#showConclusionFifth').animate({
+				opacity: 1
+			}, 1000);
+		}, 3766);
+		setTimeout(function() {
+			$('#showConclusionSixth').animate({
+				opacity: 1
+			}, 1000);
+		}, 4100);
+		setTimeout(function() {
+			$('.showConclusionLast').animate({
+				opacity: 0.6
+			}, 1500);
+		}, 6600);
 		console.log('show PowellPlayer');
-        // setTimeout(function(){
-        // 	that.timerEnded();
-        // },10000);
+        setTimeout(function(){
+        	that.timerEnded();
+        },12000);
     }
 
 	this.pause = function() {
@@ -643,18 +661,18 @@ function ConclusionPlayer(info) {
 	}
 
 	this.timerEnded = function() {
-		console.log('timer started');
-		var that = this;
-		var handler = function() {
-			console.log(name)
-			delete registry.dragHandler;
-			that.ended();
-		}
-		registry.dragHandler = handler;
-		console.log(registry);
-		$('#dragButton').fadeIn(500);
-		$('#dragPath').fadeIn(500);
-		$('#clickForMore').fadeIn(500);
+		// console.log('timer started');
+		// var that = this;
+		// var handler = function() {
+		// 	console.log(name)
+		// 	delete registry.dragHandler;
+		// 	that.ended();
+		// }
+		// registry.dragHandler = handler;
+		// console.log(registry);
+		// $('#dragButton').fadeIn(500);
+		// $('#dragPath').fadeIn(500);
+		// $('#clickForMore').fadeIn(500);
 	}
 
 
@@ -708,7 +726,7 @@ function MotionGraphicPlayer(info) {
 	this.isVideo = true;
 	this.info = info;
 	this.isLoaded = false;
-	this.video = videojs(info.videoId);
+	this.video = videos[info.videoId];
 	this.videoId = info.videoId;
 	this.cachedDuration = info.duration;
 	this.volumeLevel = this.video.volume();
@@ -721,6 +739,8 @@ function MotionGraphicPlayer(info) {
 		}
 	});
 	this.video.on("timeupdate", function() {
+		if (that.preloading) {return;}
+		if (that.paused()) {return;}
 		var timeRemaining = that.duration()-that.currentTime();
 		$('.extendedTextBackground').hide();
 		$('.secondLevelContent').hide();
@@ -750,11 +770,13 @@ function MotionGraphicPlayer(info) {
 		}
 		if (that.progressCallback) {
 			that.progressCallback.call(that);
+			// that.video.pause();
 		}
 		if (that.isReady && (that.duration() - that.bufferedTime() < 2.0)) {
 			that.isLoaded = true; 
 			if (that.loadedCallback) {
 				that.loadedCallback.call(that);
+				// that.video.pause();
 				that.video.off('progress');
 			}
 		}
@@ -880,7 +902,6 @@ function MotionGraphicPlayer(info) {
 }
 
 function Player(sequence) {
-	alert("HELLO!");
 	var that = this;
 
 	this.isReady = false;
@@ -908,6 +929,7 @@ function Player(sequence) {
 		return function() {
 			console.log("Transition from player " + index);
 			that.currentVid(index+1);
+			that.play();
 		}
 	}
 
@@ -948,8 +970,6 @@ function Player(sequence) {
 
 	this.readyCallback = function() {
 		console.log("setting up end event handler");
-		$('#loadingWrapper').hide();
-		$('#pageWrapper').show();
 		for(var i = 0; i < that.players.length; i++) {
 			var player = that.players[i];
 			player.onEnded(transitioner(i));
@@ -961,6 +981,7 @@ function Player(sequence) {
 
 	this.loader = new Loader(this);
 
+	this.players[0].load();
 
 	this.players[0].ready(function() {
 		that.ready();
@@ -978,8 +999,8 @@ function Player(sequence) {
 	// 	});
 	// });
 
-	this.players[0].volume(0);
-	this.players[0].play();
+	// this.players[0].volume(0);
+	// this.players[0].play();
 
 	
 	//this.players[this.currentPlayerIndex].play();
