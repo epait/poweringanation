@@ -17,7 +17,7 @@ var sequence = [
 		type: 'powell',
 		transitionLoop: 'loopRiver',
 		loopId: "powellLoop",
-		content: '<span class="showLast">The Colorado is young, walled at the bottom of a </span><span class="focusWords" id="showThird">canyon</span><span class="showLast"> of its own making. It is temperamental -- </span><span class="focusWords" id="showFifth">dangerous</span><span class="showLast"> as a borrowed warhorse. Rapid water across </span><span class="focusWords" id="showFirst">fallen</span><span class="showLast"> boulders creates a </span><span class="focusWords" id="showSecond">force</span><span class="showLast">, a concussion, a </span><span class="focusWords" id="showSixth">fate</span><span class="showLast">. Nations have boomed along its shore only to collapse beside it. Fortunate explorers have staggered away from its cliffs. Yet, humans found ways to harness its power and tame its floods. In the past century, damming, quarreling and consuming have </span><span class="focusWords" id="showFourth">transformed</span><span class="showLast"> this living river beyond recognition.</span>'
+		content: '<span class="showLast">The Colorado is young, walled at the bottom of a </span><span class="focusWords" id="showThird">canyon</span><span class="showLast"> of its own making. It is temperamental &mdash; </span><span class="focusWords" id="showFifth">dangerous</span><span class="showLast"> as a borrowed warhorse. Rapid water across </span><span class="focusWords" id="showFirst">fallen</span><span class="showLast"> boulders creates a </span><span class="focusWords" id="showSecond">force</span><span class="showLast">, a concussion, a </span><span class="focusWords" id="showSixth">fate</span><span class="showLast">. Nations have boomed along its shore only to collapse beside it. Fortunate explorers have staggered away from its cliffs. Yet, humans found ways to harness its power and tame its floods. In the past century, damming, quarreling and consuming have </span><span class="focusWords" id="showFourth">transformed</span><span class="showLast"> this living river beyond recognition.</span>'
 	},
 	{ 
 		type: 'video',
@@ -50,8 +50,8 @@ var sequence = [
 		transitionLoop: "loopUnderwater",
 		loopId: "videoAct3Loop", 
 		transitionText: [
-			{ id: 'videoAct3Text',  content: 'Whether underwater or at war, situations can get out of control. ' },
-			{ id: 'videoAct3Text', content: 'Once something ignites, its hard to predict how far it will spread.' }
+			{ id: 'videoAct3Text',  content: 'Underwater or at war, situations can get out of control. ' },
+			{ id: 'videoAct3Text', content: 'Once something ignites, it\'s hard to predict how far it will spread.' }
 		] 
 	},
 	{ 
@@ -67,11 +67,11 @@ var sequence = [
 	},
 	{
 		type: "transitionText",
-		transitionLoop: "loopWood",
+		transitionLoop: "loopSandstone",
 		loopId: "videoAct4Loop", 
 		transitionText: [
 			{ id: 'videoAct4Text',  content: 'Trying a new course means accepting the unknown.' },
-			{ id: 'videoAct4Text', content: 'But, sometimes you can no longer ignore the warning signs.' }
+			{ id: 'videoAct4Text', content: 'Sometimes you can no longer ignore the warning signs.' }
 		] 
 	},
 	{ 

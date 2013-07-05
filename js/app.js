@@ -147,8 +147,9 @@ var logoPosition = function() {
   var wrapperHeight = $('.pageWrapper').height();
   var logoX = (wrapperWidth - 559)/2;
   var logoY = (wrapperHeight - 559)/2;
-  var canvasX = (wrapperWidth - 152)/2;
-  var canvasY = (wrapperHeight - 459)/2;
+  var canvasX = (wrapperWidth - 354)/2;
+  var canvasY = (wrapperHeight - 354)/2;
+  d3.select('.introBackground').style('width',wrapperWidth);
   d3.select('#logoWrapper').attr('transform','scale(0.6) translate('+logoX+','+logoY+')');
   $('.circleDraw').css('top',canvasY);
   $('.circleDraw').css('left',canvasX);
@@ -334,16 +335,16 @@ function cancelFullscreen(id) {
 
 
 // Hide Video Loops
-$('#videoLoop1').hide();
-$('#videoLoop2').hide();
-$('#videoLoop3').hide();
+// $('#videoLoop1').hide();
+// $('#videoLoop2').hide();
+// $('#videoLoop3').hide();
 
 
 // Hide Drag Paths
 $('#dragButton').hide();
 $('#dragPath').hide();
 $('#dragArrow').hide();
-$('#dragArrow2').hide();
+// $('#dragArrow2').hide();
 $('#clickForMore').hide();
 
 

@@ -433,17 +433,17 @@ function PowellPlayer(info) {
 			$('#showFifth').animate({
 				opacity: 1
 			}, 1000);
-		}, 3766);
+		}, 4766);
 		setTimeout(function() {
 			$('#showSixth').animate({
 				opacity: 1
 			}, 1000);
-		}, 3100);
+		}, 5100);
 		setTimeout(function() {
 			$('.showLast').animate({
 				opacity: 0.6
 			}, 1500);
-		}, 6600);
+		}, 7600);
 		console.log('show PowellPlayer');
         setTimeout(function(){
         	that.timerEnded();
@@ -612,17 +612,17 @@ function ConclusionPlayer(info) {
 			$('#showConclusionFifth').animate({
 				opacity: 1
 			}, 1000);
-		}, 3766);
+		}, 4766);
 		setTimeout(function() {
 			$('#showConclusionSixth').animate({
 				opacity: 1
 			}, 1000);
-		}, 4100);
+		}, 5100);
 		setTimeout(function() {
 			$('.showConclusionLast').animate({
 				opacity: 0.6
 			}, 1500);
-		}, 6600);
+		}, 7600);
 		console.log('show PowellPlayer');
         setTimeout(function(){
         	that.timerEnded();

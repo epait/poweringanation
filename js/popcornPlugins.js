@@ -1,3 +1,5 @@
+var natSoundIntroA = $('#natSoundIntroA');
+var natSoundIntroB = $('#natSoundIntroB');
 var natSoundAct1A = $('#natSoundAct1A');
 var natSoundAct1B = $('#natSoundAct1B');
 var natSoundAct2A = $('#natSoundAct2A');
@@ -48,7 +50,7 @@ function showLoadingStats() {
 	console.log("]");
 }
 
-window.setInterval(showLoadingStats, 1000);
+// window.setInterval(showLoadingStats, 1000);
 
 
 var videoAct1 = videos['videoAct1'];
@@ -59,6 +61,7 @@ var videoAct5 = videos['videoAct5'];
 var motionDams = videos['motionDams'];
 var motionPopulation = videos['motionPopulation'];
 var motionDeltaMead = videos['motionDeltaMead'];
+
 
 
 
@@ -91,7 +94,7 @@ popAct1.code({
 	onStart: function() {
 		console.log('Play Audio Track A');
 		document.getElementById('natSoundAct1A').currentTime=0;
-		natSoundAct1A.animate({volume: 0.4},1000);
+		natSoundAct1A.animate({volume: 0.3},1000);
     	document.getElementById('natSoundAct1A').play();
 	}
 });
@@ -99,7 +102,7 @@ natSoundAct1A.on('timeupdate',function() {
 	if (this.currentTime>this.duration-1) {
 		console.log('Play Audio Track B');
 		document.getElementById('natSoundAct1B').currentTime=0;
-		document.getElementById('natSoundAct1B').volume=0.4;
+		document.getElementById('natSoundAct1B').volume=0.3;
 		document.getElementById('natSoundAct1B').play();
 		this.pause();
 		this.currentTime=0;
@@ -109,7 +112,7 @@ natSoundAct1B.on('timeupdate',function() {
 	if (this.currentTime>this.duration-1) {
 		console.log('Play Audio Track A');
 		document.getElementById('natSoundAct1A').currentTime=0;
-		document.getElementById('natSoundAct1A').volume=0.4;
+		document.getElementById('natSoundAct1A').volume=0.3;
 		document.getElementById('natSoundAct1A').play();
 		this.pause();
 		this.currentTime=0;

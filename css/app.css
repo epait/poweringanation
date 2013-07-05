@@ -66,7 +66,7 @@ body {
 	z-index: 999;
 }
 #videoAct1, #videoAct2, #videoAct3, #videoAct4, #videoAct5, #motionDams, #motionPopulation, #motionDeltaMead {
-	z-index: 1;
+	z-index: 10;
 	position: absolute;
 	/*min-width: 960px;*/
 	/*min-height: 540px;*/
@@ -95,7 +95,9 @@ body {
 }
 .introBackground {
 	position: absolute;
-	width: inherit;
+	height: inherit;
+	width: 100%;
+	left: 0;
 	margin: 0;
 	padding: 0;
 	top: 0;
@@ -113,13 +115,16 @@ body {
 .logo {
 	position: absolute;
 	z-index: 985;
-	width: inherit;
+	width: 100%;
+	top: 0;
+	left: 0;
 	height: inherit;
 }
 .introSentences {
 	position: absolute;
 	z-index: 985;
 	width: 100%;
+	left: 0;
 	opacity: 0.8;
 }
 #loadingWrapper {

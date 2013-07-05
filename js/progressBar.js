@@ -102,12 +102,10 @@ function ProgressBar(elementId, clickOverlayId, offsetContainerId, containerId, 
 	}
 
 
-	// 	console.log("pb ready");
-	// $(window).ready(function() {
-		d3.select(that.dragElement()).call(drag);
-		that.player.onTimeUpdate(progressFunc);
-		that.player.onProgress(progressFunc);
-	// });
+		
+	d3.select(that.dragElement()).call(drag);
+
+	window.setInterval(progressFunc, 250);
 
 	$(window).resize(function() {
 		progressFunc();
