@@ -84,7 +84,7 @@ body {
 	overflow: hidden;
 }
 #videoIntro {
-	z-index: -1000;
+	z-index: 5;
 	position: absolute;
 	/*min-width: 960px;*/
 	/*min-height: 540px;*/
@@ -93,9 +93,34 @@ body {
 	overflow: hidden;
 	left: 0;
 }
+.introBackground {
+	position: absolute;
+	width: inherit;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	z-index: 980;
+}
+#introSentence1 {
+
+}
+#introSentence2 {
+	margin-top: 100px;
+}
+#introSentence3 {
+	margin-top: 175px;
+}
+.logo {
+	position: absolute;
+	z-index: 985;
+	width: inherit;
+	height: inherit;
+}
 .introSentences {
+	position: absolute;
+	z-index: 985;
 	width: 100%;
-	background-color: #000;
+	opacity: 0.8;
 }
 #loadingWrapper {
 	margin-left: auto;
@@ -180,6 +205,7 @@ body {
 	font-size: 20px;
 }
 .landgrabScroller, .powellScroller, .addictedScroller, .damagesScroller {
+	top: 0;
 	padding-top: 10px;
 	height: 100%;
 }
@@ -191,15 +217,20 @@ body {
 	width: 40%;
 	height: 85%;
 	position: absolute;
-	overflow: hidden;
-	/*overflow-x: hidden;*/
+	overflow: scroll;
+	overflow-x: hidden;
 	left: 5%;
 	top: 5%;
 	z-index: 998;
+	padding-top: 10px;
+	padding-right: 13px;
 	/*-moz-text-shadow: 3px 3px 10px #000;
 	-webkit-text-shadow: 3px 3px 10px #000;
 	text-shadow: 3px 3px 10px #000;*/
 	margin: 0;
+}
+#powellExtendedText img, #landgrabText img, #addictedText img, #damagesText img {
+	width: 100%;
 }
 #powellExtendedText h2, #landgrabText h2, #addictedText h2, #damagesText h2 {
 	font-family: 'Interstate-Regular';
@@ -242,13 +273,17 @@ body {
 	position: absolute;
 	z-index: 981;
 }
-#motionIntakeButton, #motionImperialButton {
+#motionImperialButton {
+	top: 53%;
+	left: 5%;
+ }
+#motionIntakeButton{
 	top: 50%;
 	left: 3%;
 }
 #motionHooverButton {
 	left: 3%;
-	top: 44%;
+	top: 50%;
 }
 .secondLevelToggle {
 	height: 100%;
@@ -539,27 +574,29 @@ g#dragButton2:hover {
 .clickForMore {
 	position: absolute;
 	z-index: 999;
-	bottom: -145px;
-	left:0;
 }
+.buttonWrapper {
+	position: absolute;
+	z-index: 985;
+	height: 78%;
+	width: 100%;
+} 
 #motionDeltaMeadButton {
 	position: absolute;
 	z-index: 999;
-	bottom: 100px;
-	left: 2.5%;
-	top: 42%;
+	left: 3%;
+	top: 52%;
 }
 #motionPopulationButton {
 	position: absolute;
 	z-index: 999;
-	bottom: 100px;
 	left: 3%;
-	top: 35%;
+	top: 40%;
 }
 #motionDamsButton {
 	position: absolute;
 	z-index: 999;
-	top: 48%;
+	top: 68%;
 	left: 3%;
 }
 .clickForMore:hover {
@@ -726,13 +763,13 @@ g#dragButton2:hover {
 		margin-top: 50px;
 	}
 #creditsLogo {
-	height: 450px;
+	height: 350px;
 	margin-top: 50px;
 }
 	.creditWrapper {
 		overflow: scroll;
 		text-align: center;
-		height: 3200px;
+		height: 3500px;
 		margin: 0 auto;
 	}
 	.logoFunders {
