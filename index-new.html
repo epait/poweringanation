@@ -716,7 +716,7 @@
 				<div id="playToggle"></div>
 				<img id="playImage" src="./img/playImage.png" />
 				<img id="pauseImage" src="./img/pauseImage.png" />
-				<div class="buttonWrapper"></div>
+				<!-- <div class="buttonWrapper"></div> -->
 				<div class="natSoundContainer">
 					<audio preload id="natSoundAct1A" class="natSound">
 						<source src="./audio/natSoundAct1.ogg" type="audio/ogg">
@@ -2448,9 +2448,6 @@ var videoPlayer = function(id, volume, duration, preloadStartSeconds) {
 			pauseCounts[id]++;
 		}
 		console.log(pauseCounts);
-		if (pauseCounts[id] > 3) {
-			throw 'too many pauses';
-		}
 	}
 
 	clip.pause = function() { console.log('calling clip.pause for ' + id); incrPauseCount(id); oldPause.call(clip); }
@@ -2597,11 +2594,12 @@ var videoPlayer = function(id, volume, duration, preloadStartSeconds) {
 
  	var checkBuffer = function(c) {
  		console.log(c);
- 		console.log('checkBuffer for ' + id + ' found ' + c.buffered().end(0) + ' of ' + c.duration());
+ 		var d = c.duration() ? c.duration() : duration;
+ 		console.log('checkBuffer for ' + id + ' found ' + c.buffered().end(0) + ' of ' + d);
  		if (c.buffered().end(0) > preloadStartSeconds) {
  			vPlayer.bufferSeeded();
  		}
- 		if (c.duration()-c.buffered().end(0) < 2) {
+ 		if (d - c.buffered().end(0) < 2) {
  			console.log( ' firing ' + id + ' loadedalldata');
 	 		callbacks['loadedalldata'].fire( vPlayer );
  			if (loadingIntervalID != -1) {
@@ -2631,7 +2629,7 @@ var videos = function() {
 
 	var players = {
 		videoIntro         : videoPlayer('videoIntro', 1, 21),
-		videoAct1          : videoPlayer('videoAct1', 1, 125, 10), 
+		videoAct1          : videoPlayer('videoAct1', 1, 125, 15), 
 		videoAct2          : videoPlayer('videoAct2', 1, 184),
 		motionDams         : videoPlayer('motionDams', 1, 105), 
 		motionHooverVid    : videoPlayer('motionHooverVid', 1, 120),
@@ -2852,8 +2850,8 @@ var StateBase = function() {
 
 
 	return {
-		vidClips       : [],
-		audioClips     : [],
+		paused         : function() { return false; },
+		muted          : function() { return false; },
 		domLoaded      : function() { return this; },
 		sliderDragged  : function() { return this; },
 
@@ -2882,23 +2880,107 @@ var StateBase = function() {
 
 var states = {}
 
+var introState = function(stateName, obj) {
+	obj.name = stateName;
+	obj.s = function(n) { return states[n]; }
+	states[stateName] = $.extend({}, StateBase, obj);
+}
+
 var state = function(stateName, obj) {
 	obj.name = stateName;
 	states[stateName] = $.extend({}, StateBase, obj);
 }
 
-	state('start', 
+var mainState = function(name, vids, aud, obj) {
+
+	var allVids = function(op) {
+		for(var i = 0; i < vids.length; i++) {
+			videos[op].call(videos, vids[i]);
+		}
+	}
+
+	var allAudio = function(op) {
+		for(var i = 0; i < aud.length; i++) {
+			audio[op].call(audio, aud[i]);
+		}
+	}
+
+	var allMedia = function(op) { allVids(op); allAudio(op); }
+
+	state(name+'Playing',$.extend({},
+	{
+		s: function(stateName) { return states[stateName+'Playing']; },
+		muted: function() { return false; },
+		muteClicked: function() {
+			allMedia('mute');
+			return states[name+'Muted'];
+		},
+		pauseClicked: function() {
+			allMedia('pause');
+			return states[name+'Paused'];
+		},
+	}, obj));
+
+	state(name+'Paused', $.extend({},
+	{
+		s: function(stateName) { return states[stateName+'Paused']; },
+		muted: function() { return false; },
+		paused: function() { return true; },
+		muteClicked: function() {
+			allMedia('mute');
+			return states[name+'PausedAndMuted'];
+		},
+		playClicked: function() {
+			allMedia('play');
+			return states[name+'Playing'];
+		},
+	}, obj));
+
+	state(name+'Muted', $.extend({},
+	{
+		s: function(stateName) { return states[stateName+'Muted']; },
+		muted: function() { return true; },
+		unmuteClicked: function() {
+			allMedia('unmute');
+			return states[name+'Playing'];
+		},
+		pauseClicked: function() {
+			allMedia('pause');
+			return states[name+'PausedAndMuted'];
+		},
+	}, obj));
+
+	state(name+'PausedAndMuted', $.extend({},
+	{
+		s: function(stateName) { return states[stateName+'PausedAndMuted']; },
+		muted: function() { return true; },
+		paused: function() { return true; },
+		unmuteClicked: function() {
+			allVids('unmute');
+			return states[name+'Paused'];
+		},
+		playClicked: function() {
+			allMedia('play');
+			allMedia('mute');
+			return states[name+'Muted'];
+		},
+	}, obj));
+}
+
+
+
+	introState('start', 
 	{ 
 		domLoaded: function() {
 			// load intro video
 			// preload experience
 			videos.videoIntro.load();
 			videos.videoAct1.load();
-			return states.domLoaded;
+			return this.s('domLoaded');
 		}
 	});
 
-	state('domLoaded',
+	introState('domLoaded',
 	{
 		videoReady: function(videoId) {
 			console.log('current video is ' + videoId);
@@ -2906,7 +2988,7 @@ var state = function(stateName, obj) {
 			if (videoId === 'videoIntro') {
 				videos.play('videoIntro');
 				console.log(videoId + 'playing, switching to playing state');
-				return states.introVidPlaying;
+				return this.s('introVidPlaying');
 			} else {
 				// how do we keep track of which videos are ready
 				return this;
@@ -2914,14 +2996,14 @@ var state = function(stateName, obj) {
 		}
 	});
 
-	state('introVidPlaying',
+	introState('introVidPlaying',
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoIntro') return this;
 
 			if (videos.videoIntro.currentTime() > 7.0) {
 				audio.fadeIn('natSoundIntro');
-				return states.introVidPlayingWithLoopAudio;
+				return this.s('introVidPlayingWithLoopAudio');
 			} else {
 				return this;
 			}
@@ -2930,18 +3012,18 @@ var state = function(stateName, obj) {
 
 
 
-	state('introVidPlayingWithLoopAudio',
+	introState('introVidPlayingWithLoopAudio',
 	{
 		videoEnded: function(videoId) {
 			// hide intro vid
 			// show intro sentences
 			$('#videoIntro').hide();
 			introAnimationStart();
-			return states.introSentences;
+			return this.s('introSentences');
 		}
 	});
 
-	state('introSentences',
+	introState('introSentences',
 	{
 
 		animationEnded: function() {
@@ -2952,7 +3034,7 @@ var state = function(stateName, obj) {
 		}
 	});
 
-	state('logoShowing',
+	introState('logoShowing',
 	{
 		checkLoadProgress: function() {
 				var bufferedPercent = videos.readyPercent();
@@ -2980,91 +3062,48 @@ var state = function(stateName, obj) {
 				$('.circleDraw').hide();
 				$('#Layer_86').show();
 				showIntroSlider();
-				return states.experienceReady;
+				return this.s('experienceReady');
 			}
 			else { return this ;}
 		}
 	});
 
-	state('experienceReady',
+	introState('experienceReady',
 	{
 		sliderDragged: function() {
 			$('#loadingWrapper').hide();
 			$('#pageWrapper').show();
-			audio.fadeOut('natSoundIntro');
 			videos.show('videoAct1');
 			videos.play('videoAct1');
 			console.log('videoAct1 volume is ' + videos.videoAct1.volume() );
-			return states.videoAct1Playing;
+			return this.s('videoAct1Playing');
 		}
 	});
 
-	state('videoAct1Playing',
+	mainState('videoAct1', ['videoAct1'], [], 
 	{
-		muteClicked: function() {
-			videos.mute('videoAct1');
-			return states.videoAct1Muted;
-		},
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
-
+			audio.fadeOut('natSoundIntro');
 			if (videos.videoAct1.currentTime() > 92.3) {
-				audio.fadeIn('natSoundAct1');
-				return states.videoAct1WithLoopAudioPlaying;
+				if (!this.muted()) {
+					audio.fadeIn('natSoundAct1');
+				}
+				return this.s('videoAct1WithLoopAudio');
 			} else {
 				return this;
 			}
 		}
 	});
 
-	state('videoAct1Muted',
+	mainState('videoAct1WithLoopAudio', ['videoAct1'], ['natSoundAct1'], 
 	{
-		unmuteClicked: function() {
-			videos.unmute('videoAct1');
-			return states.videoAct1Playing;
-		},
-		timeUpdate: function(videoId) {
-			if (videoId !== 'videoAct1') return this;
-
-			if (videos.videoAct1.currentTime() > 92.3) {
-				return states.videoAct1WithLoopAudioMuted;
-			} else {
-				return this;
-			}
-		}
-	});
-
-
-	state('videoAct1WithLoopAudioPlaying',
-	{
-		muteClicked: function() {
-			videos.mute('videoAct1');
-			audio.mute('natSoundAct1');
-			return states.videoAct1WithLoopAudioMuted;
-		},
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
 
 			videos.hide('videoAct1');
 			powellFadeIn();
 			return states.powell100WordsPlaying;
-		}
-	});
-
-	state('videoAct1WithLoopAudioMuted',
-	{
-		unmuteClicked: function() {
-			audio.unmute('natSoundAct1');
-			videos.unmute('videoAct1');
-			return states.videoAct1WithLoopAudioPlaying;
-		},
-
-		videoEnded: function(videoId) {
-			if (videoId !== 'videoAct1') return this;
-
-			videos.hide('videoAct1');
-			powellFadeIn();
-			return states.powell100WordsMuted;
 		}
 	});
 
@@ -3218,6 +3257,26 @@ $('#soundOff').click(function() {
 
   slider(      function() { updateState(currentState.sliderDragged)(); });
   introSlider( function() { console.log('introSlider Dragged'); updateState(currentState.sliderDragged)(); });
+
+
+$('#playToggle').click(function() {
+	if (currentState.paused()) {
+		updateState(currentState.playClicked)();
+	}
+	else {
+		updateState(currentState.pauseClicked)();
+	}
+});
+
+
+
+$(document).keypress(function(event) {
+	if (event.which == 32) {
+		$('#playToggle').trigger('click');
+		console.log('play/pause triggered with spacebar');
+	}
+});
+
 
 
   var powellFadeIn = function() {
