@@ -63,5 +63,6 @@ var showIntroSlider = function() {
 }
 
 var showSlider = function() {
+	console.log('showSlider');
 	$('#dragWrapper').fadeIn(1000);
 }

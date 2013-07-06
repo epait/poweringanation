@@ -341,8 +341,8 @@ function cancelFullscreen(id) {
 
 
 // Hide Drag Paths
-$('#dragButton').hide();
-$('#dragPath').hide();
+// $('#dragButton').hide();
+// $('#dragPath').hide();
 $('#dragArrow').hide();
 // $('#dragArrow2').hide();
 $('#clickForMore').hide();
