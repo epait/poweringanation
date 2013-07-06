@@ -2311,7 +2311,8 @@
 						<source src="./vid/loopRiver.ogv" type="video/ogg">
 					</video>
 					<div class="textOverlay" id="powellText">
-						<span class="showLast" style="opacity: 0;">The Colorado is young, walled at the bottom of a </span><span class="focusWords" id="showThird" style="opacity: 0;">canyon</span><span class="showLast" style="opacity: 0;"> of its own making. It is temperamental — </span><span class="focusWords" id="showFifth" style="opacity: 0;">dangerous</span><span class="showLast" style="opacity: 0;"> as a borrowed warhorse. Rapid water across </span><span class="focusWords" id="showFirst" style="opacity: 0;">fallen</span><span class="showLast" style="opacity: 0;"> boulders creates a </span><span class="focusWords" id="showSecond" style="opacity: 0;">force</span><span class="showLast" style="opacity: 0;">, a concussion, a </span><span class="focusWords" id="showSixth" style="opacity: 0;">fate</span><span class="showLast" style="opacity: 0;">. Nations have boomed along its shore only to collapse beside it. Fortunate explorers have staggered away from its cliffs. Yet, humans found ways to harness its power and tame its floods. In the past century, damming, quarreling and consuming have </span><span class="focusWords" id="showFourth" style="opacity: 0;">transformed</span><span class="showLast" style="opacity: 0;"> this living river beyond recognition.</span><img src="./img/clickForMore.png" class="clickForMore" id="powellLoopButton" style="display: none;">
+						<span class="showLast" style="opacity: 0;">The Colorado is young, walled at the bottom of a </span><span class="focusWords" id="showThird" style="opacity: 0;">canyon</span><span class="showLast" style="opacity: 0;"> of its own making. It is temperamental — </span><span class="focusWords" id="showFifth" style="opacity: 0;">dangerous</span><span class="showLast" style="opacity: 0;"> as a borrowed warhorse. Rapid water across </span><span class="focusWords" id="showFirst" style="opacity: 0;">fallen</span><span class="showLast" style="opacity: 0;"> boulders creates a </span><span class="focusWords" id="showSecond" style="opacity: 0;">force</span><span class="showLast" style="opacity: 0;">, a concussion, a </span><span class="focusWords" id="showSixth" style="opacity: 0;">fate</span><span class="showLast" style="opacity: 0;">. Nations have boomed along its shore only to collapse beside it. Fortunate explorers have staggered away from its cliffs. Yet, humans found ways to harness its power and tame its floods. In the past century, damming, quarreling and consuming have </span><span class="focusWords" id="showFourth" style="opacity: 0;">transformed</span><span class="showLast" style="opacity: 0;"> this living river beyond recognition.</span>
+						<br /><img src="./img/clickForMore.png" class="clickForMore" id="powellLoopButton" style="display: none;">
 					</div>
 				</div>
 				<div class="videoLoopContainer" id="videoAct2Loop" style="display: none;">
@@ -2867,10 +2868,10 @@ var StateBase = function() {
 		videoEnded     : function(videoId) { return this; },
 		animationEnded : function() { return this; },
 
-		pauseClicked   : function() { this.vidClips.forEach(pauseVid);  this.audioClips.forEach(pauseAudio); return this; },
-		playClicked    : function() { this.vidClips.forEach(playVid);   this.audioClips.forEach(playAudio); return this; },
-		muteClicked    : function() { this.vidClips.forEach(muteVid);   this.audioClips.forEach(muteAudio); return this; },
-		unmuteClicked  : function() { this.vidClips.forEach(unmuteVid); this.audioClips.forEach(unmuteAudio); return this; },
+		pauseClicked   : function() { return this; },
+		playClicked    : function() { return this; },
+		muteClicked    : function() { return this; },
+		unmuteClicked  : function() { return this; },
 		seeked         : function() { return this; }
 		//seeked         : function(videoId) { vidClips.forEach(pauseVid); audioClips.forEach(pauseAudio); videos.show(videoId); return states[videoId+'Playing']; }
 	};
@@ -2927,6 +2928,8 @@ var state = function(stateName, obj) {
 		}
 	});
 
+
+
 	state('introVidPlayingWithLoopAudio',
 	{
 		videoEnded: function(videoId) {
@@ -2982,7 +2985,7 @@ var state = function(stateName, obj) {
 			else { return this ;}
 		}
 	});
-	
+
 	state('experienceReady',
 	{
 		sliderDragged: function() {
@@ -2998,37 +3001,82 @@ var state = function(stateName, obj) {
 
 	state('videoAct1Playing',
 	{
-		vidClips : ['videoAct1'],
+		muteClicked: function() {
+			videos.mute('videoAct1');
+			return states.videoAct1Muted;
+		},
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
 
 			if (videos.videoAct1.currentTime() > 92.3) {
 				audio.fadeIn('natSoundAct1');
-				return states.videoAct1PlayingWithLoopAudio;
+				return states.videoAct1WithLoopAudioPlaying;
 			} else {
 				return this;
 			}
 		}
 	});
 
-	state('videoAct1PlayingWithLoopAudio',
+	state('videoAct1Muted',
 	{
-		vidClips : ['videoAct1'],
-		audioClips: ['natSoundAct1'],
+		unmuteClicked: function() {
+			videos.unmute('videoAct1');
+			return states.videoAct1Playing;
+		},
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct1') return this;
+
+			if (videos.videoAct1.currentTime() > 92.3) {
+				return states.videoAct1WithLoopAudioMuted;
+			} else {
+				return this;
+			}
+		}
+	});
+
+
+	state('videoAct1WithLoopAudioPlaying',
+	{
+		muteClicked: function() {
+			videos.mute('videoAct1');
+			audio.mute('natSoundAct1');
+			return states.videoAct1WithLoopAudioMuted;
+		},
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
 
 			videos.hide('videoAct1');
 			powellFadeIn();
-			return states.powell100WordsShowing;
+			return states.powell100WordsPlaying;
 		}
 	});
 
-	state('powell100WordsShowing',
+	state('videoAct1WithLoopAudioMuted',
+	{
+		unmuteClicked: function() {
+			audio.unmute('natSoundAct1');
+			videos.unmute('videoAct1');
+			return states.videoAct1WithLoopAudioPlaying;
+		},
+
+		videoEnded: function(videoId) {
+			if (videoId !== 'videoAct1') return this;
+
+			videos.hide('videoAct1');
+			powellFadeIn();
+			return states.powell100WordsMuted;
+		}
+	});
+
+	state('powell100WordsPlaying',
 	{
 		audioClips : ['natSoundAct1']
 	});
 
+	state('powell100WordsMuted',
+	{
+		audioClips : ['natSoundAct1']
+	});
 
 
 var introAnimationStart = function() {
@@ -3110,7 +3158,7 @@ function updateState(fun) {
 		//console.log("updating state " + currentState + " by calling" + fun);
 		var newState = fun.apply(currentState, arguments);
 		if (currentState !== newState) {
-			console.log("updated state " + currentState + " by calling" + fun);
+			console.log("changed state " + currentState.name + " to " + newState.name + " by calling:\n" + fun);
 		}
 		currentState = newState;
 
