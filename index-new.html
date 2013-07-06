@@ -39,7 +39,7 @@
 
 <body>
 <div id="loadingWrapper">
-		<video id="videoIntro" class="video-js" autoplay preload="auto" width="100%" height="100%">
+		<video id="videoIntro" class="video-js" preload="auto" width="100%" height="100%">
 			<source  src="./vid/videoIntro.mp4" type='video/mp4' />
 			<source  src="./vid/videoIntro.webm" type='video/webm' />
 			<source  src="./vid/videoIntro.ogv" type='video/ogg' />
@@ -2479,8 +2479,7 @@ var videoPlayer = function(id, volume, duration, preloadStartSeconds) {
 		// query
 		currentTime:  function() { 
 			if (arguments.length > 0) {
-				throw 'CURRENT_TIME!';
-				// return clip.currentTime(arguments);
+				clip.currentTime(arguments[0]);
 			} else {
 				return clip.currentTime() ? clip.currentTime() : 0;
 			}
@@ -2518,7 +2517,7 @@ var videoPlayer = function(id, volume, duration, preloadStartSeconds) {
 			muted:       function() { return false; },
 			currentTime: function() { 
 				if (arguments > 0) {
-					clip.currentTime(arguments);
+					clip.currentTime(arguments[0]);
 				} else {
 					return 0;
 				}
@@ -2538,7 +2537,7 @@ var videoPlayer = function(id, volume, duration, preloadStartSeconds) {
 			muted:       function() { return true; },
 			currentTime: function() { 
 				if (arguments > 0) {
-					clip.currentTime(arguments);
+					clip.currentTime(arguments[0]);
 				} else {
 					return 0;
 				}
@@ -2891,7 +2890,7 @@ var state = function(stateName, obj) {
 	states[stateName] = $.extend({}, StateBase, obj);
 }
 
-var mainState = function(name, vids, aud, obj) {
+var videoState = function(name, vids, aud, obj) {
 
 	var allVids = function(op) {
 		for(var i = 0; i < vids.length; i++) {
@@ -2967,14 +2966,96 @@ var mainState = function(name, vids, aud, obj) {
 	}, obj));
 }
 
+var textState = function(name, aud, obj) {
 
+	var allAudio = function(op) {
+		for(var i = 0; i < aud.length; i++) {
+			audio[op].call(audio, aud[i]);
+		}
+	}
+
+	var allMedia = function(op) { allAudio(op); }
+
+	state(name+'Playing',$.extend({},
+	{
+		s: function(stateName) { return states[stateName+'Playing']; },
+		muted: function() { return false; },
+		paused: function() { return false; },
+		muteClicked: function() {
+			allMedia('mute');
+			return states[name+'Muted'];
+		}
+	}, obj));
+
+	state(name+'Paused', $.extend({},
+	{
+		// the Paused state is really invalid for text states we always transition to Playing
+		s: function(stateName) { return states[stateName+'Playing']; },
+		muted: function() { return false; },
+		paused: function() { return false; },
+		muteClicked: function() {
+			allMedia('mute');
+			return states[name+'Muted'];
+		},
+	}, obj));
+
+	state(name+'Muted', $.extend({},
+	{
+		s: function(stateName) { return states[stateName+'Muted']; },
+		muted: function() { return true; },
+		paused: function() { return false; },
+		unmuteClicked: function() {
+			allMedia('unmute');
+			return states[name+'Playing'];
+		},
+	}, obj));
+
+	state(name+'PausedAndMuted', $.extend({},
+	{
+		// the PausedAndMuted state is really invalid for text states we always transition to Muted
+		s: function(stateName) { return states[stateName+'Muted']; },
+		muted: function() { return true; },
+		paused: function() { return false; },
+		unmuteClicked: function() {
+			allMedia('unmute');
+			return states[name+'Playing'];
+		},
+	}, obj));
+}
+
+var debugState = function(startVideo, time) {
+	state('debugStart', {
+		domLoaded: function() {
+			// load intro video
+			// preload experience
+			// videos.videoIntro.load();
+			$('#loadingWrapper').hide();
+			$('#pageWrapper').show();
+			videos.pause('videoIntro');
+			videos.show(startVideo);
+			videos[startVideo].load();
+			return this;
+		},
+		progressUpdate: function(videoId) {
+			if (videoId != startVideo) return this;
+
+			if (videos.bufferedTime(startVideo) > time) {
+				videos[startVideo].currentTime(time);
+				videos.play(startVideo);
+				return states[startVideo+'Playing'];
+			} else {
+				return this;
+			}
+		}
+	});
+}
 
 	introState('start', 
 	{ 
 		domLoaded: function() {
 			// load intro video
 			// preload experience
-			videos.videoIntro.load();
+			// videos.videoIntro.load();
 			videos.videoAct1.load();
 			return this.s('domLoaded');
 		}
@@ -3080,7 +3161,7 @@ var mainState = function(name, vids, aud, obj) {
 		}
 	});
 
-	mainState('videoAct1', ['videoAct1'], [], 
+	videoState('videoAct1', ['videoAct1'], [], 
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
@@ -3096,27 +3177,64 @@ var mainState = function(name, vids, aud, obj) {
 		}
 	});
 
-	mainState('videoAct1WithLoopAudio', ['videoAct1'], ['natSoundAct1'], 
+	videoState('videoAct1WithLoopAudio', ['videoAct1'], ['natSoundAct1'], 
 	{
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
 
 			videos.hide('videoAct1');
 			powellFadeIn();
-			return states.powell100WordsPlaying;
+			return this.s('powell100Words');
+		}
+	});
+	textState('powell100Words', ['natSoundAct1'],
+	{
+		sliderDragged: function() {
+			powellFadeOut();
+			videos.show('videoAct2');
+			if (this.muted()) {
+				videos.mute('videoAct2');
+			}
+			if (!this.paused()) {
+				videos.play('videoAct2');
+			}
+			return this.s('videoAct2');
+		},
+		clickMore: function() {
+			powellShowExtendedText();
+			return this;
 		}
 	});
 
-	state('powell100WordsPlaying',
+	videoState('videoAct2', ['videoAct2'], [],
 	{
-		audioClips : ['natSoundAct1']
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct2') return this;
+			audio.fadeOut('natSoundAct1');
+			if (videos.videoAct2.currentTime() > 118) {
+				if (!this.muted()) {
+					audio.fadeIn('natSoundAct2');
+				}
+				return this.s('videoAct2WithLoopAudio');
+			} else {
+				return this;
+			}
+		}
 	});
 
-	state('powell100WordsMuted',
+	videoState('videoAct2WithLoopAudio', ['videoAct2'], ['natSoundAct2'],
 	{
-		audioClips : ['natSoundAct1']
+		videoEnded: function(videoId) {
+			if (videoId !== 'videoAct2') return this;
+
+			videos.hide('videoAct2');
+			powellFadeIn();
+			return this.s('powell100Words');
+		}
 	});
 
+
+	debugState('videoAct3', 220);
 
 var introAnimationStart = function() {
 	$('.introBackground').fadeIn(500);
@@ -3189,7 +3307,7 @@ var introAnimationStart = function() {
 		},17000);
 }
 
-var currentState = states.start;
+var currentState = states.debugStart;
 
 
 function updateState(fun) {
@@ -3255,8 +3373,14 @@ $('#soundOff').click(function() {
 
   new ProgressBar("progressBar", "progressLine", "pageWrapper", "videoControls", "drag", panPlayer);
 
-  slider(      function() { updateState(currentState.sliderDragged)(); });
+  slider(      function() { console.log('slider dragged');      updateState(currentState.sliderDragged)(); });
   introSlider( function() { console.log('introSlider Dragged'); updateState(currentState.sliderDragged)(); });
+
+
+ $('.clickForMore').click(function() {
+ 	console.log('See More Button Clicked');
+ 	updateState(currentState.clickMore)();
+ }) ;
 
 
 $('#playToggle').click(function() {
@@ -3322,6 +3446,22 @@ $(document).keypress(function(event) {
         	showSlider();
 			$('#powellLoopButton').fadeIn(500);
         },12000);
+    }
+
+    var powellFadeOut = function() {
+    	$('#powellLoopButton').fadeOut(500);
+    	$('#dragWrapper').fadeOut(500);
+    	$('#powellText').fadeOut(500);
+    	$('#powellExtendedText').fadeOut(500);
+    	$('#powellLoop').fadeOut(500);
+    }
+
+    var powellShowExtendedText = function() {
+    	$('#powellText').fadeOut(500);
+    	$('#powellLoopButton').fadeOut(500);
+    	setTimeout(function(){
+    		$('#powellExtendedText').fadeIn(500);
+    	},500);
     }
 
 </script>
