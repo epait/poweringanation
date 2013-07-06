@@ -2877,13 +2877,17 @@ var StateBase = function() {
 
 }();
 
-var state = function(obj) {
-	return $.extend({}, StateBase, obj);
+
+
+var states = {}
+
+var state = function(stateName, obj) {
+	obj.name = stateName;
+	states[stateName] = $.extend({}, StateBase, obj);
 }
 
-
-var states = {
-	start: state({
+	state('start', 
+	{ 
 		domLoaded: function() {
 			// load intro video
 			// preload experience
@@ -2891,8 +2895,10 @@ var states = {
 			videos.videoAct1.load();
 			return states.domLoaded;
 		}
-	}),
-	domLoaded: state({
+	});
+
+	state('domLoaded',
+	{
 		videoReady: function(videoId) {
 			console.log('current video is ' + videoId);
 			console.log(videoId === 'videoIntro');
@@ -2905,8 +2911,10 @@ var states = {
 				return this;
 			}
 		}
-	}),
-	introVidPlaying: state({
+	});
+
+	state('introVidPlaying',
+	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoIntro') return this;
 
@@ -2916,9 +2924,11 @@ var states = {
 			} else {
 				return this;
 			}
-		},
-	}),
-	introVidPlayingWithLoopAudio: state({
+		}
+	});
+
+	state('introVidPlayingWithLoopAudio',
+	{
 		videoEnded: function(videoId) {
 			// hide intro vid
 			// show intro sentences
@@ -2926,8 +2936,10 @@ var states = {
 			introAnimationStart();
 			return states.introSentences;
 		}
-	}),
-	introSentences: state({
+	});
+
+	state('introSentences',
+	{
 
 		animationEnded: function() {
 			// show logo
@@ -2935,8 +2947,10 @@ var states = {
 			$('.circleDraw').fadeIn(1000);
 			return states.logoShowing.progressUpdate();
 		}
-	}),
-	logoShowing: state({
+	});
+
+	state('logoShowing',
+	{
 		checkLoadProgress: function() {
 				var bufferedPercent = videos.readyPercent();
 				console.log('buffered percent is: ' + bufferedPercent);
@@ -2967,8 +2981,10 @@ var states = {
 			}
 			else { return this ;}
 		}
-	}),
-	experienceReady: state({
+	});
+	
+	state('experienceReady',
+	{
 		sliderDragged: function() {
 			$('#loadingWrapper').hide();
 			$('#pageWrapper').show();
@@ -2978,8 +2994,10 @@ var states = {
 			console.log('videoAct1 volume is ' + videos.videoAct1.volume() );
 			return states.videoAct1Playing;
 		}
-	}),
-	videoAct1Playing: state({
+	});
+
+	state('videoAct1Playing',
+	{
 		vidClips : ['videoAct1'],
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
@@ -2991,8 +3009,10 @@ var states = {
 				return this;
 			}
 		}
-	}),
-	videoAct1PlayingWithLoopAudio: state({
+	});
+
+	state('videoAct1PlayingWithLoopAudio',
+	{
 		vidClips : ['videoAct1'],
 		audioClips: ['natSoundAct1'],
 		videoEnded: function(videoId) {
@@ -3002,11 +3022,13 @@ var states = {
 			powellFadeIn();
 			return states.powell100WordsShowing;
 		}
-	}),
-	powell100WordsShowing: state({
+	});
+
+	state('powell100WordsShowing',
+	{
 		audioClips : ['natSoundAct1']
-	})
-};
+	});
+
 
 
 var introAnimationStart = function() {
