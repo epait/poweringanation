@@ -39,7 +39,7 @@
 
 <body>
 <div id="loadingWrapper">
-		<video id="videoIntro" class="video-js" preload="auto" width="100%" height="100%">
+		<video id="videoIntro" class="video-js" autoplay preload="auto" width="100%" height="100%">
 			<source  src="./vid/videoIntro.mp4" type='video/mp4' />
 			<source  src="./vid/videoIntro.webm" type='video/webm' />
 			<source  src="./vid/videoIntro.ogv" type='video/ogg' />
@@ -2378,6 +2378,7 @@
 			</div> 
 </div>
 <script>
+$('#dragWrapper2').hide();
 var windowHeight = $(window).height();
 var windowWidth = $(window).width();
 var windowAspectRatio = parseFloat(windowWidth/windowHeight).toFixed(2);
@@ -2390,7 +2391,6 @@ var heightAspectRatio = 0.5625;
 <script src='./js/slideToContinue.js'></script>
 <script>
 $('#Layer_86').hide();
-$('#dragWrapper2').hide();
 $('#dragWrapper').hide();
 
 
@@ -2722,7 +2722,7 @@ var videos = function() {
 
 
 	return $.extend({}, players, {
-		play:   function(id) { console.log('playing ' + id); this[id].play(); currentVideo = this[id];  },
+		play:   function(id) { console.log('playing ' + id); this[id].play(); if(videoSequence.indexOf(this[id]) >= 0) { currentVideo = this[id]; } },
 		pause:  function(id) { this[id].pause();  },
 		load:   function(id) { this[id].load();   },
 		hide:   function(id) { each(function(player) { player.hide(); });  },
@@ -2736,9 +2736,7 @@ var videos = function() {
 		readyPercent: function() { return 100*videoAct1.bufferedTime()/INITIAL_SECONDS_TO_LOAD; },
 		load:         function() { videoIntro.load(); },
 		duration:     function() { return sequenceDuration( videoSequence ); },
-		currentTime : function() {
-			if (arguments.length > 0) {
-				var time = arguments[0];
+		timeInfo:     function(time) {
 				var lastEnd = 0;
 				for(var i = 0; i < videoSequence.length; i++) {
 					var player = videoSequence[i];
@@ -2746,23 +2744,18 @@ var videos = function() {
 					if (lastEnd <= time && time < nextEnd) {
 						// found the video for the time indicated
 						// now swith to the corrent point in the video
-						var muted = currentVideo.muted();
-						var playing = currentVideo.playing();
-						currentVideo.pause();
-						player.currentTime(time - lastEnd);
-						currentVideo = player;
-						if (muted) {
-							currentVideo.mute();
-						}
-						if (playing) {
-							currentVideo.play();
-						}
-
-						return player.id;
+						return { videoId: player.id, time: time - lastEnd};
 					}
+					lastEnd = nextEnd;
 				}
-
-			} else {
+				return null;
+		},
+		currentTime : function() {
+			if (arguments.length > 0) {
+				var info = arguments[0];
+				this[info.videoId].currentTime(info.time);
+			}
+			else {
 				return currentVideo.currentTime()
 					+sequenceDuration( videoSequence.filter(function(e, i, a) { return i < index(currentVideo); }) );
 			}
@@ -2893,7 +2886,7 @@ var state = function(stateName, obj) {
 	states[stateName] = $.extend({}, StateBase, obj);
 }
 
-var videoState = function(name, vids, aud, obj) {
+var videoState = function(name, vids, aud, elements, obj) {
 
 	var allVids = function(op) {
 		for(var i = 0; i < vids.length; i++) {
@@ -2907,7 +2900,17 @@ var videoState = function(name, vids, aud, obj) {
 		}
 	}
 
+	var hideAll = function() {
+		allVids('hide');
+		for(var i = 0; i < elements.length; i++) {
+			$(elements[i]).hide();
+		}
+	}
+
+
 	var allMedia = function(op) { allVids(op); allAudio(op); }
+
+	var currentVideo = function(videoId) { return vids.indexOf(videoId) >= 0; }
 
 	state(name+'Playing',$.extend({},
 	{
@@ -2920,6 +2923,21 @@ var videoState = function(name, vids, aud, obj) {
 		pauseClicked: function() {
 			allMedia('pause');
 			return states[name+'Paused'];
+		},
+		seeked: function(time) {
+			var info = videos.timeInfo(time);
+			if (!currentVideo(info.videoId)) {
+				allMedia('pause');
+				hideAll();
+				videos.show(info.videoId);
+				videos.currentTime(info);
+				videos.play(info.videoId);
+				return states[info.videoId+'Playing'];
+			}
+			else {
+				videos.currentTime(info);
+				return this;
+			}
 		},
 	}, obj));
 
@@ -2936,6 +2954,20 @@ var videoState = function(name, vids, aud, obj) {
 			allMedia('play');
 			return states[name+'Playing'];
 		},
+		seeked: function(time) {
+			var info = videos.timeInfo(time);
+			if (!currentVideo(info.videoId)) {
+				allMedia('pause');
+				hideAll();
+				videos.show(info.videoId);
+				videos.currentTime(info);
+				return states[info.videoId+'Paused'];
+			}
+			else {
+				videos.currentTime(info);
+				return this;
+			}
+		},
 	}, obj));
 
 	state(name+'Muted', $.extend({},
@@ -2949,6 +2981,22 @@ var videoState = function(name, vids, aud, obj) {
 		pauseClicked: function() {
 			allMedia('pause');
 			return states[name+'PausedAndMuted'];
+		},
+		seeked: function(time) {
+			var info = videos.timeInfo(time);
+			if (!currentVideo(info.videoId)) {
+				allMedia('pause');
+				hideAll();
+				videos.show(info.videoId);
+				videos.currentTime(info);
+				videos.mute(info.videoId);
+				videos.play(info.videoId);
+				return states[info.videoId+'Muted'];
+			}
+			else {
+				videos.currentTime(info);
+				return this;
+			}
 		},
 	}, obj));
 
@@ -2965,6 +3013,21 @@ var videoState = function(name, vids, aud, obj) {
 			allMedia('play');
 			allMedia('mute');
 			return states[name+'Muted'];
+		},
+		seeked: function(time) {
+			var info = videos.timeInfo(time);
+			if (!currentVideo(info.videoId)) {
+				allMedia('pause');
+				hideAll();
+				videos.show(info.videoId);
+				videos.currentTime(info);
+				videos.mute(info.videoId);
+				return states[info.videoId+'PausedAndMuted'];
+			}
+			else {
+				videos.currentTime(info);
+				return this;
+			}
 		},
 	}, obj));
 }
@@ -2987,7 +3050,16 @@ var textState = function(name, aud, obj) {
 		muteClicked: function() {
 			allMedia('mute');
 			return states[name+'Muted'];
-		}
+		},
+		seeked: function(time) {
+			var info = videos.timeInfo(time);
+			allMedia('mute');
+			this.hide();
+			videos.show(info.videoId);
+			videos.currentTime(info);
+			videos.play(info.videoId);
+			return states[info.videoId+'Playing'];
+		},
 	}, obj));
 
 	state(name+'Paused', $.extend({},
@@ -3000,6 +3072,15 @@ var textState = function(name, aud, obj) {
 			allMedia('mute');
 			return states[name+'Muted'];
 		},
+		seeked: function(time) {
+			var info = videos.timeInfo(time);
+			allMedia('mute');
+			this.hide();
+			videos.show(info.videoId);
+			videos.currentTime(info);
+			videos.play(info.videoId);
+			return states[info.videoId+'Playing'];
+		},
 	}, obj));
 
 	state(name+'Muted', $.extend({},
@@ -3010,6 +3091,16 @@ var textState = function(name, aud, obj) {
 		unmuteClicked: function() {
 			allMedia('unmute');
 			return states[name+'Playing'];
+		},
+		seeked: function(time) {
+			var info = videos.timeInfo(time);
+			allMedia('mute');
+			this.hide();
+			videos.show(info.videoId);
+			videos.currentTime(info);
+			videos.mute(info.videoId);
+			videos.play(info.videoId);
+			return states[info.videoId+'Muted'];
 		},
 	}, obj));
 
@@ -3022,6 +3113,16 @@ var textState = function(name, aud, obj) {
 		unmuteClicked: function() {
 			allMedia('unmute');
 			return states[name+'Playing'];
+		},
+		seeked: function(time) {
+			var info = videos.timeInfo(time);
+			allMedia('mute');
+			this.hide();
+			videos.show(info.videoId);
+			videos.currentTime(info);
+			videos.mute(info.videoId);
+			videos.play(info.videoId);
+			return states[info.videoId+'Muted'];
 		},
 	}, obj));
 }
@@ -3164,23 +3265,24 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct1', ['videoAct1'], [], 
+	videoState('videoAct1', ['videoAct1'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
 			audio.fadeOut('natSoundIntro');
 			if (videos.videoAct1.currentTime() > 92.3) {
 				if (!this.muted()) {
+					// audio.fadeIn('natSoundAct1');
 					audio.fadeIn('natSoundAct1');
 				}
 				return this.s('videoAct1WithLoopAudio');
 			} else {
 				return this;
-			}
+			} 
 		}
 	});
 
-	videoState('videoAct1WithLoopAudio', ['videoAct1'], ['natSoundAct1'], 
+	videoState('videoAct1WithLoopAudio', ['videoAct1'], ['natSoundAct1'], ['#dragWrapper', '.clickForMore'],
 	{
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
@@ -3193,8 +3295,13 @@ var debugState = function(startVideo, time) {
 
 	textState('powell100Words', ['natSoundAct1'],
 	{
-		sliderDragged: function() {
+		hide: function() {
 			powellFadeOut();
+			$('#dragWrapper').hide();
+			$('.clickForMore').hide();
+		},
+		sliderDragged: function() {
+			this.hide();
 			videos.show('videoAct2');
 			if (this.muted()) {
 				videos.mute('videoAct2');
@@ -3207,10 +3314,15 @@ var debugState = function(startVideo, time) {
 		clickMore: function() {
 			powellShowExtendedText();
 			return this;
+		},
+		animationEnded: function() {
+			showSlider();
+			$('#powellLoopButton').fadeIn(500);
+			return this;
 		}
 	});
 
-	videoState('videoAct2', ['videoAct2'], [],
+	videoState('videoAct2', ['videoAct2'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct2') return this;
@@ -3226,7 +3338,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct2WithLoopAudio', ['videoAct2'], ['natSoundAct2'],
+	videoState('videoAct2WithLoopAudio', ['videoAct2'], ['natSoundAct2'], ['#dragWrapper', '.clickForMore'],
 	{
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct2') return this;
@@ -3239,8 +3351,12 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	textState('transitionText1', ['natSoundAct2'],
+	textState('transitionText1', ['natSoundAct2'], 
 	{
+		hide: function() {
+			$('#videoAct2TextSentence2').fadeOut(1000);
+			$('#videoAct2Loop').fadeOut(1000);
+		},
 		clickContinue: function() {
 			$('#videoAct2TextSentence1').fadeOut(1000);
 			setTimeout(function() {
@@ -3249,8 +3365,7 @@ var debugState = function(startVideo, time) {
 			return this;
 		},
 		clickNextVid: function() {
-			$('#videoAct2TextSentence2').fadeOut(1000);
-			$('#videoAct2Loop').fadeOut(1000);
+			this.hide();
 			$('#motionDams').show();
 			videos.play('motionDams');
 
@@ -3258,7 +3373,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionDams', ['motionDams'], [],
+	videoState('motionDams', ['motionDams'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionDams') return this;
@@ -3299,7 +3414,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionHooverVid', ['motionHooverVid'], [],
+	videoState('motionHooverVid', ['motionHooverVid'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionHooverVid') return this;
@@ -3314,7 +3429,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionHooverVidWithLoopAudio', ['motionHooverVid'], ['natSoundAct2'],
+	videoState('motionHooverVidWithLoopAudio', ['motionHooverVid'], ['natSoundAct2'], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionHooverVid') return this;
@@ -3359,6 +3474,12 @@ var debugState = function(startVideo, time) {
 
 	textState('landgrabText', ['natSoundAct2'],
 	{
+		hide: function() {
+			$('#bgLandgrab').fadeOut(100);
+			$('#landgrabText').fadeOut(500);
+			$('#dragWrapper').hide();
+			$('.clickForMore').hide();
+		},
 		sliderDragged: function() {
 			$('#bgLandgrab').fadeOut(100);
 			$('#landgrabText').fadeOut(500);
@@ -3368,7 +3489,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct3', ['videoAct3'], [],
+	videoState('videoAct3', ['videoAct3'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct3') return this;
@@ -3384,12 +3505,14 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct3WithLoopAudio', ['videoAct3'], ['natSoundAct3'],
+	videoState('videoAct3WithLoopAudio', ['videoAct3'], ['natSoundAct3'], ['#dragWrapper', '.clickForMore'],
 	{
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct3') return this;
 
 			videos.hide('videoAct3');
+			$('#videoAct3Loop').show();
+			$('#videoAct3TextSentence1').fadeIn(1000);
 			//Show Transition Text
 			return this.s('transitionText2');
 		}
@@ -3397,6 +3520,10 @@ var debugState = function(startVideo, time) {
 
 	textState('transitionText2', ['natSoundAct3'],
 	{
+		hide: function() {
+			$('#videoAct3TextSentence2').fadeOut(1000);
+			$('#videoAct3Loop').fadeOut(1000);
+		},
 		clickContinue: function() {
 			$('#videoAct3TextSentence1').fadeOut(1000);
 			setTimeout(function() {
@@ -3414,7 +3541,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionPopulation', ['motionPopulation'], [],
+	videoState('motionPopulation', ['motionPopulation'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionPopulation') return this;
@@ -3455,7 +3582,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionImperialVid', ['motionImperialVid'], [],
+	videoState('motionImperialVid', ['motionImperialVid'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionImperialVid') return this;
@@ -3470,7 +3597,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionImperialVidWithLoopAudio', ['motionImperialVid'], ['natSoundAct3'],
+	videoState('motionImperialVidWithLoopAudio', ['motionImperialVid'], ['natSoundAct3'], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionImperialVid') return this;
@@ -3515,6 +3642,12 @@ var debugState = function(startVideo, time) {
 
 	textState('addictedText', ['natSoundAct3'],
 	{
+		hide: function() {
+			$('#bgAddicted').fadeOut(100);
+			$('#addictedText').fadeOut(500);
+			$('#dragWrapper').hide();
+			$('.clickForMore').hide();
+		},
 		sliderDragged: function() {
 			$('#bgAddicted').fadeOut(100);
 			$('#addictedText').fadeOut(500);
@@ -3524,7 +3657,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct4', ['videoAct4'], [],
+	videoState('videoAct4', ['videoAct4'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct4') return this;
@@ -3540,12 +3673,14 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct4WithLoopAudio', ['videoAct4'], ['natSoundAct4'],
+	videoState('videoAct4WithLoopAudio', ['videoAct4'], ['natSoundAct4'], ['#dragWrapper', '.clickForMore'],
 	{
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct4') return this;
 
 			videos.hide('videoAct4');
+			$('#videoAct4Loop').show();
+			$('#videoAct4TextSentence1').fadeIn(1000);
 			//Show Transition Text
 			return this.s('transitionText3');
 		}
@@ -3553,6 +3688,10 @@ var debugState = function(startVideo, time) {
 
 	textState('transitionText3', ['natSoundAct4'],
 	{
+		hide: function() {
+			$('#videoAct4TextSentence2').fadeOut(1000);
+			$('#videoAct4Loop').fadeOut(1000);
+		},
 		clickContinue: function() {
 			$('#videoAct4TextSentence1').fadeOut(1000);
 			setTimeout(function() {
@@ -3570,7 +3709,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionDeltaMead', ['motionDeltaMead'], [],
+	videoState('motionDeltaMead', ['motionDeltaMead'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionDeltaMead') return this;
@@ -3611,7 +3750,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionIntakeVid', ['motionIntakeVid'], [],
+	videoState('motionIntakeVid', ['motionIntakeVid'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionIntakeVid') return this;
@@ -3626,7 +3765,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('motionIntakeVidWithLoopAudio', ['motionIntakeVid'], ['natSoundAct4'],
+	videoState('motionIntakeVidWithLoopAudio', ['motionIntakeVid'], ['natSoundAct4'], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionIntakeVid') return this;
@@ -3671,6 +3810,12 @@ var debugState = function(startVideo, time) {
 
 	textState('damagesText', ['natSoundAct4'],
 	{
+		hide: function() {
+			$('#bgDamages').fadeOut(100);
+			$('#damagesText').fadeOut(500);
+			$('#dragWrapper').hide();
+			$('.clickForMore').hide();
+		},
 		sliderDragged: function() {
 			$('#bgDamages').fadeOut(100);
 			$('#damagesText').fadeOut(500);
@@ -3680,7 +3825,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct5', ['videoAct5'], [],
+	videoState('videoAct5', ['videoAct5'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct5') return this;
@@ -3696,26 +3841,29 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct5WithLoopAudio', ['videoAct5'], ['natSoundAct5'],
+	videoState('videoAct5WithLoopAudio', ['videoAct5'], ['natSoundAct5'], ['#dragWrapper', '.clickForMore'],
 	{
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct5') return this;
 
 			videos.hide('videoAct5');
-			//Show Transition Text
+			//Show Conclusion Text
 			return this.s('conclusionText');
 		}
 	});
 
 	textState('conclusionText', ['natSoundAct5'],
 	{
+		hide: function() {
+			// hide conclusion text
+		},
 		clickForMore: function() {
 			return this;
 		}
 	});
 
 
-	debugState('motionDeltaMead', 85);
+	debugState('motionDams', 100);
 
 var introAnimationStart = function() {
 	$('.introBackground').fadeIn(500);
@@ -3788,7 +3936,8 @@ var introAnimationStart = function() {
 		},17000);
 }
 
-var currentState = states.debugStart;
+// var currentState = states.debugStart;
+var currentState = states.start;
 
 
 function updateState(fun) {
@@ -3838,8 +3987,7 @@ $('#soundOff').click(function() {
  var panPlayer = {
  	currentTime: function() {
  		if (arguments.length > 0) {
-			// var videoId = video.currentTime(arguments);
-			// updateState(currentState.seek(videoId));
+			updateState(currentState.seeked)(arguments[0]);
  		} else {
  			return videos.currentTime();
  		}
@@ -3896,6 +4044,14 @@ $(document).keypress(function(event) {
   var powellFadeIn = function() {
 		$('.secondLevelContent').hide();
 		$('#powellLoop').show();
+		$('#powellText').show();
+    	$('#showFirst').css('opacity',0);
+    	$('#showSecond').css('opacity',0);
+    	$('#showThird').css('opacity',0);
+    	$('#showFourth').css('opacity',0);
+    	$('#showFifth').css('opacity',0);
+    	$('#showSixth').css('opacity',0);
+    	$('.showLast').css('opacity',0);
 		setTimeout(function() {
 			$('#showFirst').animate({
 				opacity: 1
@@ -3933,8 +4089,7 @@ $(document).keypress(function(event) {
 		}, 7600);
 		console.log('show PowellPlayer');
         setTimeout(function(){
-        	showSlider();
-			$('#powellLoopButton').fadeIn(500);
+        	updateState(currentState.animationEnded)('Powell');
         },12000);
     }
 
