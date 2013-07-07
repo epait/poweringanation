@@ -716,7 +716,12 @@
 				<div id="playToggle"></div>
 				<img id="playImage" src="./img/playImage.png" />
 				<img id="pauseImage" src="./img/pauseImage.png" />
-				<!-- <div class="buttonWrapper"></div> -->
+				<img src="./img/clickForMore.png" class="clickForMore" id="motionDamsButton" style="display: none;"/>
+				<img src="./img/clickForMore.png" class="clickForMore" id="motionPopulationButton" style="display: none;"/>
+				<img src="./img/clickForMore.png" class="clickForMore" id="motionDeltaMeadButton" style="display: none;"/>
+				<img src="./img/clickForMore.png" class="clickForMore" id="motionHooverButton" style="display: none;"/>
+				<img src="./img/clickForMore.png" class="clickForMore" id="motionImperialButton" style="display: none;"/>
+				<img src="./img/clickForMore.png" class="clickForMore" id="motionIntakeButton" style="display: none;"/>
 				<div class="natSoundContainer">
 					<audio preload id="natSoundAct1A" class="natSound">
 						<source src="./audio/natSoundAct1.ogg" type="audio/ogg">
@@ -1147,8 +1152,6 @@
 					<!-- </div>  -->
 				</div>
 				<div id="motionHoover" class="secondLevelContent">
-					<img src="./img/clickForMore.png" class="clickForMore" id="motionHooverButton" />
-					<div class="secondLevelToggle" id="motionHooverToggle"></div>
 					<video id="motionHooverVid" class="video-js" preload="auto" width="100%" height="100%">
 						<source  src="./vid/motionHoover.mp4" type='video/mp4' />
 						<source  src="./vid/motionHoover.webm" type='video/webm' />
@@ -1601,8 +1604,6 @@
 					<!-- </div> -->
 				</div>				
 				<div id="motionImperial" class="secondLevelContent">
-					<img src="./img/clickForMore.png" class="clickForMore" id="motionImperialButton" />
-					<div class="secondLevelToggle" id="motionImperialToggle"></div>
 					<video id="motionImperialVid" class="video-js" preload="auto" width="100%" height="100%">
 						<source  src="./vid/motionImperial.mp4" type='video/mp4' />
 						<source  src="./vid/motionImperial.webm" type='video/webm' />
@@ -2015,8 +2016,6 @@
 					<!-- </div> -->
 				</div>
 				<div id="motionIntake" class="secondLevelContent">
-					<img src="./img/clickForMore.png" class="clickForMore" id="motionIntakeButton" />
-					<div class="secondLevelToggle" id="motionIntakeToggle"></div>
 					<video id="motionIntakeVid" class="video-js" preload="auto" width="100%" height="100%">
 						<source  src="./vid/motionIntake.mp4" type='video/mp4' />
 						<source  src="./vid/motionIntake.webm" type='video/webm' />
@@ -2323,11 +2322,13 @@
 					</video>
 					<div class="textOverlay" id="videoAct2TextSentence1" style="display: block;">
 						Ever since the crash, its effects have been time-released, staggering and persistent.
-						<img src="./img/clickToContinue.png" class="advanceSlide" id="videoAct2TextButton1">
+						<br />
+						<img src="./img/clickToContinue.png" class="clickToContinue" id="videoAct2TextButton1">
 					</div>
 					<div class="textOverlay" id="videoAct2TextSentence2" style="display: none;">
 						An event is incited suddenly; the aftermath can be more complicated.
-						<img src="./img/clickToContinue.png" class="advanceSlide" id="videoAct2TextButton2">
+						<br />
+						<img src="./img/clickToContinue.png" class="clickToNextVid" id="videoAct2TextButton2">
 					</div>
 				</div>
 				<div class="videoLoopContainer" id="videoAct3Loop" style="display: none;">
@@ -2338,11 +2339,13 @@
 					</video>
 					<div class="textOverlay" id="videoAct3TextSentence1" style="display: block;">
 						Underwater or at war, situations can get out of control. 
-						<img src="./img/clickToContinue.png" class="advanceSlide" id="videoAct3TextButton1">
+						<br />
+						<img src="./img/clickToContinue.png" class="clickToContinue" id="videoAct3TextButton1">
 					</div>
 					<div class="textOverlay" id="videoAct3TextSentence2" style="display: none;">
 						Once something ignites, it's hard to predict how far it will spread.
-						<img src="./img/clickToContinue.png" class="advanceSlide" id="videoAct3TextButton2">
+						<br />
+						<img src="./img/clickToContinue.png" class="clickToNextVid" id="videoAct3TextButton2">
 					</div>
 				</div>
 				<div class="videoLoopContainer" id="videoAct4Loop" style="display: none;">
@@ -2353,11 +2356,13 @@
 					</video>
 					<div class="textOverlay" id="videoAct4TextSentence1" style="display: block;">
 						Trying a new course means accepting the unknown.
-						<img src="./img/clickToContinue.png" class="advanceSlide" id="videoAct4TextButton1">
+						<br />
+						<img src="./img/clickToContinue.png" class="clickToContinue" id="videoAct4TextButton1">
 					</div>
 					<div class="textOverlay" id="videoAct4TextSentence2" style="display: none;">
 						Sometimes you can no longer ignore the warning signs.
-						<img src="./img/clickToContinue.png" class="advanceSlide" id="videoAct4TextButton2">
+						<br />
+						<img src="./img/clickToContinue.png" class="clickToNextVid" id="videoAct4TextButton2">
 					</div>
 				</div>
 				<div class="videoLoopContainer" id="conclusionLoop" style="display: none;">
@@ -2418,13 +2423,10 @@ $('#creditsContent').hide();
 
 $('#powellExtendedText').hide();
 $('#motionHoover').hide();
-$('#motionHooverButton').hide()
 $('#landgrabText').hide();
 $('#motionImperial').hide();
-$('#motionImperialButton').hide()
 $('#addictedText').hide();
 $('#motionIntake').hide();
-$('#motionIntakeButton').hide()
 $('#damagesText').hide();
 </script>
 <script>
@@ -2786,8 +2788,8 @@ var audioPlayer = function(id, volume) {
 			if (a.currentTime > a.duration-1) {
 				b.currentTime = 0;
 				b.volume=volume;
-				a.pause();
 				b.play();
+				a.pause();
 				a.currentTime = 0;
 			}
 		}
@@ -2858,6 +2860,7 @@ var StateBase = function() {
 		timeUpdate     : function(videoId) { return this; },
 
 		clickContinue  : function() { return this; },
+		clickNextVid   : function() { return this; },
 		clickMore      : function() { return this; },
 
 		videoReady     : function(videoId) { return this; },
@@ -3187,6 +3190,7 @@ var debugState = function(startVideo, time) {
 			return this.s('powell100Words');
 		}
 	});
+
 	textState('powell100Words', ['natSoundAct1'],
 	{
 		sliderDragged: function() {
@@ -3228,13 +3232,490 @@ var debugState = function(startVideo, time) {
 			if (videoId !== 'videoAct2') return this;
 
 			videos.hide('videoAct2');
-			powellFadeIn();
-			return this.s('powell100Words');
+			$('#videoAct2Loop').show();
+			$('#videoAct2TextSentence1').fadeIn(1000);
+			//Show Transition Text
+			return this.s('transitionText1');
+		}
+	});
+
+	textState('transitionText1', ['natSoundAct2'],
+	{
+		clickContinue: function() {
+			$('#videoAct2TextSentence1').fadeOut(1000);
+			setTimeout(function() {
+				$('#videoAct2TextSentence2').fadeIn(1000);
+			},1000);
+			return this;
+		},
+		clickNextVid: function() {
+			$('#videoAct2TextSentence2').fadeOut(1000);
+			$('#videoAct2Loop').fadeOut(1000);
+			$('#motionDams').show();
+			videos.play('motionDams');
+
+			return this.s('motionDams');
+		}
+	});
+
+	videoState('motionDams', ['motionDams'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionDams') return this;
+			audio.fadeOut('natSoundAct2');
+			if (videos.motionDams.currentTime() > 85) {
+				showSlider();
+				$('#motionDamsButton').fadeIn(500);
+				return this;
+			} else {
+				return this;
+			}
+		},
+		clickMore: function() {
+			videos.hide('motionDams');
+			$('#dragWrapper').hide();
+			$('#motionDamsButton').hide();
+			$('#motionHoover').show();
+			videos.show('motionHooverVid');
+			videos.pause('motionDams');
+			videos.play('motionHooverVid');
+			return this.s('motionHooverVid');
+		},
+		sliderDragged: function() {
+			//hide motion graphic
+			videos.pause('motionDams');
+			videos.hide('motionDams');
+			videos.show('videoAct3');
+			videos.play('videoAct3')
+			return this.s('videoAct3');
+		},
+		videoEnded: function(videoId) {
+			if (videoId !== 'motionDams') return this;
+
+			videos.hide('motionDams');
+			videos.show('videoAct3');
+			videos.play('videoAct3')
+			return this.s('videoAct3');
+		}
+	});
+
+	videoState('motionHooverVid', ['motionHooverVid'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionHooverVid') return this;
+			if (videos.motionHooverVid.currentTime() > 105.5) {
+				if (!this.muted()) {
+					audio.fadeIn('natSoundAct2');
+				}
+				return this.s('motionHooverVidWithLoopAudio');
+			} else {
+				return this;
+			}
+		}
+	});
+
+	videoState('motionHooverVidWithLoopAudio', ['motionHooverVid'], ['natSoundAct2'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionHooverVid') return this;
+			if (videos.motionHooverVid.currentTime() > 110.5) {
+				showSlider();
+				$('#motionHooverButton').fadeIn(500);
+				return this;
+			} else {
+				return this;
+			}
+		},
+		clickMore: function() {
+			$('#motionHoover').hide();
+			$('#motionHooverButton').hide();
+			videos.hide('motionHooverVid');
+			$('#bgLandgrab').fadeIn(500);
+			videos.pause('motionHooverVid');
+			$('#landgrabText').show();
+			return this.s('landgrabText');
+		},
+		sliderDragged: function() {
+			$('#dragWrapper').hide();
+			videos.pause('motionHooverVid');
+			$('#motionHoover').hide();
+			$('#motionHooverButton').hide();
+			videos.hide('motionHooverVid');
+			videos.show('videoAct3');
+			videos.play('videoAct3')
+			return this.s('videoAct3');
+		},
+		videoEnded: function(videoId) {
+			if (videoId !== 'motionHooverVid') return this;
+			$('#dragWrapper').hide();
+			$('#motionHoover').hide();
+			$('#motionHooverButton').hide();
+			videos.hide('motionHooverVid');
+			videos.show('videoAct3');
+			videos.play('videoAct3')
+			return this.s('videoAct3');
+		}
+	});
+
+	textState('landgrabText', ['natSoundAct2'],
+	{
+		sliderDragged: function() {
+			$('#bgLandgrab').fadeOut(100);
+			$('#landgrabText').fadeOut(500);
+			videos.show('videoAct3');
+			videos.play('videoAct3')
+			return this.s('videoAct3');
+		}
+	});
+
+	videoState('videoAct3', ['videoAct3'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct3') return this;
+			audio.fadeOut('natSoundAct2');
+			if (videos.videoAct3.currentTime() > 214) {
+				if (!this.muted()) {
+					audio.fadeIn('natSoundAct3');
+				}
+				return this.s('videoAct3WithLoopAudio');
+			} else {
+				return this;
+			}
+		}
+	});
+
+	videoState('videoAct3WithLoopAudio', ['videoAct3'], ['natSoundAct3'],
+	{
+		videoEnded: function(videoId) {
+			if (videoId !== 'videoAct3') return this;
+
+			videos.hide('videoAct3');
+			//Show Transition Text
+			return this.s('transitionText2');
+		}
+	});
+
+	textState('transitionText2', ['natSoundAct3'],
+	{
+		clickContinue: function() {
+			$('#videoAct3TextSentence1').fadeOut(1000);
+			setTimeout(function() {
+				$('#videoAct3TextSentence2').fadeIn(1000);
+			},1000);
+			return this;
+		},
+		clickNextVid: function() {
+			$('#videoAct3TextSentence2').fadeOut(1000);
+			$('#videoAct3Loop').fadeOut(1000);
+			$('#motionPopulation').show();
+			videos.play('motionPopulation');
+
+			return this.s('motionPopulation');
+		}
+	});
+
+	videoState('motionPopulation', ['motionPopulation'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionPopulation') return this;
+			audio.fadeOut('natSoundAct3');
+			if (videos.motionPopulation.currentTime() > 55) {
+				showSlider();
+				$('#motionPopulationButton').fadeIn(500);
+				return this;
+			} else {
+				return this;
+			}
+		},
+		clickMore: function() {
+			videos.hide('motionPopulation');
+			$('#dragWrapper').hide();
+			$('#motionPopulationButton').hide();
+			$('#motionImperial').show();
+			videos.show('motionImperialVid');
+			videos.pause('motionPopulation');
+			videos.play('motionImperialVid');
+			return this.s('motionImperialVid');
+		},
+		sliderDragged: function() {
+			//hide motion graphic
+			videos.pause('motionPopulation');
+			videos.hide('motionPopulation');
+			videos.show('videoAct4');
+			videos.play('videoAct4')
+			return this.s('videoAct4');
+		},
+		videoEnded: function(videoId) {
+			if (videoId !== 'motionPopulation') return this;
+
+			videos.hide('motionPopulation');
+			videos.show('videoAct4');
+			videos.play('videoAct4')
+			return this.s('videoAct4');
+		}
+	});
+
+	videoState('motionImperialVid', ['motionImperialVid'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionImperialVid') return this;
+			if (videos.motionImperialVid.currentTime() > 50) {
+				if (!this.muted()) {
+					audio.fadeIn('natSoundAct3');
+				}
+				return this.s('motionImperialVidWithLoopAudio');
+			} else {
+				return this;
+			}
+		}
+	});
+
+	videoState('motionImperialVidWithLoopAudio', ['motionImperialVid'], ['natSoundAct3'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionImperialVid') return this;
+			if (videos.motionImperialVid.currentTime() > 54) {
+				showSlider();
+				$('#motionImperialButton').fadeIn(500);
+				return this;
+			} else {
+				return this;
+			}
+		},
+		clickMore: function() {
+			$('#motionImperial').hide();
+			$('#motionImperialButton').hide();
+			videos.hide('motionImperialVid');
+			$('#bgAddicted').fadeIn(500);
+			videos.pause('motionImperialVid');
+			$('#addictedText').show();
+			return this.s('addictedText');
+		},
+		sliderDragged: function() {
+			$('#dragWrapper').hide();
+			videos.pause('motionImperialVid');
+			$('#motionImperial').hide();
+			$('#motionImperialButton').hide();
+			videos.hide('motionImperialVid');
+			videos.show('videoAct4');
+			videos.play('videoAct4')
+			return this.s('videoAct4');
+		},
+		videoEnded: function(videoId) {
+			if (videoId !== 'motionImperialVid') return this;
+			$('#dragWrapper').hide();
+			$('#motionImperial').hide();
+			$('#motionImperialButton').hide();
+			videos.hide('motionImperialVid');
+			videos.show('videoAct4');
+			videos.play('videoAct4')
+			return this.s('videoAct4');
+		}
+	});
+
+	textState('addictedText', ['natSoundAct3'],
+	{
+		sliderDragged: function() {
+			$('#bgAddicted').fadeOut(100);
+			$('#addictedText').fadeOut(500);
+			videos.show('videoAct4');
+			videos.play('videoAct4')
+			return this.s('videoAct4');
+		}
+	});
+
+	videoState('videoAct4', ['videoAct4'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct4') return this;
+			audio.fadeOut('natSoundAct3');
+			if (videos.videoAct4.currentTime() > 25.5) {
+				if (!this.muted()) {
+					audio.fadeIn('natSoundAct4');
+				}
+				return this.s('videoAct4WithLoopAudio');
+			} else {
+				return this;
+			}
+		}
+	});
+
+	videoState('videoAct4WithLoopAudio', ['videoAct4'], ['natSoundAct4'],
+	{
+		videoEnded: function(videoId) {
+			if (videoId !== 'videoAct4') return this;
+
+			videos.hide('videoAct4');
+			//Show Transition Text
+			return this.s('transitionText3');
+		}
+	});
+
+	textState('transitionText3', ['natSoundAct4'],
+	{
+		clickContinue: function() {
+			$('#videoAct4TextSentence1').fadeOut(1000);
+			setTimeout(function() {
+				$('#videoAct4TextSentence2').fadeIn(1000);
+			},1000);
+			return this;
+		},
+		clickNextVid: function() {
+			$('#videoAct4TextSentence2').fadeOut(1000);
+			$('#videoAct4Loop').fadeOut(1000);
+			$('#motionDeltaMead').show();
+			videos.play('motionDeltaMead');
+
+			return this.s('motionDeltaMead');
+		}
+	});
+
+	videoState('motionDeltaMead', ['motionDeltaMead'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionDeltaMead') return this;
+			audio.fadeOut('natSoundAct4');
+			if (videos.motionDeltaMead.currentTime() > 85) {
+				showSlider();
+				$('#motionDeltaMeadButton').fadeIn(500);
+				return this;
+			} else {
+				return this;
+			}
+		},
+		clickMore: function() {
+			videos.hide('motionDeltaMead');
+			$('#dragWrapper').hide();
+			$('#motionDeltaMeadButton').hide();
+			$('#motionIntake').show();
+			videos.show('motionIntakeVid');
+			videos.pause('motionDeltaMead');
+			videos.play('motionIntakeVid');
+			return this.s('motionIntakeVid');
+		},
+		sliderDragged: function() {
+			//hide motion graphic
+			videos.pause('motionDeltaMead');
+			videos.hide('motionDeltaMead');
+			videos.show('videoAct5');
+			videos.play('videoAct5')
+			return this.s('videoAct5');
+		},
+		videoEnded: function(videoId) {
+			if (videoId !== 'motionDeltaMead') return this;
+
+			videos.hide('motionDeltaMead');
+			videos.show('videoAct5');
+			videos.play('videoAct5')
+			return this.s('videoAct5');
+		}
+	});
+
+	videoState('motionIntakeVid', ['motionIntakeVid'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionIntakeVid') return this;
+			if (videos.motionIntakeVid.currentTime() > 73) {
+				if (!this.muted()) {
+					audio.fadeIn('natSoundAct4');
+				}
+				return this.s('motionIntakeVidWithLoopAudio');
+			} else {
+				return this;
+			}
+		}
+	});
+
+	videoState('motionIntakeVidWithLoopAudio', ['motionIntakeVid'], ['natSoundAct4'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionIntakeVid') return this;
+			if (videos.motionIntakeVid.currentTime() > 78) {
+				showSlider();
+				$('#motionIntakeButton').fadeIn(500);
+				return this;
+			} else {
+				return this;
+			}
+		},
+		clickMore: function() {
+			$('#motionIntake').hide();
+			$('#motionIntakeButton').hide();
+			videos.hide('motionIntakeVid');
+			$('#bgDamages').fadeIn(500);
+			videos.pause('motionIntakeVid');
+			$('#damagesText').show();
+			return this.s('damagesText');
+		},
+		sliderDragged: function() {
+			$('#dragWrapper').hide();
+			videos.pause('motionIntakeVid');
+			$('#motionImperial').hide();
+			$('#motionImperialButton').hide();
+			videos.hide('motionIntakeVid');
+			videos.show('videoAct5');
+			videos.play('videoAct5')
+			return this.s('videoAct5');
+		},
+		videoEnded: function(videoId) {
+			if (videoId !== 'motionIntakeVid') return this;
+			$('#dragWrapper').hide();
+			$('#motionIntake').hide();
+			$('#motionIntakeButton').hide();
+			videos.hide('motionIntakeVid');
+			videos.show('videoAct5');
+			videos.play('videoAct5')
+			return this.s('videoAct5');
+		}
+	});
+
+	textState('damagesText', ['natSoundAct4'],
+	{
+		sliderDragged: function() {
+			$('#bgDamages').fadeOut(100);
+			$('#damagesText').fadeOut(500);
+			videos.show('videoAct5');
+			videos.play('videoAct5')
+			return this.s('videoAct5');
+		}
+	});
+
+	videoState('videoAct5', ['videoAct5'], [],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct5') return this;
+			audio.fadeOut('natSoundAct4');
+			if (videos.videoAct5.currentTime() > 63.6) {
+				if (!this.muted()) {
+					audio.fadeIn('natSoundAct5');
+				}
+				return this.s('videoAct5WithLoopAudio');
+			} else {
+				return this;
+			}
+		}
+	});
+
+	videoState('videoAct5WithLoopAudio', ['videoAct5'], ['natSoundAct5'],
+	{
+		videoEnded: function(videoId) {
+			if (videoId !== 'videoAct5') return this;
+
+			videos.hide('videoAct5');
+			//Show Transition Text
+			return this.s('conclusionText');
+		}
+	});
+
+	textState('conclusionText', ['natSoundAct5'],
+	{
+		clickForMore: function() {
+			return this;
 		}
 	});
 
 
-	debugState('videoAct3', 220);
+	debugState('motionDeltaMead', 85);
 
 var introAnimationStart = function() {
 	$('.introBackground').fadeIn(500);
@@ -3380,8 +3861,17 @@ $('#soundOff').click(function() {
  $('.clickForMore').click(function() {
  	console.log('See More Button Clicked');
  	updateState(currentState.clickMore)();
- }) ;
+ });
 
+ $('.clickToContinue').click(function() {
+ 	console.log('Continue Button Clicked');
+ 	updateState(currentState.clickContinue)();
+ });
+
+  $('.clickToNextVid').click(function() {
+ 	console.log('Continue Button Clicked');
+ 	updateState(currentState.clickNextVid)();
+ });
 
 $('#playToggle').click(function() {
 	if (currentState.paused()) {

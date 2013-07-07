@@ -276,19 +276,25 @@ body {
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	z-index: 981;
+	z-index: 15;
 }
 #motionImperialButton {
-	top: 53%;
-	left: 5%;
+	position: absolute;
+	z-index: 999;
+	top: 55%;
+	left: 3%;
  }
 #motionIntakeButton{
-	top: 50%;
+	position: absolute;
+	z-index: 999;
+	top: 32%;
 	left: 3%;
 }
 #motionHooverButton {
+	position: absolute;
+	z-index: 999;
 	left: 3%;
-	top: 50%;
+	top: 53%;
 }
 .secondLevelToggle {
 	height: 100%;
@@ -590,18 +596,18 @@ g#dragButton2:hover {
 	position: absolute;
 	z-index: 999;
 	left: 3%;
-	top: 52%;
+	top: 40%;
 }
 #motionPopulationButton {
 	position: absolute;
 	z-index: 999;
 	left: 3%;
-	top: 40%;
+	top: 32%;
 }
 #motionDamsButton {
 	position: absolute;
 	z-index: 999;
-	top: 68%;
+	top: 53%;
 	left: 3%;
 }
 .clickForMore:hover {
@@ -666,13 +672,12 @@ g#dragButton2:hover {
 	font-size: 32px;
 	line-height: 40px;
 }
-.advanceSlide {
+.clickToContinue, .clickToNextVid {
 	position: absolute;
 	z-index:999;
-	bottom:-130px;
 	left:0;
 }
-.advanceSlide:hover {
+.clickToContinue:hover, .clickToNextVid:hover {
 	cursor: pointer;
 }
 
