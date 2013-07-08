@@ -38,8 +38,10 @@
 </head>
 
 <body>
-<div id="loadingWrapper">
-		<video id="videoIntro" class="video-js" autoplay preload="auto" width="100%" height="100%">
+<div class="pageWrapper" id="pageWrapper">
+	<div id="bufferingOverlay"><img id ="loader" src="./img/loader.gif" /></div>
+	<div id="loadingWrapper">
+		<video id="videoIntro" class="video-js" preload="auto" width="100%" height="100%">
 			<source  src="./vid/videoIntro.mp4" type='video/mp4' />
 			<source  src="./vid/videoIntro.webm" type='video/webm' />
 			<source  src="./vid/videoIntro.ogv" type='video/ogg' />
@@ -53,9 +55,9 @@
 			<source src="./audio/natSoundIntro.mp3" type="audio/mpeg">
 		</audio>
 		<img class="introBackground" src="./img/bgIntro.png" style="display:none" />
-		<div class="introSentences" id="introSentence1" style="display:none; opacity:0;">This is a story about the Colorado River</div>
-		<div class="introSentences" id="introSentence2" style="display:none; opacity:0;">How we change the river</div>
-		<div class="introSentences" id="introSentence3" style="display:none; opacity:0;">And how the river changes us</div>
+		<div class="introSentences" id="introSentence1">This is a story about the Colorado River</div>
+		<div class="introSentences" id="introSentence2">How we change the river</div>
+		<div class="introSentences" id="introSentence3">And how the river changes us</div>
 		<div class="logo" style="display:none">
 			<svg width="100%" height="100%">
 				<g id="logoWrapper" transform="translate(195,100) scale(0.6)">
@@ -626,7 +628,7 @@
 			<input class="knob" value="25">
 		</div>
 	</div>
-	<div class="pageWrapper" id="pageWrapper">
+	<div id="mainContentWrapper" style="display:none;">
 			<div class="videoWrapper">
 				<video id="videoAct1" class="video-js" preload="auto" width="100%" height="100%">
 					 <source  src="./vid/video1.mp4" type='video/mp4' />
@@ -2376,9 +2378,13 @@
 					</div>
 				</div>
 			</div> 
-</div>
+		</div>
+	</div>
 <script>
 $('#dragWrapper2').hide();
+$('#introSentence1').hide();
+$('#introSentence2').hide();
+$('#introSentence3').hide();
 var windowHeight = $(window).height();
 var windowWidth = $(window).width();
 var windowAspectRatio = parseFloat(windowWidth/windowHeight).toFixed(2);
@@ -2389,6 +2395,7 @@ var heightAspectRatio = 0.5625;
 <script src="./js/app.js"></script>
 <script src='./js/progressBar.js'></script>
 <script src='./js/slideToContinue.js'></script>
+<script src="./js/jquery.mousewheel.js"></script>
 <script>
 $('#Layer_86').hide();
 $('#dragWrapper').hide();
@@ -2461,7 +2468,7 @@ var videoPlayer = function(id, volume, duration, preloadStartSeconds) {
 
 	var callbacks = {};
 
-	['timeupdate', 'progress', 'ended', 'canplaythrough'].forEach(function(event) {
+	['timeupdate', 'progress', 'ended', 'canplaythrough', 'waiting', 'stalled'].forEach(function(event) {
 		callbacks[event] = $.Callbacks();
 		clip.on(event, function() { callbacks[event].fire(vPlayer); });
 	});
@@ -2706,6 +2713,7 @@ var videos = function() {
 
 	var currentVideo = players.videoAct1;
 
+
 	var index = function(v) { return videoSequence.indexOf(v); }
 
 	var sequenceDuration = function(seq) {
@@ -2722,7 +2730,8 @@ var videos = function() {
 
 
 	return $.extend({}, players, {
-		play:   function(id) { console.log('playing ' + id); this[id].play(); if(videoSequence.indexOf(this[id]) >= 0) { currentVideo = this[id]; } },
+		playingVideo: null,
+		play:   function(id) { console.log('playing ' + id); this[id].play(); this.playingVideo = this[id]; if(videoSequence.indexOf(this[id]) >= 0) { currentVideo = this[id]; } },
 		pause:  function(id) { this[id].pause();  },
 		load:   function(id) { this[id].load();   },
 		hide:   function(id) { each(function(player) { player.hide(); });  },
@@ -2793,6 +2802,8 @@ var audioPlayer = function(id, volume) {
 
 	var inFade = function(clip) {
 		$(clip).animate({volume: volume}, 1000);
+		console.log('audio faded in');
+		console.log('audio volume is ' + clip.volume);
 	};
 
 	var outFade = function(clip) {
@@ -2802,9 +2813,9 @@ var audioPlayer = function(id, volume) {
 	return { 
 		a: aClip, 
 		b: bClip,
-		fadeIn:  function() { this.a.volume = 0, this.a.play(); inFade(this.a); },
+		fadeIn:  function() { this.a.volume = 0; this.a.currentTime = 0; this.a.play(); inFade(this.a); },
 		fadeOut: function() { outFade(this.a); outFade(this.b); },
-		play:    function() { this.a.play(); },
+		play:    function() { this.a.volume = volume; this.a.play(); },
 		pause:   function() { this.a.pause(); this.b.pause(); },
 		mute:    function() { this.pause(); },
 		unmute:  function() { this.play(); }
@@ -2820,12 +2831,12 @@ var audio = function() {
 		natSoundAct4  : audioPlayer('natSoundAct4',  0.3),
 		natSoundAct5  : audioPlayer('natSoundAct5',  0.5),
 
-		fadeIn:  function(id) { this[id].fadeIn();  },
-		fadeOut: function(id) { this[id].fadeOut(); },
-		play:    function(id) { this[id].play();    },
-		pause:   function(id) { this[id].pause();   },
-		mute:    function(id) { this[id].mute();    },
-		unmute:  function(id) { this[id].unmute();  }
+		fadeIn:  function(id) { console.log(id + ' is fading in'); this[id].fadeIn();  },
+		fadeOut: function(id) { console.log(id + ' is fading out'); this[id].fadeOut(); },
+		play:    function(id) { console.log(id + ' is playing'); this[id].play();    },
+		pause:   function(id) { console.log(id + ' is pausing'); this[id].pause();   },
+		mute:    function(id) { console.log(id + ' is muting'); this[id].mute();    },
+		unmute:  function(id) { console.log(id + ' is unmuting'); this[id].unmute();  }
 	};
 }();
 
@@ -2851,6 +2862,7 @@ var StateBase = function() {
 
 		progressUpdate : function(videoId) { return this; },
 		timeUpdate     : function(videoId) { return this; },
+		waiting        : function(videoId) { return this; },
 
 		clickContinue  : function() { return this; },
 		clickNextVid   : function() { return this; },
@@ -2912,6 +2924,22 @@ var videoState = function(name, vids, aud, elements, obj) {
 
 	var currentVideo = function(videoId) { return vids.indexOf(videoId) >= 0; }
 
+	state(name+'Buffering',$.extend({},
+	{
+		timeUpdate: function(videoId) {
+			$('#bufferingOverlay').hide();
+			return states[name+'Playing'];
+		}
+	}));	
+
+	state(name+'MutedAndBuffering',$.extend({},
+	{
+		timeUpdate: function(videoId) {
+			$('#bufferingOverlay').hide();
+			return states[name+'Muted'];
+		}
+	}));	
+
 	state(name+'Playing',$.extend({},
 	{
 		s: function(stateName) { return states[stateName+'Playing']; },
@@ -2939,6 +2967,15 @@ var videoState = function(name, vids, aud, elements, obj) {
 				return this;
 			}
 		},
+		waiting: function(videoId) {
+			if (!currentVideo(videoId)) {
+				return this;
+			}
+			else {
+				$('#bufferingOverlay').show();
+				return states[name+'Buffering'];
+			}
+		}
 	}, obj));
 
 	state(name+'Paused', $.extend({},
@@ -2998,6 +3035,15 @@ var videoState = function(name, vids, aud, elements, obj) {
 				return this;
 			}
 		},
+		waiting: function(videoId) {
+			if (!currentVideo(videoId)) {
+				return this;
+			}
+			else {
+				$('#bufferingOverlay').show();
+				return states[name+'MutedAndBuffering'];
+			}
+		}
 	}, obj));
 
 	state(name+'PausedAndMuted', $.extend({},
@@ -3134,7 +3180,7 @@ var debugState = function(startVideo, time) {
 			// preload experience
 			// videos.videoIntro.load();
 			$('#loadingWrapper').hide();
-			$('#pageWrapper').show();
+			$('#mainContentWrapper').show();
 			videos.pause('videoIntro');
 			videos.show(startVideo);
 			videos[startVideo].load();
@@ -3159,7 +3205,7 @@ var debugState = function(startVideo, time) {
 		domLoaded: function() {
 			// load intro video
 			// preload experience
-			// videos.videoIntro.load();
+			videos.videoIntro.load();
 			videos.videoAct1.load();
 			return this.s('domLoaded');
 		}
@@ -3173,6 +3219,7 @@ var debugState = function(startVideo, time) {
 			if (videoId === 'videoIntro') {
 				videos.play('videoIntro');
 				console.log(videoId + 'playing, switching to playing state');
+				$('#bufferingOverlay').hide();
 				return this.s('introVidPlaying');
 			} else {
 				// how do we keep track of which videos are ready
@@ -3186,7 +3233,7 @@ var debugState = function(startVideo, time) {
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoIntro') return this;
 
-			if (videos.videoIntro.currentTime() > 7.0) {
+			if (videos.videoIntro.currentTime() > 12.0) {
 				audio.fadeIn('natSoundIntro');
 				return this.s('introVidPlayingWithLoopAudio');
 			} else {
@@ -3257,11 +3304,21 @@ var debugState = function(startVideo, time) {
 	{
 		sliderDragged: function() {
 			$('#loadingWrapper').hide();
-			$('#pageWrapper').show();
+			$('#mainContentWrapper').show();
+			videos.videoAct1.currentTime(0);
 			videos.show('videoAct1');
 			videos.play('videoAct1');
 			console.log('videoAct1 volume is ' + videos.videoAct1.volume() );
-			return this.s('videoAct1Playing');
+			return this.s('videoAct1FadingPreviousAudioLoopPlaying');
+		}
+	});
+
+	videoState('videoAct1FadingPreviousAudioLoop', ['videoAct1'], [], ['#dragWrapper', '.clickForMore'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct1') return this;
+			audio.fadeOut('natSoundIntro');
+			return this.s('videoAct1');
 		}
 	});
 
@@ -3269,7 +3326,6 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
-			audio.fadeOut('natSoundIntro');
 			if (videos.videoAct1.currentTime() > 92.3) {
 				if (!this.muted()) {
 					// audio.fadeIn('natSoundAct1');
@@ -3309,7 +3365,7 @@ var debugState = function(startVideo, time) {
 			if (!this.paused()) {
 				videos.play('videoAct2');
 			}
-			return this.s('videoAct2');
+			return this.s('videoAct2FadingPreviousAudioLoop');
 		},
 		clickMore: function() {
 			powellShowExtendedText();
@@ -3322,11 +3378,19 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct2', ['videoAct2'], [], ['#dragWrapper', '.clickForMore'],
+	videoState('videoAct2FadingPreviousAudioLoop', ['videoAct2'], [], ['#dragWrapper', '.clickForMore'],
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct2') return this;
 			audio.fadeOut('natSoundAct1');
+			return this.s('videoAct2');
+		}
+	});
+
+	videoState('videoAct2', ['videoAct2'], [], ['#dragWrapper', '.clickForMore'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct2') return this;
 			if (videos.videoAct2.currentTime() > 118) {
 				if (!this.muted()) {
 					audio.fadeIn('natSoundAct2');
@@ -3369,6 +3433,15 @@ var debugState = function(startVideo, time) {
 			$('#motionDams').show();
 			videos.play('motionDams');
 
+			return this.s('motionDamsFadingPreviousAudioLoop');
+		}
+	});
+
+	videoState('motionDamsFadingPreviousAudioLoop', ['motionDams'], [], ['#dragWrapper', '.clickForMore'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionDams') return this;
+			audio.fadeOut('natSoundAct2');
 			return this.s('motionDams');
 		}
 	});
@@ -3377,8 +3450,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionDams') return this;
-			audio.fadeOut('natSoundAct2');
-			if (videos.motionDams.currentTime() > 85) {
+			if (videos.motionDams.currentTime() > 80) {
 				showSlider();
 				$('#motionDamsButton').fadeIn(500);
 				return this;
@@ -3391,6 +3463,7 @@ var debugState = function(startVideo, time) {
 			$('#dragWrapper').hide();
 			$('#motionDamsButton').hide();
 			$('#motionHoover').show();
+			videos.motionHooverVid.currentTime(0);
 			videos.show('motionHooverVid');
 			videos.pause('motionDams');
 			videos.play('motionHooverVid');
@@ -3398,6 +3471,7 @@ var debugState = function(startVideo, time) {
 		},
 		sliderDragged: function() {
 			//hide motion graphic
+			$('.clickForMore').hide();
 			videos.pause('motionDams');
 			videos.hide('motionDams');
 			videos.show('videoAct3');
@@ -3406,7 +3480,8 @@ var debugState = function(startVideo, time) {
 		},
 		videoEnded: function(videoId) {
 			if (videoId !== 'motionDams') return this;
-
+			$('#dragWrapper').hide();
+			$('#motionDamsButton').hide();
 			videos.hide('motionDams');
 			videos.show('videoAct3');
 			videos.play('videoAct3')
@@ -3418,7 +3493,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionHooverVid') return this;
-			if (videos.motionHooverVid.currentTime() > 105.5) {
+			if (videos.motionHooverVid.currentTime() > 102) {
 				if (!this.muted()) {
 					audio.fadeIn('natSoundAct2');
 				}
@@ -3433,7 +3508,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionHooverVid') return this;
-			if (videos.motionHooverVid.currentTime() > 110.5) {
+			if (videos.motionHooverVid.currentTime() > 103) {
 				showSlider();
 				$('#motionHooverButton').fadeIn(500);
 				return this;
@@ -3458,7 +3533,7 @@ var debugState = function(startVideo, time) {
 			videos.hide('motionHooverVid');
 			videos.show('videoAct3');
 			videos.play('videoAct3')
-			return this.s('videoAct3');
+			return this.s('videoAct3FadingPreviousAudioLoop');
 		},
 		videoEnded: function(videoId) {
 			if (videoId !== 'motionHooverVid') return this;
@@ -3468,7 +3543,7 @@ var debugState = function(startVideo, time) {
 			videos.hide('motionHooverVid');
 			videos.show('videoAct3');
 			videos.play('videoAct3')
-			return this.s('videoAct3');
+			return this.s('videoAct3FadingPreviousAudioLoop');
 		}
 	});
 
@@ -3485,6 +3560,15 @@ var debugState = function(startVideo, time) {
 			$('#landgrabText').fadeOut(500);
 			videos.show('videoAct3');
 			videos.play('videoAct3')
+			return this.s('videoAct3FadingPreviousAudioLoop');
+		}
+	});
+
+	videoState('videoAct3FadingPreviousAudioLoop', ['videoAct3'], [], ['#dragWrapper', '.clickForMore'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct3') return this;
+			audio.fadeOut('natSoundAct2');
 			return this.s('videoAct3');
 		}
 	});
@@ -3493,7 +3577,6 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct3') return this;
-			audio.fadeOut('natSoundAct2');
 			if (videos.videoAct3.currentTime() > 214) {
 				if (!this.muted()) {
 					audio.fadeIn('natSoundAct3');
@@ -3537,6 +3620,15 @@ var debugState = function(startVideo, time) {
 			$('#motionPopulation').show();
 			videos.play('motionPopulation');
 
+			return this.s('motionPopulationFadingPreviousAudioLoop');
+		}
+	});
+
+	videoState('motionPopulationFadingPreviousAudioLoop', ['motionPopulation'], [], ['#dragWrapper', '.clickForMore'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionPopulation') return this;
+			audio.fadeOut('natSoundAct3');
 			return this.s('motionPopulation');
 		}
 	});
@@ -3545,8 +3637,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionPopulation') return this;
-			audio.fadeOut('natSoundAct3');
-			if (videos.motionPopulation.currentTime() > 55) {
+			if (videos.motionPopulation.currentTime() > 45) {
 				showSlider();
 				$('#motionPopulationButton').fadeIn(500);
 				return this;
@@ -3559,6 +3650,7 @@ var debugState = function(startVideo, time) {
 			$('#dragWrapper').hide();
 			$('#motionPopulationButton').hide();
 			$('#motionImperial').show();
+			videos.motionImperialVid.currentTime(0);
 			videos.show('motionImperialVid');
 			videos.pause('motionPopulation');
 			videos.play('motionImperialVid');
@@ -3566,6 +3658,7 @@ var debugState = function(startVideo, time) {
 		},
 		sliderDragged: function() {
 			//hide motion graphic
+			$('.clickForMore').hide();
 			videos.pause('motionPopulation');
 			videos.hide('motionPopulation');
 			videos.show('videoAct4');
@@ -3574,7 +3667,8 @@ var debugState = function(startVideo, time) {
 		},
 		videoEnded: function(videoId) {
 			if (videoId !== 'motionPopulation') return this;
-
+			$('#dragWrapper').hide();
+			$('#motionPopulationButton').hide();
 			videos.hide('motionPopulation');
 			videos.show('videoAct4');
 			videos.play('videoAct4')
@@ -3586,7 +3680,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionImperialVid') return this;
-			if (videos.motionImperialVid.currentTime() > 50) {
+			if (videos.motionImperialVid.currentTime() > 52) {
 				if (!this.muted()) {
 					audio.fadeIn('natSoundAct3');
 				}
@@ -3601,7 +3695,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionImperialVid') return this;
-			if (videos.motionImperialVid.currentTime() > 54) {
+			if (videos.motionImperialVid.currentTime() > 53) {
 				showSlider();
 				$('#motionImperialButton').fadeIn(500);
 				return this;
@@ -3626,7 +3720,7 @@ var debugState = function(startVideo, time) {
 			videos.hide('motionImperialVid');
 			videos.show('videoAct4');
 			videos.play('videoAct4')
-			return this.s('videoAct4');
+			return this.s('videoAct4FadingPreviousAudioLoop');
 		},
 		videoEnded: function(videoId) {
 			if (videoId !== 'motionImperialVid') return this;
@@ -3636,7 +3730,7 @@ var debugState = function(startVideo, time) {
 			videos.hide('motionImperialVid');
 			videos.show('videoAct4');
 			videos.play('videoAct4')
-			return this.s('videoAct4');
+			return this.s('videoAct4FadingPreviousAudioLoop');
 		}
 	});
 
@@ -3653,6 +3747,15 @@ var debugState = function(startVideo, time) {
 			$('#addictedText').fadeOut(500);
 			videos.show('videoAct4');
 			videos.play('videoAct4')
+			return this.s('videoAct4FadingPreviousAudioLoop');
+		}
+	});
+
+	videoState('videoAct4FadingPreviousAudioLoop', ['videoAct4'], [], ['#dragWrapper', '.clickForMore'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct4') return this;
+			audio.fadeOut('natSoundAct3');
 			return this.s('videoAct4');
 		}
 	});
@@ -3661,7 +3764,6 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct4') return this;
-			audio.fadeOut('natSoundAct3');
 			if (videos.videoAct4.currentTime() > 25.5) {
 				if (!this.muted()) {
 					audio.fadeIn('natSoundAct4');
@@ -3705,6 +3807,15 @@ var debugState = function(startVideo, time) {
 			$('#motionDeltaMead').show();
 			videos.play('motionDeltaMead');
 
+			return this.s('motionDeltaMeadFadingPreviousAudioLoop');
+		}
+	});
+
+	videoState('motionDeltaMeadFadingPreviousAudioLoop', ['motionDeltaMead'], [], ['#dragWrapper', '.clickForMore'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'motionDeltaMead') return this;
+			audio.fadeOut('natSoundAct4');
 			return this.s('motionDeltaMead');
 		}
 	});
@@ -3713,8 +3824,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionDeltaMead') return this;
-			audio.fadeOut('natSoundAct4');
-			if (videos.motionDeltaMead.currentTime() > 85) {
+			if (videos.motionDeltaMead.currentTime() > 67) {
 				showSlider();
 				$('#motionDeltaMeadButton').fadeIn(500);
 				return this;
@@ -3727,6 +3837,7 @@ var debugState = function(startVideo, time) {
 			$('#dragWrapper').hide();
 			$('#motionDeltaMeadButton').hide();
 			$('#motionIntake').show();
+			videos.motionIntakeVid.currentTime(0);
 			videos.show('motionIntakeVid');
 			videos.pause('motionDeltaMead');
 			videos.play('motionIntakeVid');
@@ -3734,6 +3845,7 @@ var debugState = function(startVideo, time) {
 		},
 		sliderDragged: function() {
 			//hide motion graphic
+			$('.clickForMore').hide();
 			videos.pause('motionDeltaMead');
 			videos.hide('motionDeltaMead');
 			videos.show('videoAct5');
@@ -3742,7 +3854,8 @@ var debugState = function(startVideo, time) {
 		},
 		videoEnded: function(videoId) {
 			if (videoId !== 'motionDeltaMead') return this;
-
+			$('#dragWrapper').hide();
+			$('#motionDeltaMeadButton').hide();
 			videos.hide('motionDeltaMead');
 			videos.show('videoAct5');
 			videos.play('videoAct5')
@@ -3754,7 +3867,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionIntakeVid') return this;
-			if (videos.motionIntakeVid.currentTime() > 73) {
+			if (videos.motionIntakeVid.currentTime() > 67) {
 				if (!this.muted()) {
 					audio.fadeIn('natSoundAct4');
 				}
@@ -3769,7 +3882,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionIntakeVid') return this;
-			if (videos.motionIntakeVid.currentTime() > 78) {
+			if (videos.motionIntakeVid.currentTime() > 68) {
 				showSlider();
 				$('#motionIntakeButton').fadeIn(500);
 				return this;
@@ -3794,7 +3907,7 @@ var debugState = function(startVideo, time) {
 			videos.hide('motionIntakeVid');
 			videos.show('videoAct5');
 			videos.play('videoAct5')
-			return this.s('videoAct5');
+			return this.s('videoAct5FadingPreviousAudioLoop');
 		},
 		videoEnded: function(videoId) {
 			if (videoId !== 'motionIntakeVid') return this;
@@ -3804,7 +3917,7 @@ var debugState = function(startVideo, time) {
 			videos.hide('motionIntakeVid');
 			videos.show('videoAct5');
 			videos.play('videoAct5')
-			return this.s('videoAct5');
+			return this.s('videoAct5FadingPreviousAudioLoop');
 		}
 	});
 
@@ -3821,6 +3934,15 @@ var debugState = function(startVideo, time) {
 			$('#damagesText').fadeOut(500);
 			videos.show('videoAct5');
 			videos.play('videoAct5')
+			return this.s('videoAct5FadingPreviousAudioLoop');
+		}
+	});
+
+	videoState('videoAct5FadingPreviousAudioLoop', ['videoAct5'], [], ['#dragWrapper', '.clickForMore'],
+	{
+		timeUpdate: function(videoId) {
+			if (videoId !== 'videoAct5') return this;
+			audio.fadeOut('natSoundAct4');
 			return this.s('videoAct5');
 		}
 	});
@@ -3829,7 +3951,6 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct5') return this;
-			audio.fadeOut('natSoundAct4');
 			if (videos.videoAct5.currentTime() > 63.6) {
 				if (!this.muted()) {
 					audio.fadeIn('natSoundAct5');
@@ -3867,73 +3988,75 @@ var debugState = function(startVideo, time) {
 
 var introAnimationStart = function() {
 	$('.introBackground').fadeIn(500);
-		$('#introSentence1').show();
-		$('#introSentence2').show();
-		$('#introSentence3').show();
+		// $('#introSentence1').show();
+		// $('#introSentence2').show();
+		// $('#introSentence3').show();
 		setTimeout(function() {
-			$('#introSentence1').css('opacity','1');
-		},500);
+			$('#introSentence1').fadeIn(1000);
+		},1000);
 		setTimeout(function() {
-			$('#introSentence2').css('opacity','1');
-		},5500);
+			$('#introSentence2').fadeIn(1000);
+		},4500);
 		setTimeout(function() {
-			$('#introSentence3').css('opacity','1');
-		},8500);
-		$('#introSentence1').textillate({
-			in: {
-				effect: 'fadeInLeft',
-				delayScale: 2,
-				delay: 50,
-				sync: false
-			},
-			out: {
-				effect: 'fadeOutLeft',
-				delayScale: 2,
-				delay: 50,
-				sync: true
-			},
-			loop: true,
-			initialDelay: 250,
-			minDisplayTime: 11780
-		});
-		$('#introSentence2').textillate({
-			in: {
-				effect: 'fadeInLeft',
-				delayScale: 2,
-				delay: 50,
-				sync: false
-			},
-			out: {
-				effect: 'fadeOutLeft',
-				delayScale: 2,
-				delay: 50,
-				sync: true
-			},
-			loop: true,
-			initialDelay: 5250,
-			minDisplayTime: 8150
-		});
-		$('#introSentence3').textillate({
-			in: {
-				effect: 'fadeInLeft',
-				delayScale: 2,
-				delay: 50,
-				sync: false
-			},
-			out: {
-				effect: 'fadeOutLeft',
-				delayScale: 2,
-				delay: 50,
-				sync: true
-			},
-			loop: true,
-			initialDelay: 8250,
-			minDisplayTime: 4775
-		});
+			$('#introSentence3').fadeIn(1000);
+		},8000);
+		// $('#introSentence1').textillate({
+		// 	in: {
+		// 		effect: 'fadeInLeft',
+		// 		delayScale: 2,
+		// 		delay: 50,
+		// 		sync: false
+		// 	},
+		// 	out: {
+		// 		effect: 'fadeOutLeft',
+		// 		delayScale: 2,
+		// 		delay: 50,
+		// 		sync: true
+		// 	},
+		// 	loop: true,
+		// 	initialDelay: 250,
+		// 	minDisplayTime: 11780
+		// });
+		// $('#introSentence2').textillate({
+		// 	in: {
+		// 		effect: 'fadeInLeft',
+		// 		delayScale: 2,
+		// 		delay: 50,
+		// 		sync: false
+		// 	},
+		// 	out: {
+		// 		effect: 'fadeOutLeft',
+		// 		delayScale: 2,
+		// 		delay: 50,
+		// 		sync: true
+		// 	},
+		// 	loop: true,
+		// 	initialDelay: 5250,
+		// 	minDisplayTime: 8150
+		// });
+		// $('#introSentence3').textillate({
+		// 	in: {
+		// 		effect: 'fadeInLeft',
+		// 		delayScale: 2,
+		// 		delay: 50,
+		// 		sync: false
+		// 	},
+		// 	out: {
+		// 		effect: 'fadeOutLeft',
+		// 		delayScale: 2,
+		// 		delay: 50,
+		// 		sync: true
+		// 	},
+		// 	loop: true,
+		// 	initialDelay: 8250,
+		// 	minDisplayTime: 4775
+		// });
 		setTimeout(function() {
-			$('.introSentences').hide();
-			updateState(currentState.animationEnded)();
-		},17000);
+			$('.introSentences').fadeOut(500);
+			setTimeout(function() {
+				updateState(currentState.animationEnded)();
+			},500);
+		},14000);
 }
 
 // var currentState = states.debugStart;
@@ -3954,10 +4077,26 @@ function updateState(fun) {
 
 $(document).ready(function () { updateState(currentState.domLoaded)(); });
 
-videos.on('canplaythrough', function(player){ updateState(currentState.videoReady)(player.id) });
-videos.on('progress',       function(player){ updateState(currentState.progressUpdate)(player.id) });
+// videos.on('canplaythrough', function(player){ updateState(currentState.videoReady)(player.id) });
+videos.on('progress',       function(player){ updateState(currentState.progressUpdate)(player.id); if(player.buffered().end(0)>=player.duration()) {updateState(currentState.videoReady)(player.id)} });
 videos.on('timeupdate',     function(player){ updateState(currentState.timeUpdate)(player.id) });
 videos.on('ended',          function(player){ updateState(currentState.videoEnded)(player.id) });
+videos.on('waiting',        function(player){ updateState(currentState.waiting)(player.id) });
+videos.on('stalled',        function(player){ updateState(currentState.waiting)(player.id) });
+
+var lastVidTime = 0;
+setInterval(function() {
+	console.log('video playing is ' + videos.playingVideo);
+	if (!videos.playingVideo) { return; }
+	console.log('video playing is ' + videos.playingVideo.id);
+	console.log('last vid time is ' + lastVidTime);
+	var nextVidTime = videos.playingVideo.currentTime();
+	console.log('next vid time is ' + nextVidTime);
+	if (nextVidTime === lastVidTime) {
+		updateState(currentState.waiting)(videos.playingVideo.id);
+	}
+	lastVidTime = nextVidTime;
+},250); 
 
 $('#soundOn').click(function() {
 	updateState(currentState.muteClicked)();
@@ -4023,9 +4162,13 @@ $('#soundOff').click(function() {
 
 $('#playToggle').click(function() {
 	if (currentState.paused()) {
+		$('#playImage').show();
+		$('#playImage').fadeOut(500);
 		updateState(currentState.playClicked)();
 	}
 	else {
+		$('#pauseImage').show();
+		$('#pauseImage').fadeOut(500);
 		updateState(currentState.pauseClicked)();
 	}
 });
@@ -4033,7 +4176,7 @@ $('#playToggle').click(function() {
 
 
 $(document).keypress(function(event) {
-	if (event.which == 32) {
+	if (event.which === 32) {
 		$('#playToggle').trigger('click');
 		console.log('play/pause triggered with spacebar');
 	}
@@ -4108,6 +4251,118 @@ $(document).keypress(function(event) {
     		$('#powellExtendedText').fadeIn(500);
     	},500);
     }
+
+
+    // Addition Content Through Menu
+    $('.additionalContentToggle').on('click',function(){
+    	updateState(currentState.pauseClicked)();
+		$('#additionalContentBackground').show('slide',{direction:'down'});
+		setTimeout(function(){
+			$('#closeOverlay').show();
+		},350);
+		d3.select('#progressPathHide').attr('transform','translate(0,200)');
+	});
+	$('#closeOverlay').on('click',function(){
+		$('#additionalContentBackground').hide('slide',{direction:'down'});
+		setTimeout(function(){
+			d3.select('#progressPathHide').attr('transform','translate(0,0)');
+		},350);
+		$('#closeOverlay').hide();
+		$('.additionalContent').hide();
+		// panPlayer.play();
+	});
+	$('#aboutToggle').click(function() {
+		$('.additionalContent').hide();
+		setTimeout(function() {
+			$('#aboutContent').show();
+		},350);
+	});
+	$('#editorialToggle').click(function() {
+		$('.additionalContent').hide();
+		setTimeout(function() {
+			$('#editorialContent').show();
+		},350);
+	});
+	$('#creditsToggle').click(function() {
+		$('.additionalContent').hide();
+		setTimeout(function() {
+			$('#creditsContent').show();
+			$('#creditsContent').animate({
+				scrollTop: '3500px'
+			}, 20000);
+		},350);
+	});
+	$('#creditsContent').mousewheel(function() {
+		$('#creditsContent').stop();
+		clearTimeout($.data(this, 'timer'));
+		$.data(this, 'timer', setTimeout(function() {
+			$('#creditsContent').animate({
+				scrollTop: '3500px'
+			}, 40000);
+		}, 100));
+	});
+	$('.editorialQuote').hide();
+	$('.fellowPortrait').on('mouseleave',function() {
+		$('.editorialQuote').hide();
+	});
+	$('#brittain').on('mouseenter',function() {
+		$('#brittainQuote').fadeIn(500);
+	});
+	$('#natalie').on('mouseenter',function() {
+		$('#natalieQuote').fadeIn(500);
+	});
+	$('#katy').on('mouseenter',function() {
+		$('#katyQuote').fadeIn(500);
+	});
+	$('#erin').on('mouseenter',function() {
+		$('#erinQuote').fadeIn(500);
+	});
+	$('#eric').on('mouseenter',function() {
+		$('#ericQuote').fadeIn(500);
+	});
+	$('#spencer').on('mouseenter',function() {
+		$('#spencerQuote').fadeIn(500);
+	});
+	$('#ligaiya').on('mouseenter',function() {
+		$('#ligaiyaQuote').fadeIn(500);
+	});
+	$('#john').on('mouseenter',function() {
+		$('#johnQuote').fadeIn(500);
+	});
+	$('#hannah').on('mouseenter',function() {
+		$('#hannahQuote').fadeIn(500);
+	});
+	$('#emma').on('mouseenter',function() {
+		$('#emmaQuote').fadeIn(500);
+	});
+
+
+	// Second Level Text Scrollers
+	$('.powellScroller').jScrollPane( {
+		verticalGutter: 15,
+		hideFocus: true,
+		verticalDragMaxHeight: 50
+	});
+	console.log('powell scrollpane initialized');
+	$('.landgrabScroller').jScrollPane( {
+		verticalGutter: 15,
+		hideFocus: true,
+		verticalDragMaxHeight: 50
+
+	});
+	$('.addictedScroller').jScrollPane( {
+		verticalGutter: 15,
+		hideFocus: true,
+		verticalDragMaxHeight: 50
+
+	});
+	$('.damagesScroller').jScrollPane( {
+		verticalGutter: 15,
+		hideFocus: true,
+		verticalDragMaxHeight: 50
+
+	});	
+
 
 </script>
 </body>
