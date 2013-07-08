@@ -152,6 +152,14 @@ var logoPosition = function() {
   $('.circleDraw').css('top',canvasY);
   $('.circleDraw').css('left',canvasX);
 }
+var conclusionSharePosition = function() {
+  var wrapperWidth = $('#pageWrapper').width();
+  var wrapperHeight = $('#pageWrapper').height();
+  var conclusionShareX = (wrapperWidth - 390)/2;
+  var conclusionShareY = (wrapperHeight - 200)/2;
+  $('#shareTheExperience').css('top',conclusionShareY);
+  $('#shareTheExperience').css('left',conclusionShareX);
+}
 var resizePageElements = function() {
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
@@ -170,6 +178,7 @@ var resizePageElements = function() {
     editorialDividerPosition();
     quoteWrapperPosition();
     logoPosition();
+    conclusionSharePosition();
   }
   else if (windowHeight <= 540) {
     pageWrapperMin();
@@ -185,6 +194,7 @@ var resizePageElements = function() {
     editorialDividerPosition();
     quoteWrapperPosition();
     logoPosition();
+    conclusionSharePosition();
   }
     else if (windowAspectRatio < widthAspectRatio){
     $('#pageWrapper').width(windowWidth);
@@ -206,6 +216,7 @@ var resizePageElements = function() {
     editorialDividerPosition();
     quoteWrapperPosition();
     logoPosition();
+    conclusionSharePosition();
   }
   else if (windowAspectRatio > widthAspectRatio) {
     $('#pageWrapper').height(windowHeight);
@@ -224,6 +235,7 @@ var resizePageElements = function() {
     editorialDividerPosition();
     quoteWrapperPosition();
     logoPosition();
+    conclusionSharePosition();
   }
   else {
     // Do Nothing

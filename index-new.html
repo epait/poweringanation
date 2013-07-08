@@ -55,6 +55,7 @@
 			<source src="./audio/natSoundIntro.mp3" type="audio/mpeg">
 		</audio>
 		<img class="introBackground" src="./img/bgIntro.png" style="display:none" />
+		<div class="introSentences" id="contextSentence">Millions of people nationwide depend on the Colorado River, which was declared America's Most Endangered River in April 2013</div>
 		<div class="introSentences" id="introSentence1">This is a story about the Colorado River</div>
 		<div class="introSentences" id="introSentence2">How we change the river</div>
 		<div class="introSentences" id="introSentence3">And how the river changes us</div>
@@ -577,36 +578,46 @@
 						</g>
 						<g id="dragButton2">	
 							<g transform="scale(.65)" id="resumeVideo2">
-								<polygon fill="#FFFFFF" points="77.207,9.191 72.574,4.633 77.128,0 81.762,4.553"/>
-								<path fill="#FFFFFF" d="M78.46,150.427c-40.803,0.351-74.283-32.556-74.639-73.355C3.553,46.054,22.88,17.934,51.922,7.086
-									l1.476,3.954C26.016,21.268,7.785,47.784,8.04,77.033c0.332,38.474,31.91,69.506,70.385,69.173
-									c38.473-0.333,69.506-31.911,69.17-70.383c-0.254-29.134-18.842-55.293-46.25-65.108l1.418-3.977
-									c29.069,10.406,48.783,38.158,49.053,69.048C152.171,116.59,119.261,150.071,78.46,150.427z"/>
-								<polygon fill="#FFFFFF" points="91.179,10.629 96.571,7.01 92.942,1.617 87.55,5.243 "/>
-								<rect x="58.877" y="3.212" transform="matrix(0.8389 0.5443 -0.5443 0.8389 13.5255 -32.7727)" fill="#FFFFFF" width="6.497" height="6.5"/>
-								<path fill="#FFFFFF" d="M101.257,82.128c-2.783,0-4.829,2.599-4.829,6.646s2.116,6.691,4.921,6.691
-									c2.783,0,4.852-2.599,4.852-6.646S104.062,82.128,101.257,82.128z"/>
-								<path fill="#FFFFFF" d="M76.768,22.891c-29.896,0.261-54.006,24.785-53.746,54.683c0.261,29.896,24.79,54.002,54.686,53.742
-									c29.894-0.259,54-24.786,53.739-54.684C131.189,46.737,106.662,22.633,76.768,22.891z M42.032,67.992h-3.816v6.853h-1.794
-									V58.748h6.37c2.828,0,5.012,1.449,5.012,4.553c0,2.507-1.494,4.07-3.793,4.554l3.541,6.99h-2.07L42.032,67.992z M53.647,96.845
-									h-1.979l-5.473-16.097h1.887l3.586,11.015c0.322,0.966,0.828,2.599,0.989,3.174c0.161-0.575,0.713-2.277,1.012-3.22l3.61-10.969
-									h1.84L53.647,96.845z M61.443,74.845H51.372V58.748h9.727v1.633h-7.934v5.059h4.6v1.633h-4.6v6.14h8.278V74.845z M64.366,96.845
-									h-1.794V80.748h1.794V96.845z M63.286,72.867l1.195-1.334c1.219,1.173,2.621,1.932,4.277,1.932c2.139,0,3.473-1.058,3.473-2.759
-									c0-1.495-0.897-2.346-3.841-3.403c-3.472-1.242-4.646-2.369-4.646-4.691c0-2.575,2.023-4.116,5.037-4.116
-									c2.16,0,3.541,0.644,4.897,1.725l-1.149,1.403c-1.174-0.966-2.254-1.495-3.863-1.495c-2.208,0-3.128,1.104-3.128,2.368
-									c0,1.334,0.599,2.093,3.817,3.242c3.564,1.288,4.668,2.484,4.668,4.875c0,2.53-1.978,4.484-5.335,4.484
-									C66.505,75.098,64.55,74.155,63.286,72.867z M72.646,96.845h-3.932V80.748h4.254c4.23,0,7.335,2.415,7.335,7.934
-									C80.303,94.522,76.945,96.845,72.646,96.845z M76.718,68.314v-9.566h1.793v9.521c0,3.472,1.334,5.196,4.116,5.196
-									s3.886-1.679,3.886-5.15v-9.566h1.794v9.521c0,4.461-1.908,6.829-5.771,6.829C78.694,75.098,76.718,72.775,76.718,68.314z
-									 M93.459,96.845H83.388V80.748h9.727v1.633h-7.934v5.059h4.6v1.633h-4.6v6.14h8.278V96.845z M93.23,62.221v12.624h-1.725V58.748
-									h2.001l3.793,9.635c0.392,0.966,0.967,2.461,1.15,3.128c0.207-0.69,0.781-2.185,1.15-3.128l3.84-9.635h1.954v16.097h-1.725
-									V62.221c-0.161,0.621-0.62,1.816-0.966,2.667l-4.3,10.371l-4.231-10.371C93.828,64.061,93.392,62.842,93.23,62.221z
-									 M101.28,97.098c-4.002,0-6.646-3.426-6.646-8.278c0-4.852,2.691-8.324,6.691-8.324c4.002,0,6.669,3.427,6.669,8.278
-									S105.28,97.098,101.28,97.098z M108.71,74.845V58.748h9.727v1.633h-7.934v5.059h4.6v1.633h-4.6v6.14h8.279v1.633H108.71z"/>
-								<path fill="#FFFFFF" d="M72.829,82.381h-2.322v12.831h2.369c3.472,0,5.633-1.84,5.633-6.462
-									C78.509,84.635,76.532,82.381,72.829,82.381z"/>
-								<path fill="#FFFFFF" d="M46.011,63.37c0-1.978-1.15-2.989-3.289-2.989h-4.506v6.002h4.276
-									C44.884,66.383,46.011,65.394,46.011,63.37z"/>
+								<path fill="#FFFFFF" d="M75.059,80.709l-5.275,0.048l0.061,7.023l5.006-0.043c2.8-0.025,4.108-1.192,4.088-3.56
+									C78.919,81.86,77.562,80.689,75.059,80.709z"/>
+								<path fill="#FFFFFF" d="M91.5,80.89c-0.184,0.757-0.707,2.458-1.151,3.78l-2.02,6.152l6.484-0.056l-2.125-6.17
+									C92.249,83.361,91.694,81.67,91.5,80.89z"/>
+								<path fill="#FFFFFF" d="M33.953,93.178c0.015,1.831,1.32,3.272,3.741,3.251c1.616-0.015,2.899-0.696,3.915-1.865l-4.411-5.665
+									C34.868,89.993,33.937,91.349,33.953,93.178z"/>
+								<path fill="#FFFFFF" d="M54.803,80.885l-2.719,0.024l0.131,15.016l2.775-0.023c4.061-0.036,6.571-2.212,6.525-7.619
+									C61.472,83.468,59.136,80.849,54.803,80.885z"/>
+								<path fill="#FFFFFF" d="M73.507,22.888C43.613,23.151,19.504,47.674,19.764,77.57c0.259,29.896,24.79,54.001,54.684,53.742
+									c29.892-0.26,53.998-24.787,53.737-54.683C127.927,46.734,103.401,22.631,73.507,22.888z M95.914,55.079l2.098-0.016
+									l0.092,10.738c0.478-0.707,1.967-2.739,2.714-3.711l5.402-7.1l2.287-0.02l-5.456,7.125l6.669,11.702l-2.397,0.021l-5.657-9.991
+									l-3.54,4.658l0.046,5.412l-2.099,0.019L95.914,55.079z M71.837,55.289l2.097-0.016l0.164,18.834L72,74.124L71.837,55.289z
+									 M56.234,55.425l2.098-0.022l0.148,16.929l9.313-0.082l0.017,1.913l-11.412,0.1L56.234,55.425z M46.229,55.215
+									c2.584-0.025,4.53,0.929,6.027,2.96l-1.658,1.281c-1.227-1.629-2.363-2.348-4.406-2.33c-3.231,0.027-5.516,3.249-5.478,7.825
+									c0.04,4.601,2.462,7.811,5.639,7.783c2.044-0.018,3.437-0.946,4.633-2.516l1.464,1.251c-1.356,1.867-3.392,3.151-6.134,3.173
+									c-4.604,0.042-7.655-4.103-7.703-9.621C38.567,59.425,41.68,55.256,46.229,55.215z M44.247,97.909l-1.524-1.952
+									c-1.361,1.412-3.049,2.284-5.068,2.304c-4.141,0.034-5.696-2.267-5.721-5.01c-0.022-2.801,1.524-4.346,4.177-5.715l-0.653-0.854
+									c-0.956-1.231-1.689-2.3-1.701-3.756c-0.02-2.366,1.794-4.077,4.753-4.103c2.1-0.019,3.665,0.586,5.021,1.651l-1.062,1.678
+									c-1.408-1.09-2.489-1.509-3.97-1.499c-1.668,0.015-2.681,0.883-2.669,2.151c0.006,0.993,0.415,1.69,1.151,2.627l5.798,7.401
+									c0.502-0.945,0.896-2.081,1.261-3.32l1.783,0.522c-0.417,1.564-1.051,3.05-1.849,4.323l2.75,3.528L44.247,97.909z
+									 M54.737,97.815l-4.604,0.041l-0.164-18.838l4.98-0.044c4.95-0.042,8.609,2.753,8.665,9.21
+									C63.672,95.022,59.768,97.772,54.737,97.815z M80.856,97.588l-2.42,0.021l-4.108-7.981l-4.468,0.036l0.07,8.021L67.833,97.7
+									l-0.164-18.834l7.456-0.064c3.309-0.029,5.876,1.642,5.91,5.275c0.028,2.935-1.705,4.782-4.391,5.368L80.856,97.588z
+									 M78.294,64.681c-0.049-5.599,3.062-9.773,7.612-9.812c2.583-0.021,4.53,0.933,6.027,2.963l-1.658,1.279
+									c-1.225-1.63-2.361-2.348-4.407-2.33c-3.231,0.027-5.516,3.25-5.476,7.829c0.04,4.595,2.461,7.809,5.64,7.779
+									c2.042-0.017,3.435-0.946,4.632-2.516l1.463,1.253c-1.354,1.87-3.389,3.151-6.134,3.174
+									C81.392,74.338,78.341,70.196,78.294,64.681z M97.133,97.445l-1.657-4.774L87.7,92.74l-1.601,4.803l-2.152,0.02l6.377-18.895
+									l2.312-0.019l6.706,18.781L97.133,97.445z M109.535,97.634c-4.602,0.043-7.654-4.105-7.7-9.617
+									c-0.049-5.599,3.063-9.773,7.612-9.812c2.581-0.022,4.528,0.93,6.026,2.962l-1.657,1.279c-1.223-1.629-2.362-2.348-4.407-2.331
+									c-3.229,0.028-5.517,3.25-5.476,7.827c0.04,4.599,2.489,7.811,5.639,7.783c3.149-0.028,4.854-1.982,4.82-5.668v-0.162
+									l-3.391,0.031l-0.018-1.939l5.438-0.047l0.016,1.831C116.48,94.963,113.516,97.602,109.535,97.634z"/>
+							
+								<rect x="70.098" y="1.346" transform="matrix(0.7132 0.701 -0.701 0.7132 24.2592 -50.0976)" fill="#FFFFFF" width="6.497" height="6.499"/>
+							<path fill="#FFFFFF" d="M74.64,150.421c-40.802,0.353-74.281-32.553-74.637-73.352c-0.267-31.018,19.06-59.136,48.099-69.982
+								l1.476,3.953C22.197,21.266,3.967,47.784,4.221,77.031c0.333,38.472,31.909,69.503,70.383,69.17
+								c38.47-0.333,69.503-31.908,69.168-70.382c-0.254-29.131-18.841-55.291-46.25-65.105l1.419-3.974
+								c29.068,10.405,48.782,38.155,49.051,69.043C148.347,116.585,115.439,150.066,74.64,150.421z"/>
+							<polygon fill="#FFFFFF" points="87.357,10.63 92.751,7.009 89.122,1.617 83.73,5.243 			"/>
+							
+								<rect x="55.058" y="3.212" transform="matrix(0.8392 0.5439 -0.5439 0.8392 12.8931 -30.673)" fill="#FFFFFF" width="6.496" height="6.5"/>
 							</g>
 							<g transform="scale(.65)" id="dragArrow2" style="display:none;">
 								<polygon fill="#FFFFFF" points="77.026,9.191 72.394,4.633 76.947,0 81.582,4.553 			"/>
@@ -2150,8 +2161,15 @@ Now that the sediment is trapped behind the dams, the tides have washed the clam
 						<source src="./vid/loopRock.webm" type="video/webm">
 						<source src="./vid/loopRock.ogv" type="video/ogg">
 					</video>
-					<div class="textOverlay">
+					<div class="textOverlay" id="conclusionText">
 						<span class="showConclusionLast" style="opacity: 0;">The Colorado is generous. The river baptized our </span><span class="focusWords" id="showConclusionThird" style="opacity: 0;">nation</span><span class="showConclusionLast" style="opacity: 0;"> in its infancy. Dusty outposts flourished into cities. We have plowed the desert, </span><span class="focusWords" id="showConclusionFirst" style="opacity: 0;">forced</span><span class="showConclusionLast" style="opacity: 0;"> the river into fields, and exported crops across continents. Our faith in the river's power leaves us vulnerable and dependent. When we flooded a natural cathedral, we irreversibly </span><span class="focusWords" id="showConclusionFourth" style="opacity: 0;">transformed</span><span class="showConclusionLast" style="opacity: 0;"> the landscape. Now a new consciousness demands exploration for </span><span class="focusWords" id="showConclusionSecond" style="opacity: 0;">change</span><span class="showConclusionLast" style="opacity: 0;">. Our decisions have shaped a fluid </span><span class="focusWords" id="showConclusionFifth" style="opacity: 0;">fate</span><span class="showConclusionLast" style="opacity: 0;">. The river graces us with opportunities to be </span><span class="focusWords" id="showConclusionSixth" style="opacity: 0;">remade</span><span class="showConclusionLast" style="opacity: 0;">.</span>
+						<br /><img src="./img/clickToContinue.png" class="clickForMore" id="conclusionLoopButton" style="display: none;">
+					</div>
+					<div id="shareTheExperience" style="display:none;">
+						<a class="tweet" href="https://twitter.com/share" data-text="Check out our interactive film on the battle for power on the Colorado River" data-via="poweringanation" data-hashtags="overwaterunderfire" target="_blank" onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');"><img class="conclusionShareButtons" id="conclusionTwitter" src="http://www.poweringanation.org/water2013-test/img/conclusionTwitter.png" /></a>
+						<a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://www.overwaterunderfire.org&amp;p[images][0]=http://www.poweringanation.org/water2013/img/fbTnail.png&amp;p[title]=Powering A Nation Presents: Over Water Under Fire&amp;p[summary]=The upcoming interactive documentary, “Over Water Under Fire,” combines a video narrative with motion graphics and text to present the Colorado river as a living timeline of our nation’s innovations and exploitations with water. The river's uncertain future echoes the precarious state of water resources in this country." target="_blank" onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');"><img class="conclusionShareButtons" id="conclusionFacebook" src="http://www.poweringanation.org/water2013-test/img/conclusionFacebook.png" /></a>
+						<a href="https://plus.google.com/share?url=http://www.overwaterunderfire.org" target="_blank" onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');"><img class="conclusionShareButtons" id="conclusionGoogle" src="http://www.poweringanation.org/water2013-test/img/conclusionGoogle.png" /></a>
+						<p id="shareTheExperienceText">SHARE THE EXPERIENCE</p>
 					</div>
 				</div>
 			</div> 
@@ -2159,6 +2177,7 @@ Now that the sediment is trapped behind the dams, the tides have washed the clam
 	</div>
 <script>
 $('#dragWrapper2').hide();
+$('#contextSentence').hide();
 $('#introSentence1').hide();
 $('#introSentence2').hide();
 $('#introSentence3').hide();
@@ -3746,6 +3765,8 @@ var debugState = function(startVideo, time) {
 
 			videos.hide('videoAct5');
 			//Show Conclusion Text
+			$('#conclusionLoop').show();
+			conclusionFadeIn();
 			return this.s('conclusionText');
 		}
 	});
@@ -3753,9 +3774,19 @@ var debugState = function(startVideo, time) {
 	textState('conclusionText', ['natSoundAct5'],
 	{
 		hide: function() {
-			// hide conclusion text
+			$('#conclusionLoop').hide();
+			conclusionFadeOut();
 		},
-		clickForMore: function() {
+		clickMore: function() {
+			$('#conclusionText').fadeOut(500);
+			$('#conclusionLoopButton').fadeOut(500);
+			setTimeout(function() {
+				$('#shareTheExperience').fadeIn(500);
+			},750);
+			return this;
+		},
+		animationEnded: function() {
+			$('#conclusionLoopButton').fadeIn(500);
 			return this;
 		}
 	});
@@ -3769,14 +3800,20 @@ var introAnimationStart = function() {
 		// $('#introSentence2').show();
 		// $('#introSentence3').show();
 		setTimeout(function() {
-			$('#introSentence1').fadeIn(1000);
+			$('#contextSentence').fadeIn(1000);
+			setTimeout(function() {
+				$('#contextSentence').fadeOut(1000);
+			},8000);
 		},1000);
 		setTimeout(function() {
+			$('#introSentence1').fadeIn(1000);
+		},10000);
+		setTimeout(function() {
 			$('#introSentence2').fadeIn(1000);
-		},4500);
+		},13500);
 		setTimeout(function() {
 			$('#introSentence3').fadeIn(1000);
-		},8000);
+		},17000);
 		// $('#introSentence1').textillate({
 		// 	in: {
 		// 		effect: 'fadeInLeft',
@@ -3832,8 +3869,8 @@ var introAnimationStart = function() {
 			$('.introSentences').fadeOut(500);
 			setTimeout(function() {
 				updateState(currentState.animationEnded)();
-			},500);
-		},14000);
+			},1000);
+		},23000);
 }
 
 // var currentState = states.debugStart;
@@ -4010,7 +4047,7 @@ $(document).keypress(function(event) {
 		console.log('show PowellPlayer');
         setTimeout(function(){
         	updateState(currentState.animationEnded)('Powell');
-        },12000);
+        },11000);
     }
 
     var powellFadeOut = function() {
@@ -4027,6 +4064,67 @@ $(document).keypress(function(event) {
     	setTimeout(function(){
     		$('#powellExtendedText').fadeIn(500);
     	},500);
+    }
+
+    var conclusionFadeIn = function() {
+		$('.secondLevelContent').hide();
+		$('#conclusionLoop').show();
+		$('#conclusionText').show();
+    	$('#showConclusionFirst').css('opacity',0);
+    	$('#showConclusionSecond').css('opacity',0);
+    	$('#showConclusionThird').css('opacity',0);
+    	$('#showConclusionFourth').css('opacity',0);
+    	$('#showConclusionFifth').css('opacity',0);
+    	$('#showConclusionSixth').css('opacity',0);
+    	$('.showConclusionLast').css('opacity',0);
+		setTimeout(function() {
+			$('#showConclusionFirst').animate({
+				opacity: 1
+			}, 1000);
+		}, 100);
+		setTimeout(function() {
+			$('#showConclusionSecond').animate({
+				opacity: 1
+			}, 1000);
+		}, 433);
+		setTimeout(function() {
+			$('#showConclusionThird').animate({
+				opacity: 1
+			}, 1000);
+		}, 2433);
+		setTimeout(function() {
+			$('#showConclusionFourth').animate({
+				opacity: 1
+			}, 1000);
+		}, 2766);
+		setTimeout(function() {
+			$('#showConclusionFifth').animate({
+				opacity: 1
+			}, 1000);
+		}, 4766);
+		setTimeout(function() {
+			$('#showConclusionSixth').animate({
+				opacity: 1
+			}, 1000);
+		}, 5100);
+		setTimeout(function() {
+			$('.showConclusionLast').animate({
+				opacity: 0.6
+			}, 1500);
+		}, 7600);
+		console.log('show conclusion');
+        setTimeout(function(){
+        	updateState(currentState.animationEnded)('Conclusion');
+        },11000);
+    }
+
+    var conclusionFadeOut = function() {
+    	$('#conclusionLoopButton').fadeOut(500);
+    	$('#shareTheExperience').fadeOut(500);
+    	$('#dragWrapper').fadeOut(500);
+    	$('#conclusionText').fadeOut(500);
+    	// $('#conclusionShare').fadeOut(500);
+    	$('#conclusionLoop').fadeOut(500);
     }
 
 

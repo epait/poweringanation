@@ -15,12 +15,17 @@
 					url("../fonts/Interstate-Light.ttf");
 			}
 			@font-face {
+				font-family: Interstate-LightCondensed;
+				src:url("../fonts/Interstate-LightCondensed.otf"),
+					url("../fonts/Interstate-LightCondensed.ttf");
+			}
+			@font-face {
 				font-family: Interstate-Bold;
 				src:url("../fonts/Interstate-Bold.otf"),
 					url("../fonts/Interstate-Bold.ttf");
 			}
 			@font-face {
-				font-family: Interstate-Bold;
+				font-family: Interstate-BoldCondensed;
 				src:url("../fonts/Interstate-BoldCondensed.otf"),
 					url("../fonts/Interstate-Bold.ttf");
 			}
@@ -125,8 +130,13 @@ body {
 	top: 0;
 	z-index: 980;
 }
-#introSentence1 {
+#introSentence1, #contextSentence {
  	top: 3%;
+}
+#contextSentence {
+ 	top: 3%;
+ 	width: 85%;
+ 	line-height: 50px;
 }
 #introSentence2 {
 	top: 9%;
@@ -200,6 +210,33 @@ body {
 
 
 
+/*Conclusiong Share*/
+#shareTheExperience {
+	width: 390px;
+	height: 200px;
+	position: absolute;
+	z-index: 998;
+}
+#shareTheExperienceText {
+	font-family: 'Interstate-Light';
+	font-size: 32px;
+	text-align: center;
+	position: relative;
+	left: 0;
+	margin-top: 2px;
+}
+.conclusionShareButtons {
+	position: relative;
+}
+#conclusionTwitter {
+}
+#conclusionFacebook {
+	top: 2px;
+}
+#conclusionGoogle {
+	top: 7px;
+}
+
 
 
 /*Second Level Content*/
@@ -239,7 +276,7 @@ body {
 	font-size: 20px;
 	line-height: 30px;
 	width: 40%;
-	height: 85%;
+	height: 83%;
 	position: absolute;
 	overflow: scroll;
 	overflow-x: hidden;
@@ -582,7 +619,7 @@ g#dragButton:hover {
 #dragPath {
 	position: absolute;
 	z-index: 998;
-	bottom: 36px;
+	bottom: 10px;
 	left:54px;
 	/*bottom: 50px*/
 }
@@ -610,7 +647,7 @@ g#dragButton2:hover {
 #dragPath2 {
 	position: absolute;
 	z-index: 998;
-	bottom: 36px;
+	bottom: 10px;
 	left:54px;
 	/*bottom: 50px*/
 }
