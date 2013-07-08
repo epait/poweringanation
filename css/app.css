@@ -258,6 +258,7 @@ body {
 }
 #powellExtendedText h2, #landgrabText h2, #addictedText h2, #damagesText h2 {
 	font-family: 'Interstate-Regular';
+	font-weight: normal;
 	padding: 0;
 	margin: 0;
 	font-size: 42px;
@@ -265,6 +266,7 @@ body {
 }
 #powellExtendedText h3, #landgrabText h3, #addictedText h3, #damagesText h3 {
 	font-family: 'Interstate-LightCondensed';
+	font-weight: normal;
 	text-align: center;
 	padding: 0;
 	margin: 30px 0 0 0;
@@ -272,6 +274,7 @@ body {
 }
 #powellExtendedText h5, #landgrabText h5, #addictedText h5, #damagesText h5 {
 	font-family: 'Interstate-Thin';
+	font-weight: normal;
 	text-align: center;
 	padding: 0;
 	margin: 0 0  30px 0;
@@ -279,10 +282,20 @@ body {
 }
 #powellExtendedText h4, #landgrabText h4, #addictedText h4, #damagesText h4 {
 	font-family: 'Interstate-BoldCondensed';
+	font-weight: normal;
 	padding: 0;
 	margin: 0;
 	font-size: 24px;
 	text-align: left;
+}
+.imageCaption {
+	font-family: 'Interstate-Thin';
+	font-size: 14px;
+	line-height: 18px;
+	margin-top: 0;
+}
+.imageSource {
+	text-transform: uppercase;
 }
 .openingQuote {
 	text-align: left;
