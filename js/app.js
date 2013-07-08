@@ -30,16 +30,16 @@ var playerControlsPositioning = function () {
 
 };
 var dragButtonStart = function() {
-  var wrapperWidth = $('#pageWrapper').width();
-  return wrapperWidth - 440;
+  var wrapperWidth = $('#pageWrapper').width()/2;
+  return wrapperWidth - 355;
 }
 var dragButtonPositioning = function() {
-  var wrapperWidth = $('#pageWrapper').width();
-  return 'translate('+ dragButtonStart() +',13) scale(0.65)';
+  var wrapperWidth = $('#pageWrapper').width()/2;
+  return 'translate('+ dragButtonStart() +',13) scale(0.55)';
 };
 var dragPathPositioning = function () {
-  var wrapperWidth = $('#pageWrapper').width();
-  return 'translate('+(wrapperWidth - 340)+',0) scale(0.8)';
+  var wrapperWidth = $('#pageWrapper').width()/2;
+  return 'translate('+(wrapperWidth - 270)+',0) scale(0.7)';
 };
 var dragToResumePositioning = function () {
   d3.select('#svgPath').attr('transform',dragPathPositioning);
@@ -143,12 +143,12 @@ var quoteWrapperPosition = function() {
 var logoPosition = function() {
   var wrapperWidth = $('#pageWrapper').width();
   var wrapperHeight = $('#pageWrapper').height();
-  var logoX = (wrapperWidth - 559 + 218)/2;
-  var logoY = (wrapperHeight - 559 + 54)/2;
-  var canvasX = (wrapperWidth - 354)/2;
-  var canvasY = (wrapperHeight - 354)/2;
+  var logoX = (wrapperWidth - 465);
+  var logoY = (wrapperHeight - 465);
+  var canvasX = (wrapperWidth - 290)/2;
+  var canvasY = (wrapperHeight - 296)/2;
   d3.select('.introBackground').style('width',wrapperWidth);
-  d3.select('#logoWrapper').attr('transform','scale(0.6) translate('+logoX+','+logoY+')');
+  d3.select('#logoWrapper').attr('transform','scale(0.5) translate('+logoX+','+logoY+')');
   $('.circleDraw').css('top',canvasY);
   $('.circleDraw').css('left',canvasX);
 }
@@ -238,7 +238,21 @@ var resizePageElements = function() {
     conclusionSharePosition();
   }
   else {
-    // Do Nothing
+    $('#pageWrapper').width(windowWidth);
+    $('#pageWrapper').height(windowHeight);
+    playerControlsPositioning();
+    dragToResumePositioning();
+    dragToEnterPositioning();
+    grayBoxRightPositioning();
+    progressLineWidth();
+    additionalContentBackgroundResize();
+    playPausePositioning();
+    portraitWrapperSize();
+    fellowPortraitSize();
+    editorialDividerPosition();
+    quoteWrapperPosition();
+    logoPosition();
+    conclusionSharePosition();
   }
 }
 

@@ -148,8 +148,6 @@ body {
 	position: absolute;
 	z-index: 985;
 	width: 100%;
-	margin-left: -218px;
-	margin-top: -54px;
 	height: inherit;
 }
 .introSentences {
@@ -199,8 +197,8 @@ body {
 	}
 	.circleDraw {
 		position: absolute;
-		width: 354px;
-		height: 354px;
+		width: 295px;
+		height: 295px;
 		top: 0;
 		left: 0;
 		z-index: 980;
@@ -620,7 +618,7 @@ g#dragButton:hover {
 	position: absolute;
 	z-index: 998;
 	bottom: 10px;
-	left:54px;
+	left:50%;
 	/*bottom: 50px*/
 }
 #dragWrapper2 {
@@ -648,7 +646,7 @@ g#dragButton2:hover {
 	position: absolute;
 	z-index: 998;
 	bottom: 10px;
-	left:54px;
+	left:50%;
 	/*bottom: 50px*/
 }
 .clickForMore {

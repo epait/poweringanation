@@ -3,13 +3,14 @@
 var slider = function(cb) {
 
 	$(function() {
+		var wrapperWidth = $('#pageWrapper').width()/2;
 		$("#dragButton").draggable({
 			axis: 'x',
 			drag: function(event, ui) {
-				$('#dragClick').attr('transform','translate('+ui.position.left+',13) scale(0.65)');
-				$('#dragArrow').attr('transform','translate('+ui.position.left+',13) scale(0.65)');
-				$('#resumeVideo').attr('transform','translate('+ui.position.left+',13) scale(0.65)');
-				if (ui.position.left > dragButtonStart()+285) {
+				$('#dragClick').attr('transform','translate('+ui.position.left+',13) scale(0.55)');
+				$('#dragArrow').attr('transform','translate('+ui.position.left+',13) scale(0.55)');
+				$('#resumeVideo').attr('transform','translate('+ui.position.left+',13) scale(0.55)');
+				if (ui.position.left > dragButtonStart()+260) {
 					$('#dragWrapper').hide();
 					cb();
 					$('#resumeVideo').attr('transform',dragButtonPositioning);
@@ -18,7 +19,7 @@ var slider = function(cb) {
 				}
 			},
 			stop: function(event, ui) {
-				if (ui.position.left < dragButtonStart()+284) {
+				if (ui.position.left < dragButtonStart()+259) {
 					d3.select('#resumeVideo').transition().ease('linear').duration(500).attr('transform',dragButtonPositioning);
 	  				d3.select('#dragArrow').transition().ease('linear').duration(500).attr('transform',dragButtonPositioning);
 	  				d3.select('#dragClick').transition().ease('linear').duration(500).attr('transform',dragButtonPositioning);
@@ -32,13 +33,14 @@ var slider = function(cb) {
 var introSlider = function(cb) {
 
 	$(function() {
+		var wrapperWidth = $('#pageWrapper').width()/2;
 		$("#dragButton2").draggable({
 			axis: 'x',
 			drag: function(event, ui) {
-				$('#dragClick2').attr('transform','translate('+ui.position.left+',13) scale(0.65)');
-				$('#dragArrow2').attr('transform','translate('+ui.position.left+',13) scale(0.65)');
-				$('#resumeVideo2').attr('transform','translate('+ui.position.left+',13) scale(0.65)');
-				if (ui.position.left > dragButtonStart()+285) {
+				$('#dragClick2').attr('transform','translate('+ui.position.left+',13) scale(0.55)');
+				$('#dragArrow2').attr('transform','translate('+ui.position.left+',13) scale(0.55)');
+				$('#resumeVideo2').attr('transform','translate('+ui.position.left+',13) scale(0.55)');
+				if (ui.position.left > dragButtonStart()+260) {
 					$('#dragWrapper2').hide();
 					cb();
 					$('#resumeVideo2').attr('transform',dragButtonPositioning);
@@ -47,7 +49,7 @@ var introSlider = function(cb) {
 				}
 			},
 			stop: function(event, ui) {
-				if (ui.position.left < dragButtonStart()+284) {
+				if (ui.position.left < dragButtonStart()+259) {
 					d3.select('#resumeVideo2').transition().ease('linear').duration(500).attr('transform',dragButtonPositioning);
 	  				d3.select('#dragArrow2').transition().ease('linear').duration(500).attr('transform',dragButtonPositioning);
 	  				d3.select('#dragClick2').transition().ease('linear').duration(500).attr('transform',dragButtonPositioning);
