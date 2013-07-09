@@ -136,7 +136,7 @@ body {
 #contextSentence {
  	top: 3%;
  	width: 85%;
- 	line-height: 50px;
+ 	line-height: 46px;
 }
 #introSentence2 {
 	top: 9%;
@@ -189,7 +189,7 @@ body {
 /*Preloader*/
 .introSentences {
 		font-family: 'Interstate-Regular';
-		font-size: 40px;
+		font-size: 36px;
 		padding: 10px 50px;
 	}
 	.vjs-control {
@@ -281,8 +281,7 @@ body {
 	width: 40%;
 	height: 83%;
 	position: absolute;
-	overflow: scroll;
-	overflow-x: hidden;
+	overflow: hidden;
 	left: 5%;
 	top: 5%;
 	z-index: 998;
@@ -442,7 +441,8 @@ body {
 	#shareTwitter {
 		position: absolute;
 		z-index: 999;
-		bottom: 0;
+		bottom: 1.5px;
+		left: 7.5px;
 	}
 	#shareFacebook {
 		position: absolute;
@@ -524,9 +524,8 @@ body {
 #closeOverlay {
 	position: absolute;
 	z-index: 1200;
-	top:0;
-	right: 15px;
-	padding: 5px;
+	top:5px;
+	right: 30px;
 }
 #closeOverlay:hover {
 	cursor: pointer;
@@ -819,13 +818,13 @@ g#dragButton2:hover {
 }
 .editorialQuote {
 	font-family: 'Interstate-ThinCondensed';
-	font-size: 28px;
-	line-height: 36px;
+	font-size: 24px;
+	line-height: 34px;
 }
 .editorialQuoteAttribution {
 	font-family: 'Interstate-RegularCondensed';
 	float: right;
-	font-size: 32px;
+	font-size: 28px;
 	padding-top: 25px;
 }
 
