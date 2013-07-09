@@ -815,7 +815,7 @@
 				</div>
 				<div id="closeOverlay"><img src="./img/closeOverlay.png" /></div>
 				<div id="powellExtendedText" class="secondLevelContent">
-					<!-- <div class="powellScroller"> -->
+					<div class="powellScroller">
 						<h2>AGAINST THE CURRENT</h2>
 			<h3>How the West’s Water was Almost Won</h3>
 			<h5>By NATALIE TAYLOR</h5>
@@ -930,6 +930,7 @@ The communal concept enriched the settlers and the church, which was funded by i
             <p>
             <span class="pullQuote">"He was interested in how this society that had existed for 900 years had been able to survive and develop agriculture based on almost no water."</span>
             </p>
+            <p>
 Powell also spent time with numerous Native American tribes during his second expedition. “He was interested in how this society that had existed for 900 years had been able to survive and develop agriculture based on almost no water,” Mark Law, historian and board of directors president of the <a target="_blank" onclick="cancelFullscreen('pageWrapper');" href="http://www.powellmuseum.org/index.php">
 					Powell Museum
 				</a>, said of Powell’s time with the Hopi. “They showed him how they made little catchment basins and how they made irrigation ditches. All of this, Powell absorbed like a sponge.”
@@ -1009,7 +1010,7 @@ That once dusty settlement is today a city of <a target="_blank" onclick="cancel
 </p> 
 <img src="./img/powell5.jpg" />
 <p class="imageCaption">Powell's Map Proposing Political Units be organized by Watershed. U.S. Geological Survey.</p>
-					<!-- </div>  -->
+					</div> 
 				</div>
 				<div id="motionHoover" class="secondLevelContent">
 					<video id="motionHooverVid" class="video-js" preload="auto" width="100%" height="100%">
@@ -1020,7 +1021,7 @@ That once dusty settlement is today a city of <a target="_blank" onclick="cancel
 				</div>
 				<img class="extendedTextBackground" id="bgLandgrab" src="./img/bgLandgrab.png" />
 				<div id="landgrabText" class="secondLevelContent">
-					<!-- <div class="landgrabScroller"> -->
+					<div class="landgrabScroller">
 						<h2>LANDGRAB</h2>
 			<h3>What Happens When You Go Against the Flow</h3>
 			<h5>By HANNAH WEINBERGER</h5>
@@ -1284,7 +1285,7 @@ With something “that impacts this many people, that has infrastructure built u
 <p>
 “To change water use, you’d have to get new losers to get new winners,” he says. “It’s a finite resource. Somebody has to lose their water.” 
 </p>
-					<!-- </div> -->
+					</div>
 				</div>				
 				<div id="motionImperial" class="secondLevelContent">
 					<video id="motionImperialVid" class="video-js" preload="auto" width="100%" height="100%">
@@ -1295,7 +1296,7 @@ With something “that impacts this many people, that has infrastructure built u
 				</div>
 				<img class="extendedTextBackground" id="bgAddicted" src="./img/bgAddicted.png" />
 				<div id="addictedText" class="secondLevelContent">
-					<!-- <div class="addictedScroller"> -->
+					<div class="addictedScroller">
 						<h2>ADDICTED</h2>
 			<h3>Giving up water is hard</h3>
 			<h5>By HANNAH WEINBERGER</h5>
@@ -1711,7 +1712,7 @@ But it’s not just ‘the people downstream’ who are responsible, author DeBu
 “It’s everyone,” he says. “We’re all culpable.” 
 </p>
 
-					<!-- </div> -->
+					</div>
 				</div>
 				<div id="motionIntake" class="secondLevelContent">
 					<video id="motionIntakeVid" class="video-js" preload="auto" width="100%" height="100%">
@@ -1722,7 +1723,7 @@ But it’s not just ‘the people downstream’ who are responsible, author DeBu
 				</div>
 				<img class="extendedTextBackground" id="bgDamages" src="./img/bgDamages.png" />
 				<div id="damagesText" class="secondLevelContent">
-					<!-- <div class="damagesScroller"> -->
+					<div class="damagesScroller">
 					<h2>SEA CHANGE</h2>
 			<h3>What happens when a river stops before the ocean?</h3>
 			<h5>By NATALIE TAYLOR</h5>
@@ -1852,7 +1853,7 @@ Now that the sediment is trapped behind the dams, the tides have washed the clam
 			<p>
 			Flessa expresses hope that populations of endangered species like the totoaba would bounce back. “I think there’s potential for that,” he says. “A little bit of water can have an enormous environmental benefit, and that environmental benefit can get translated into economic opportunities for people. We can’t quite turn the clock back, but the system as a whole is remarkably resilient.” 
 			</p>
-				<!-- </div> -->
+				</div>
 				</div>
 				<div id="dragWrapper" style="width:100%;">
 					<svg id="dragPath" width="50%" height="151px">
@@ -2959,7 +2960,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
-			audio.fadeOut('natSoundIntro');
+			audio.mute('natSoundIntro');
 			return this.s('videoAct1');
 		}
 	});
@@ -3164,7 +3165,13 @@ var debugState = function(startVideo, time) {
 			videos.hide('motionHooverVid');
 			$('#bgLandgrab').fadeIn(500);
 			videos.pause('motionHooverVid');
-			$('#landgrabText').show();
+			$('#landgrabText').fadeIn(500);
+			$('.landgrabScroller').jScrollPane( {
+				verticalGutter: 15,
+				hideFocus: true,
+				verticalDragMaxHeight: 50,
+				autoReinitialise: true
+			});
 			return this.s('landgrabText');
 		},
 		sliderDragged: function() {
@@ -3192,13 +3199,13 @@ var debugState = function(startVideo, time) {
 	textState('landgrabText', ['natSoundAct2'],
 	{
 		hide: function() {
-			$('#bgLandgrab').fadeOut(100);
+			$('#bgLandgrab').fadeOut(1000);
 			$('#landgrabText').fadeOut(500);
 			$('#dragWrapper').hide();
 			$('.clickForMore').hide();
 		},
 		sliderDragged: function() {
-			$('#bgLandgrab').fadeOut(100);
+			$('#bgLandgrab').fadeOut(1000);
 			$('#landgrabText').fadeOut(500);
 			videos.show('videoAct3');
 			videos.play('videoAct3')
@@ -3352,6 +3359,12 @@ var debugState = function(startVideo, time) {
 			$('#bgAddicted').fadeIn(500);
 			videos.pause('motionImperialVid');
 			$('#addictedText').show();
+			$('.addictedScroller').jScrollPane( {
+				verticalGutter: 15,
+				hideFocus: true,
+				verticalDragMaxHeight: 50,
+				autoReinitialise: true
+			});
 			return this.s('addictedText');
 		},
 		sliderDragged: function() {
@@ -3379,13 +3392,13 @@ var debugState = function(startVideo, time) {
 	textState('addictedText', ['natSoundAct3'],
 	{
 		hide: function() {
-			$('#bgAddicted').fadeOut(100);
+			$('#bgAddicted').fadeOut(1000);
 			$('#addictedText').fadeOut(500);
 			$('#dragWrapper').hide();
 			$('.clickForMore').hide();
 		},
 		sliderDragged: function() {
-			$('#bgAddicted').fadeOut(100);
+			$('#bgAddicted').fadeOut(1000);
 			$('#addictedText').fadeOut(500);
 			videos.show('videoAct4');
 			videos.play('videoAct4')
@@ -3539,6 +3552,12 @@ var debugState = function(startVideo, time) {
 			$('#bgDamages').fadeIn(500);
 			videos.pause('motionIntakeVid');
 			$('#damagesText').show();
+			$('.damagesScroller').jScrollPane( {
+				verticalGutter: 15,
+				hideFocus: true,
+				verticalDragMaxHeight: 50,
+				autoReinitialise: true
+			});	
 			return this.s('damagesText');
 		},
 		sliderDragged: function() {
@@ -3566,13 +3585,13 @@ var debugState = function(startVideo, time) {
 	textState('damagesText', ['natSoundAct4'],
 	{
 		hide: function() {
-			$('#bgDamages').fadeOut(100);
+			$('#bgDamages').fadeOut(1000);
 			$('#damagesText').fadeOut(500);
 			$('#dragWrapper').hide();
 			$('.clickForMore').hide();
 		},
 		sliderDragged: function() {
-			$('#bgDamages').fadeOut(100);
+			$('#bgDamages').fadeOut(1000);
 			$('#damagesText').fadeOut(500);
 			videos.show('videoAct5');
 			videos.play('videoAct5')
@@ -3909,6 +3928,12 @@ $(document).keypress(function(event) {
     	$('#powellLoopButton').fadeOut(500);
     	setTimeout(function(){
     		$('#powellExtendedText').fadeIn(500);
+    		$('.powellScroller').jScrollPane( {
+				verticalGutter: 15,
+				hideFocus: true,
+				verticalDragMaxHeight: 50,
+				autoReinitialise: true
+			});
     	},500);
     }
 
@@ -4059,30 +4084,6 @@ $(document).keypress(function(event) {
 
 
 	// Second Level Text Scrollers
-	$('.powellScroller').jScrollPane( {
-		verticalGutter: 15,
-		hideFocus: true,
-		verticalDragMaxHeight: 50
-	});
-	console.log('powell scrollpane initialized');
-	$('.landgrabScroller').jScrollPane( {
-		verticalGutter: 15,
-		hideFocus: true,
-		verticalDragMaxHeight: 50
-
-	});
-	$('.addictedScroller').jScrollPane( {
-		verticalGutter: 15,
-		hideFocus: true,
-		verticalDragMaxHeight: 50
-
-	});
-	$('.damagesScroller').jScrollPane( {
-		verticalGutter: 15,
-		hideFocus: true,
-		verticalDragMaxHeight: 50
-
-	});	
 
 
 </script>

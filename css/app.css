@@ -247,6 +247,10 @@ body {
 	border-radius: 10px;
 	width: 12px;
 }
+.jspContainer, .jsPane {
+	height: 100%;
+	width: 100%;
+}
 .pullQuote {
 	float: left;
 	text-align: right;
@@ -267,6 +271,7 @@ body {
 	top: 0;
 	padding-top: 10px;
 	height: 100%;
+	width: 100%;
 }
 #powellExtendedText, #landgrabText, #addictedText, #damagesText {
 	color: #fff;
@@ -520,7 +525,7 @@ body {
 	position: absolute;
 	z-index: 1200;
 	top:0;
-	right:0;
+	right: 15px;
 	padding: 5px;
 }
 #closeOverlay:hover {
