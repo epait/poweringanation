@@ -27,8 +27,16 @@
      });
     </script>
   <![endif]-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta property="og:image" content="http://www.poweringanation.org/water2013/img/fbTnail.png" />
+<meta property="og:title" content="Powering A Nation Presents: Over Water Under Fire"/>
+<meta property="og:description" content="The upcoming interactive documentary, “Over Water Under Fire,” combines a video narrative with motion graphics and text to present the Colorado river as a living timeline of our nation’s innovations and exploitations with water. The river's uncertain future echoes the precarious state of water resources in this country." />
+<meta property="og:url" content="http://www.overwaterunderfire.org"/>
+<meta property="og:site_name" content="Over Water Under Fire"/>
+<meta property="og:type" content="website"/>
 <meta charset="utf-8"></meta>
-<title>Powering A Nation Test Environment</title>
+<meta name="description" content="The upcoming interactive documentary, “Over Water Under Fire,” combines a video narrative with motion graphics and text to present the Colorado river as a living timeline of our nation’s innovations and exploitations with water. The river's uncertain future echoes the precarious state of water resources in this country." />
+<title>Over Water Under Fire</title>
 <link href="./css/animate.css" rel="stylesheet">
 <link href="./js/video-js/video-js.css" rel="stylesheet">
 <!-- <link href="./css/bootstrap.min.css" rel="stylesheet"> -->
@@ -46,6 +54,14 @@
 <script src="./js/jquery.lettering.js"></script>
 <script src="./js/jquery.textillate.js"></script>
 <script src="./js/jquery.knob.js"></script>
+<script src="./js/redirection-mobile.js"></script>
+<script>
+    SA.redirection_mobile({
+    	mobile_url           : 'overwaterunderfire.org/mobile',
+    	mobile_prefix        : 'http',
+    	tablet_redirection   : 'true'
+    });
+</script>
 <script>
   videojs.options.flash.swf = "./js/video-js/video-js.swf"
 </script>
@@ -87,7 +103,7 @@
 		<div class="logo" style="display:none">
 			<svg width="100%" height="100%">
 				<g id="logoWrapper" transform="scale(0.5) translate(0,0)">
-					<circle opacity="0.6" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="10" cx="470.634" cy="461.508" r="291.677"/>
+					<circle id="Layer_86" opacity="0.6" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="10" cx="470.634" cy="461.508" r="291.677"/>
 					<polygon fill="#FFFFFF" points="592.387,591.865 823.576,591.865 798.846,621.32 567.492,621.32 	"/>
 					<path opacity="0.6" fill="#FFFFFF" d="M499.346,369.297c-0.701,5.2-2.301,12.701-3.801,19.201l-3.9,17.401h15.4l-3.9-17.501
 						C501.645,381.798,500.145,374.498,499.346,369.297z"/>
@@ -546,7 +562,7 @@
 					</svg>
 					<div id="menuItems">
 						<div id="followButtons">
-							<a class="tweet" href="https://twitter.com/share" data-text="Explore the Colorado River in this interactive documentary tracing our nation's relationship with water." data-hashtags="poweringanation" onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');" target="Window2"><img id="shareTwitter" src="./img/twitter.png" /></a>
+							<a class="tweet" href="https://twitter.com/share" data-text="Explore the Colorado River in an interactive documentary about our nation's relationship with water." data-hashtags="poweringanation" onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');" target="Window2"><img id="shareTwitter" src="./img/twitter.png" /></a>
 							<a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://www.overwaterunderfire.org&amp;p[images][0]=http://www.poweringanation.org/water2013/img/fbTnail.png&amp;p[title]=Powering A Nation Presents: Over Water Under Fire&amp;p[summary]=The upcoming interactive documentary, “Over Water Under Fire,” combines a video narrative with motion graphics and text to present the Colorado river as a living timeline of our nation’s innovations and exploitations with water. The river's uncertain future echoes the precarious state of water resources in this country." onclick="return windowpop(this.href, 545, 433); return false; cancelFullscreen('pageWrapper');" target="Window2"><img id="shareFacebook" src="./img/facebook.png" /></a>
 							<a href="https://plus.google.com/share?url=http://www.overwaterunderfire.org" onclick="return windowpop(this.href, 545, 433); return false; cancelFullscreen('pageWrapper');" target="Window2"><img id="shareGooglePlus" src="./img/googlePlus.png" /></a>
 							<!-- <div id="shareText">SHARE</div> -->
@@ -594,6 +610,14 @@
 					<audio  preload id="natSoundAct2B" class="natSound">
 						<source src="./audio/natSoundAct2.ogg" type="audio/ogg">
 						<source src="./audio/natSoundAct2.mp3" type="audio/mpeg">
+					</audio>
+					<audio  preload id="natSoundAct2v2A" class="natSound">
+						<source src="./audio/natSoundAct2v2.ogg" type="audio/ogg">
+						<source src="./audio/natSoundAct2v2.mp3" type="audio/mpeg">
+					</audio>
+					<audio  preload id="natSoundAct2v2B" class="natSound">
+						<source src="./audio/natSoundAct2v2.ogg" type="audio/ogg">
+						<source src="./audio/natSoundAct2v2.mp3" type="audio/mpeg">
 					</audio>
 					<audio  preload id="natSoundAct3A" class="natSound">
 						<source src="./audio/natSoundAct3.ogg" type="audio/ogg">
@@ -800,8 +824,7 @@
 						Tag-a-Long Expeditions<br />
 						Wade and Diana Sharbono<br />
 						Matt Bachman<br />
-						Stephanie Brown<br />
-						Tony Reyes</p>
+						Stephanie Brown</p>
 					</div>
 					<img id="divider" src="./img/divider.png" />
 					<div class="logoFundersWrapper">
@@ -1291,7 +1314,7 @@ With something “that impacts this many people, that has infrastructure built u
 				<div id="addictedText" class="secondLevelContent">
 					<div class="addictedScroller">
 						<h2>ADDICTED</h2>
-			<h3>Giving up water is hard</h3>
+			<h3>Giving Up Water Is Hard</h3>
 			<h5>By HANNAH WEINBERGER</h5>
 			</p>
 			<img src="./img/addictedCrest.jpg" /> 
@@ -1507,7 +1530,7 @@ Pressure from increasing populations meant that Lake Mead, which took almost sev
 Dams aren’t able to function forever, and early dam boosters knew it. One reason, experts say, is dirt. 
 </p>
 <p>
-<span class="pullQuote">No matter how the laws are set, no matter how much water people use, 21st century Westerners will not have as muh water going forward as they do today. </span>
+<span class="pullQuote">No matter how the laws are set, no matter how much water people use, 21st century Westerners will not have as much water going forward as they do today. </span>
   </p>
 <p>          
 The Colorado is an especially muddy river that flushes dirt and minerals through the basin, making farmland along its banks nutrient-rich. Dams hinder that process, inadvertently caching silt in their floors and further disrupting rivers’ natural processes. The Hoover Dam has <a target="_blank" onclick="cancelFullscreen('pageWrapper');" href="http://www.usbr.gov/pmts/sediment/projects/ReservoirSurveys/Reports/2001 Lake Mead Sedimentation Survey.pdf">lost 2.4 million acre-feet of storage space to silt</a> buildup since 1935. Silt buildup has slowed in Lake Mead recently because Lake Powell, upstream of Lake Mead at Glen Canyon Dam, has captured 95 percent of the silt that would have gone to Lake Mead since 1963. 
@@ -1622,7 +1645,7 @@ Getting people to move would first take a USBR admission that its systems can’
 “All they need to say is, the mission of developing the West has been accomplished, thank you very much. We’re at the limit of our resources, we can’t accept any more, and in fact we’re in trouble and we actually have to turn this around ourselves so we can live here, too,” Weisheit says. “But they can’t do that.”
 </p>
 <p>
-<h4> Conserving for the future </h4>
+<h4> Conserving for the Future </h4>
 </p>
 <img src="./img/addictedLawn.jpg" /> 
 <p class="imageCaption">A Sustainable Las Vegas Lawn. <span class="imageSource">Courtesy Southern Nevada Water Authority</span>.</p>
@@ -1718,7 +1741,7 @@ But it’s not just ‘the people downstream’ who are responsible, author DeBu
 				<div id="damagesText" class="secondLevelContent">
 					<div class="damagesScroller">
 					<h2>SEA CHANGE</h2>
-			<h3>What happens when a river stops before the ocean?</h3>
+			<h3>What Happens When a River Stops Before the Ocean?</h3>
 			<h5>By NATALIE TAYLOR</h5>
 			</p>
 	
@@ -1949,7 +1972,7 @@ Now that the sediment is trapped behind the dams, the tides have washed the clam
 						<source src="./vid/loopFire.ogv" type="video/ogg">
 					</video>
 					<div class="textOverlay" id="videoAct2TextSentence1" style="display: block;">
-						We never know what will forever changes us.
+						We never know what will forever change us.
 						<br />
 						<img src="./img/clickToContinue.png" class="clickToContinue" id="videoAct2TextButton1">
 					</div>
@@ -2004,7 +2027,7 @@ Now that the sediment is trapped behind the dams, the tides have washed the clam
 						<br /><img src="./img/clickToContinue.png" class="clickForMore" id="conclusionLoopButton" style="display: none;">
 					</div>
 					<div id="shareTheExperience" style="display:none;">
-						<a class="tweet" href="https://twitter.com/share" data-text="Explore the Colorado River in this interactive documentary tracing our nation's relationship with water." data-hashtags="poweringanation" onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');" target="Window2"><img class="conclusionShareButtons" id="conclusionTwitter" src="http://www.poweringanation.org/water2013-test/img/conclusionTwitter.png" /></a>
+						<a class="tweet" href="https://twitter.com/share" data-text="Explore the Colorado River in an interactive documentary about our nation's relationship with water." data-hashtags="poweringanation" onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');" target="Window2"><img class="conclusionShareButtons" id="conclusionTwitter" src="http://www.poweringanation.org/water2013-test/img/conclusionTwitter.png" /></a>
 						<a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://www.overwaterunderfire.org&amp;p[images][0]=http://www.poweringanation.org/water2013/img/fbTnail.png&amp;p[title]=Powering A Nation Presents: Over Water Under Fire&amp;p[summary]=The upcoming interactive documentary, “Over Water Under Fire,” combines a video narrative with motion graphics and text to present the Colorado river as a living timeline of our nation’s innovations and exploitations with water. The river's uncertain future echoes the precarious state of water resources in this country." onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');" target="Window2"><img class="conclusionShareButtons" id="conclusionFacebook" src="http://www.poweringanation.org/water2013-test/img/conclusionFacebook.png" /></a>
 						<a href="https://plus.google.com/share?url=http://www.overwaterunderfire.org" onclick="return windowpop(this.href, 545, 433); cancelFullscreen('pageWrapper');" target="Window2"><img class="conclusionShareButtons" id="conclusionGoogle" src="http://www.poweringanation.org/water2013-test/img/conclusionGoogle.png" /></a>
 						<p id="shareTheExperienceText">SHARE THE EXPERIENCE</p>
@@ -2487,12 +2510,13 @@ var audioPlayer = function(id, volume) {
 
 var audio = function() {
 	return {
-		natSoundIntro : audioPlayer('natSoundIntro', 0.3),
-		natSoundAct1  : audioPlayer('natSoundAct1',  0.3),
-		natSoundAct2  : audioPlayer('natSoundAct2',  0.6),
-		natSoundAct3  : audioPlayer('natSoundAct3',  0.5),
-		natSoundAct4  : audioPlayer('natSoundAct4',  0.3),
-		natSoundAct5  : audioPlayer('natSoundAct5',  0.5),
+		natSoundIntro   : audioPlayer('natSoundIntro',   0.3),
+		natSoundAct1    : audioPlayer('natSoundAct1',    0.3),
+		natSoundAct2    : audioPlayer('natSoundAct2',    0.6),
+		natSoundAct2v2  : audioPlayer('natSoundAct2v2',  0.4),
+		natSoundAct3    : audioPlayer('natSoundAct3',    0.5),
+		natSoundAct4    : audioPlayer('natSoundAct4',    0.3),
+		natSoundAct5    : audioPlayer('natSoundAct5',    0.5),
 
 		fadeIn:  function(id) { console.log(id + ' is fading in'); this[id].fadeIn();  },
 		fadeOut: function(id) { console.log(id + ' is fading out'); this[id].fadeOut(); },
@@ -2981,6 +3005,12 @@ var debugState = function(startVideo, time) {
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
 			audio.mute('natSoundIntro');
+			audio.mute('natSoundAct1');
+			audio.mute('natSoundAct2');
+			audio.mute('natSoundAct2v2');
+			audio.mute('natSoundAct3');
+			audio.mute('natSoundAct4');
+			audio.mute('natSoundAct5');
 			return this.s('videoAct1');
 		}
 	});
@@ -2989,6 +3019,7 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct1') return this;
+			audio.mute('natSoundIntro');
 			if (videos.videoAct1.currentTime() > 92.3) {
 				if (!this.muted()) {
 					// audio.fadeIn('natSoundAct1');
@@ -3046,6 +3077,11 @@ var debugState = function(startVideo, time) {
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct2') return this;
 			audio.fadeOut('natSoundAct1');
+			audio.mute('natSoundAct2');
+			audio.mute('natSoundAct2v2');
+			audio.mute('natSoundAct3');
+			audio.mute('natSoundAct4');
+			audio.mute('natSoundAct5');
 			return this.s('videoAct2');
 		}
 	});
@@ -3054,9 +3090,9 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct2') return this;
-			if (videos.videoAct2.currentTime() > 118) {
+			if (videos.videoAct2.currentTime() > 120) {
 				if (!this.muted()) {
-					audio.fadeIn('natSoundAct2');
+					audio.fadeIn('natSoundAct2v2');
 				}
 				return this.s('videoAct2WithLoopAudio');
 			} else {
@@ -3065,7 +3101,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	videoState('videoAct2WithLoopAudio', ['videoAct2'], ['natSoundAct2'], ['#dragWrapper', '.clickForMore'],
+	videoState('videoAct2WithLoopAudio', ['videoAct2'], ['natSoundAct2v2'], ['#dragWrapper', '.clickForMore'],
 	{
 		videoEnded: function(videoId) {
 			if (videoId !== 'videoAct2') return this;
@@ -3078,7 +3114,7 @@ var debugState = function(startVideo, time) {
 		}
 	});
 
-	textState('transitionText1', ['natSoundAct2'], 
+	textState('transitionText1', ['natSoundAct2v2'], 
 	{
 		hide: function() {
 			$('#videoAct2TextSentence2').fadeOut(1000);
@@ -3104,7 +3140,12 @@ var debugState = function(startVideo, time) {
 	{
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionDams') return this;
-			audio.fadeOut('natSoundAct2');
+			audio.fadeOut('natSoundAct2v2');
+			audio.mute('natSoundAct1');
+			audio.mute('natSoundAct2');
+			audio.mute('natSoundAct3');
+			audio.mute('natSoundAct4');
+			audio.mute('natSoundAct5');
 			return this.s('motionDams');
 		}
 	});
@@ -3238,6 +3279,11 @@ var debugState = function(startVideo, time) {
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct3') return this;
 			audio.fadeOut('natSoundAct2');
+			audio.mute('natSoundAct1');
+			audio.mute('natSoundAct2v2');
+			audio.mute('natSoundAct3');
+			audio.mute('natSoundAct4');
+			audio.mute('natSoundAct5');
 			return this.s('videoAct3');
 		}
 	});
@@ -3298,6 +3344,11 @@ var debugState = function(startVideo, time) {
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionPopulation') return this;
 			audio.fadeOut('natSoundAct3');
+			audio.mute('natSoundAct1');
+			audio.mute('natSoundAct2');
+			audio.mute('natSoundAct2v2');
+			audio.mute('natSoundAct4');
+			audio.mute('natSoundAct5');
 			return this.s('motionPopulation');
 		}
 	});
@@ -3431,6 +3482,11 @@ var debugState = function(startVideo, time) {
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct4') return this;
 			audio.fadeOut('natSoundAct4');
+			audio.mute('natSoundAct1');
+			audio.mute('natSoundAct2');
+			audio.mute('natSoundAct2v2');
+			audio.mute('natSoundAct3');
+			audio.mute('natSoundAct5');
 			return this.s('videoAct4');
 		}
 	});
@@ -3491,6 +3547,11 @@ var debugState = function(startVideo, time) {
 		timeUpdate: function(videoId) {
 			if (videoId !== 'motionDeltaMead') return this;
 			audio.fadeOut('natSoundAct4');
+			audio.mute('natSoundAct1');
+			audio.mute('natSoundAct2');
+			audio.mute('natSoundAct2v2');
+			audio.mute('natSoundAct3');
+			audio.mute('natSoundAct5');
 			return this.s('motionDeltaMead');
 		}
 	});
@@ -3624,6 +3685,11 @@ var debugState = function(startVideo, time) {
 		timeUpdate: function(videoId) {
 			if (videoId !== 'videoAct5') return this;
 			audio.fadeOut('natSoundAct1');
+			audio.mute('natSoundAct2');
+			audio.mute('natSoundAct2v2');
+			audio.mute('natSoundAct3');
+			audio.mute('natSoundAct4');
+			audio.mute('natSoundAct5');
 			return this.s('videoAct5');
 		}
 	});
@@ -3661,6 +3727,7 @@ var debugState = function(startVideo, time) {
 		hide: function() {
 			$('#conclusionLoop').hide();
 			conclusionFadeOut();
+			audio.fadeOut('natSoundAct2');
 		},
 		clickMore: function() {
 			$('#conclusionText').fadeOut(500);
